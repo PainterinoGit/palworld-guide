@@ -59,6 +59,38 @@
             color: var(--text-primary);
             line-height: 1.6;
             transition: background-color 0.2s, color 0.2s;
+            scrollbar-color: var(--border) var(--bg-secondary);
+            scrollbar-width: thin;
+        }
+
+        /* Browser surfaces: theme what the UA would otherwise draw generically */
+        ::selection {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
         }
 
         /* Header */
@@ -1551,6 +1583,7 @@
             border-top: 1px solid var(--border);
             color: var(--text-secondary);
             vertical-align: top;
+            font-variant-numeric: tabular-nums;
         }
 
         table.hb-table td.hb-name {

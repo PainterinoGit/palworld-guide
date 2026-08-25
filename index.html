@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palworld Komplett-Guide</title>
+    <meta name="description" content="Team, Base, Standorte & Mechaniken – plus persönlicher Wegweiser durch die Hauptquest.">
+    <meta name="theme-color" content="#6366F1">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -1689,9 +1699,7 @@
                 Das komplette Palworld-Roster – alle Pals inkl. aller Elementar-Varianten (Ignis/Cryst/Lux/Noct/Terra/
                 Aqua/Primo/Botan/Gild/Ryu/Libero) mit Typ, Tier, Spielphase, Partner-Skill, Arbeits-Eignung und Fundort.
                 Filterbar nach Typ, Spielphase und Guide-Empfehlung, sortierbar auch nach einzelner Fähigkeit.
-                Pals mit dem ⭐-Badge werden zusätzlich irgendwo im Guide aktiv als Team-Pick oder Base-Worker empfohlen –
-                bei allen anderen stammen Typ/Tier/Partner-Skill/Arbeits-Eignung aus den Spieldaten und der Fundort aus
-                Wiki-Recherche.
+                Pals mit dem ⭐-Badge werden an anderer Stelle im Guide aktiv als Team-Pick oder Base-Worker empfohlen.
             </p>
 
             <div class="pals-filter-bar">
@@ -1751,7 +1759,7 @@
                     <!-- REAL MAP with overlay pins -->
                     <div class="map-panel" id="realMapPanel">
                         <div class="photo-map-wrap" id="photoMapWrap">
-                            <img id="realMapImg" src="assets/images/map.jpg">
+                            <img id="realMapImg" src="assets/images/map.jpg" width="1224" height="1225" alt="Interaktive Palworld-Weltkarte mit Base- und Ressourcen-Pins" loading="lazy" decoding="async">
                             <div id="photoPinLayer" class="photo-pin-layer"></div>
                         </div>
                         <div class="map-legend" id="mapLegend">
@@ -1762,8 +1770,6 @@
                         </div>
                         <p class="map-caption">
                             Positionierung basiert auf den echten Paldeck-Koordinaten – kann je nach Zuschnitt leicht abweichen.
-                            Feinjustierung: falls ein Pin spürbar daneben liegt, sag mir grob in welche Richtung
-                            (z.B. "alles 5% zu weit rechts"), dann korrigiere ich die Formel.
                         </p>
                     </div>
 

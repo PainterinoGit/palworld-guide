@@ -1,0 +1,16 @@
+{
+  "name": "Palworld Komplett-Guide",
+  "short_name": "Palworld Guide",
+  "description": "Team, Base, Standorte & Mechaniken – plus persönlicher Wegweiser durch die Hauptquest",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#6366F1",
+  "lang": "de",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
