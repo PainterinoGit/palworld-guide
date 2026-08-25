@@ -706,7 +706,29 @@
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-tertiary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-disclaimer {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .footer-meta {
+            color: var(--text-secondary);
+        }
+
+        .footer-meta a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-meta a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive */
