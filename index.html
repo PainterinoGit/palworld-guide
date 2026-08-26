@@ -55,6 +55,20 @@
 
         <!-- TAB: TEAM BUILDS -->
         <div id="teams" class="tab-content">
+            <section class="level-team-guide" aria-labelledby="levelTeamTitle">
+                <div class="level-team-guide-header">
+                    <div>
+                        <p class="section-eyebrow">DEIN STANDARD-SETUP</p>
+                        <h2 id="levelTeamTitle">Teams nach deinem Levelbereich</h2>
+                        <p class="hb-intro">Wähle deinen ungefähren Levelbereich. Du bekommst ein vollständiges Kampfteam, ein Roaming-/Erkundungsteam und ein Base-Team. Spezialteams kommen darunter nur dann dazu, wenn du sie wirklich brauchst.</p>
+                    </div>
+                    <label class="level-band-picker">Levelbereich
+                        <select id="levelBandSelect" aria-label="Levelbereich auswählen"></select>
+                    </label>
+                </div>
+                <div id="levelBandSummary" class="level-band-summary"></div>
+                <div id="levelTeamHost" class="level-team-grid" aria-live="polite"></div>
+            </section>
             <p class="hb-intro">
                 Kampf-Teams und Base-Worker an einem Ort. Wähle unten ein Thema – die Ansicht wechselt sofort,
                 ohne dass du zwischen Reitern hin- und herspringen musst.
@@ -2648,6 +2662,6 @@
     <script src="data/skills.js"></script>
     <script src="data/pals-roster.js"></script>
     <script src="data/quests.js"></script>
-    <script src="js/app.js"></script>
+    <script type="module" src="js/bootstrap.mjs"></script>
 </body>
 </html>

@@ -1884,3 +1884,38 @@
         .stage-team-chip, .synergy-chip {
             cursor: help;
         }
+/* Level-based team guide */
+.level-team-guide {
+    margin: 0 0 2rem;
+    padding: 1.35rem;
+    border: 1px solid rgba(99, 102, 241, .22);
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(99,102,241,.11), rgba(15,23,42,.3));
+}
+.level-team-guide-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
+.section-eyebrow { margin:0 0 .35rem; color:#a5b4fc; font-size:.72rem; font-weight:700; letter-spacing:.12em; }
+.level-team-guide h2 { margin:.1rem 0 .5rem; }
+.level-band-picker { display:grid; gap:.35rem; min-width:170px; color:var(--text-secondary); font-size:.8rem; font-weight:600; }
+.level-band-picker select { padding:.7rem .8rem; border:1px solid var(--border-color); border-radius:10px; color:var(--text-primary); background:var(--surface-color); }
+.level-band-summary { display:flex; gap:.65rem; align-items:baseline; margin:1rem 0; color:var(--text-secondary); }
+.level-band-summary strong { color:var(--text-primary); }
+.level-team-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1rem; }
+.team-card { padding:1rem; border:1px solid var(--border-color); border-radius:14px; background:rgba(15,23,42,.48); }
+.team-card-kicker { color:#a5b4fc; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.team-card h3 { margin:.35rem 0 .3rem; font-size:1rem; }
+.team-card-purpose { min-height:2.5em; margin:0 0 .8rem; color:var(--text-secondary); font-size:.85rem; }
+.team-card-slots { display:grid; gap:.45rem; }
+.team-card-slots-label { color:var(--text-secondary); font-size:.75rem; font-weight:700; }
+.team-slot { display:flex; gap:.6rem; align-items:center; padding:.55rem; border:1px solid rgba(148,163,184,.16); border-radius:10px; background:rgba(30,41,59,.58); }
+.team-slot:focus-visible { outline:2px solid #a5b4fc; outline-offset:2px; }
+.team-slot-pal { display:grid; min-width:88px; gap:.12rem; }
+.team-slot-pal strong { color:var(--text-primary); font-size:.82rem; }
+.team-slot-pal small, .team-slot-index { color:var(--text-secondary); font-size:.65rem; }
+.team-slot-copy { display:grid; gap:.1rem; color:var(--text-secondary); font-size:.72rem; }
+.team-slot-copy strong { color:#c7d2fe; font-size:.68rem; text-transform:uppercase; }
+.team-slot-copy small { color:#94a3b8; font-size:.66rem; }
+.team-slot-variable { border-style:dashed; }
+.team-slot-question { display:grid; width:31px; height:31px; place-items:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
+.team-card-meta { margin-top:.8rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
+@media (max-width: 900px) { .level-team-grid { grid-template-columns:1fr; } }
+@media (max-width: 560px) { .level-team-guide-header, .level-band-summary { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } }
