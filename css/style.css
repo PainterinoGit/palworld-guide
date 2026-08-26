@@ -1968,6 +1968,10 @@
 .team-slot-variable { border-style:dashed; }
 .team-slot-question { display:grid; flex:0 0 44px; width:44px; height:44px; place-items:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
 .team-card-meta { margin-top:.8rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
+.legacy-team-library { margin-top:1.5rem; border-top:1px solid var(--border-color); }
+.legacy-team-library summary { min-height:44px; padding:1rem .25rem; color:var(--text-secondary); cursor:pointer; font-size:.85rem; font-weight:700; list-style-position:inside; }
+.legacy-team-library summary:hover { color:var(--text-primary); }
+.legacy-team-library[open] summary { margin-bottom:1rem; color:var(--text-primary); }
 .level-guide-panel { margin:1rem 0 1.5rem; padding:1rem; border:1px solid var(--border-color); border-radius:14px; background:rgba(15,23,42,.32); }
 .level-guide-panel-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
 .level-guide-panel h2 { margin:.1rem 0 .4rem; font-size:1.15rem; }
