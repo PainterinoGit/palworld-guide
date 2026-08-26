@@ -768,6 +768,9 @@
         applyPalThumbs();
         applySynergyChipIcons();
         PAL_DB = buildPalDB();
+        if (window.GuideData?.applyGuidePalData && window.GuideData?.PALS) {
+            window.GuideData.applyGuidePalData(PAL_DB, window.GuideData.PALS);
+        }
         renderPalsTable();
         enableChipTooltips();
 
