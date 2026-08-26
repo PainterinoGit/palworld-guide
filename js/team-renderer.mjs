@@ -1,4 +1,5 @@
 import { getPalById } from '../data/pals.mjs';
+import { LEVEL_BANDS } from '../data/teams.mjs';
 
 const escapeHtml = value => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -42,13 +43,16 @@ export function renderTeamSlot(teamSlot, context = 'combat') {
 
 export function renderTeamCard(team, context = team.kind) {
   const slotHtml = team.slots.map(slot => renderTeamSlot(slot, context)).join('');
+  const band = LEVEL_BANDS.find(item => item.id === team.levelBandId);
   const prerequisites = team.prerequisites.length ? `<div class="team-card-meta"><strong>Vorbereitung:</strong> ${escapeHtml(team.prerequisites.join(' · '))}</div>` : '';
+  const useWhen = team.useWhen ? `<div class="team-card-meta"><strong>Nur einsetzen:</strong> ${escapeHtml(team.useWhen)}</div>` : '';
   return `<article class="team-card" data-team-id="${escapeHtml(team.id)}" data-level-band="${escapeHtml(team.levelBandId)}">
-    <div class="team-card-kicker">${escapeHtml(contextLabel[context] || context)} · ${escapeHtml(team.levelBandId)}</div>
+    <div class="team-card-kicker">${escapeHtml(contextLabel[context] || context)} · ${escapeHtml(band?.label || team.levelBandId)}</div>
     <h3>${escapeHtml(team.title)}</h3>
     <p class="team-card-purpose">${escapeHtml(team.purpose)}</p>
     <div class="team-card-slots"><div class="team-card-slots-label">Team-Slots · ${team.slots.length}</div>${slotHtml}</div>
     ${prerequisites}
+    ${useWhen}
     <div class="team-card-meta"><strong>Wechseln:</strong> ${escapeHtml(team.switchWhen)}</div>
   </article>`;
 }

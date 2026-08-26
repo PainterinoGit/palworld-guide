@@ -14,14 +14,19 @@ function getInitialBandId() {
 function renderLevelBand(bandId) {
   const band = LEVEL_BANDS.find(item => item.id === bandId) || LEVEL_BANDS[0];
   const host = document.getElementById('levelTeamHost');
+  const specialHost = document.getElementById('levelSpecialHost');
   const summary = document.getElementById('levelBandSummary');
-  if (!host || !summary) return;
+  if (!host || !summary || !specialHost) return;
 
   summary.innerHTML = `<strong>${band.label}</strong><span>${band.summary}</span>`;
   host.innerHTML = TEAMS
     .filter(team => team.levelBandId === band.id && ['combat', 'roaming', 'base'].includes(team.kind))
     .map(team => renderTeamCard(team, team.kind))
     .join('');
+  const specialTeams = TEAMS.filter(team => team.levelBandId === band.id && team.kind === 'special');
+  specialHost.innerHTML = specialTeams.length
+    ? `<div class="level-special-heading"><span>SPEZIALTEAMS</span><small>Nur für konkrete Situationen wechseln</small></div>${specialTeams.map(team => renderTeamCard(team, team.kind)).join('')}`
+    : '';
   attachTeamSlotDetails(host);
   window.localStorage.setItem(STORAGE_KEY, band.id);
 }

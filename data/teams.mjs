@@ -10,7 +10,7 @@ export const LEVEL_BANDS = [
   { id: '50-plus', label: 'Level 50+', minLevel: 50, maxLevel: null, summary: 'Endgame, Raids und finale Teams.' },
 ];
 
-export const TEAMS = LEVEL_BANDS.flatMap((band, index) => {
+const STANDARD_TEAMS = LEVEL_BANDS.flatMap((band, index) => {
   const progression = [
     ['cattiva', 'foxparks', 'daedream', 'vixy'],
     ['cattiva', 'foxparks', 'rushoar', 'eikthyrdeer', null],
@@ -31,3 +31,31 @@ export const TEAMS = LEVEL_BANDS.flatMap((band, index) => {
     standard(`${band.id}-base`, band.id, 'base', `${band.label} · Base-Team`, 'Produktion, Ressourcen und Worker-Aufgaben', base, [], 'Wenn eine Produktionskette dauerhaft Engpässe erzeugt.'),
   ];
 });
+
+export const TEAMS = [
+  ...STANDARD_TEAMS,
+  {
+    id: 'special-tower-electric', levelBandId: '10-20', kind: 'special', specialty: 'boss',
+    title: 'Spezialteam · Electric-Boss', purpose: 'Nur einsetzen, wenn ein Electric-Boss oder eine Electric-Region dein Ziel ist.',
+    useWhen: 'Vor dem Bosskampf mit Ground-Fokus vorbereiten.', prerequisites: ['Ground-Pal', 'Fernkampfwaffe'], switchWhen: 'Nach dem Kampf zurück auf das Standardteam wechseln.',
+    slots: [slot('rushoar', 'ground counter', 'Kontert Electric mit Ground.', ['anubis']), slot('foxcicle', 'ice backup', 'Zusätzliche sichere Distanzoption.', ['foxparks']), slot(null, 'variable', 'Nach Bossmechanik oder eigener Spielweise wählen.', ['anubis', 'cattiva'], true)],
+  },
+  {
+    id: 'special-fang', levelBandId: '20-30', kind: 'special', specialty: 'fang',
+    title: 'Spezialteam · Fangen', purpose: 'Wild-Pals sicher schwächen, ohne sie versehentlich zu besiegen.',
+    useWhen: 'Vor einem gezielten Fangziel oder Alpha-Encounter.', prerequisites: ['Pal Spheres', 'Schwächungs-Angriff'], switchWhen: 'Nach dem Fang zurück auf das Standardteam wechseln.',
+    slots: [slot('foxparks', 'burn / weaken', 'Schwächt Ziele kontrolliert mit Fire.', []), slot('vixy', 'sphere support', 'Hilft beim Sphere-Nachschub.', []), slot(null, 'variable', 'Je nach Fangziel defensiv oder mobil wählen.', ['lamball', 'eikthyrdeer'], true)],
+  },
+  {
+    id: 'special-resource', levelBandId: '30-40', kind: 'special', specialty: 'resource',
+    title: 'Spezialteam · Ressourcenroute', purpose: 'Für Erz, Kohle und entfernte Farm-Routen.',
+    useWhen: 'Wenn du gezielt eine Ressource außerhalb der Base farmst.', prerequisites: ['Mount', 'ausreichend Inventar'], switchWhen: 'Nach der Route zurück auf das Standardteam wechseln.',
+    slots: [slot('eikthyrdeer', 'mount', 'Schnelle Fortbewegung zwischen Hotspots.', ['jetragon']), slot('digtoise', 'mining', 'Baut Erzadern effizient ab.', ['anubis']), slot('anubis', 'repair / utility', 'Übernimmt Mining und Handiwork als Backup.', []), slot(null, 'variable', 'Gebietsspezifisch ergänzen.', ['foxcicle', 'lily'], true)],
+  },
+  {
+    id: 'special-raid', levelBandId: '50-plus', kind: 'special', specialty: 'raid',
+    title: 'Spezialteam · Raid / World Tree', purpose: 'Für Endgame-Bosse und schwierige Raid-Loops.',
+    useWhen: 'Erst einsetzen, wenn das Standardteam ausgerüstet und das Raid-Ziel bekannt ist.', prerequisites: ['Endgame-Ausrüstung', 'gepflegte Kern-Pals'], switchWhen: 'Je nach Bossmechanik und Element wechseln.',
+    slots: [slot('shadowbeak', 'dark carry', 'Hoher Endgame-Schaden.', ['jormuntide-ignis']), slot('jormuntide-ignis', 'fire carry', 'Flächenschaden gegen passende Ziele.', ['blazehowl']), slot('jetragon', 'burst / mount', 'Mobilität und Burst-Schaden.', ['frostallion']), slot('paladius', 'defense', 'Defensive Absicherung.', ['lily'])],
+  },
+];

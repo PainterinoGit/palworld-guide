@@ -10,6 +10,7 @@ assert.deepEqual(
 for (const team of TEAMS) {
   assert.ok(['combat', 'roaming', 'base', 'special'].includes(team.kind));
   assert.ok(team.slots.length > 0);
+  if (team.kind === 'special') assert.equal(typeof team.useWhen, 'string');
 
   for (const slot of team.slots) {
     assert.ok(slot.palId === null || PALS.some(pal => pal.id === slot.palId));
