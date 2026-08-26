@@ -1917,5 +1917,15 @@
 .team-slot-variable { border-style:dashed; }
 .team-slot-question { display:grid; width:31px; height:31px; place-items:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
 .team-card-meta { margin-top:.8rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
+.level-guide-panel { margin:1rem 0 1.5rem; padding:1rem; border:1px solid var(--border-color); border-radius:14px; background:rgba(15,23,42,.32); }
+.level-guide-panel-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
+.level-guide-panel h2 { margin:.1rem 0 .4rem; font-size:1.15rem; }
+.guide-step-card { padding:1rem; border:1px solid rgba(99,102,241,.25); border-radius:12px; background:rgba(30,41,59,.45); }
+.guide-step-kicker { color:#a5b4fc; font-size:.72rem; font-weight:700; text-transform:uppercase; }
+.guide-step-card h2 { margin:.35rem 0 1rem; }
+.guide-step-columns { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.guide-step-columns h3 { margin:0 0 .35rem; font-size:.8rem; }
+.guide-step-columns ul { margin:0; padding-left:1.1rem; color:var(--text-secondary); font-size:.8rem; line-height:1.55; }
+.guide-step-completion { margin-top:1rem; padding-top:.8rem; border-top:1px solid var(--border-color); color:var(--text-secondary); font-size:.8rem; }
 @media (max-width: 900px) { .level-team-grid { grid-template-columns:1fr; } }
-@media (max-width: 560px) { .level-team-guide-header, .level-band-summary { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } }
+@media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } }

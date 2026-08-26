@@ -42,6 +42,18 @@
                 Hake Türme/Meilensteine ab, sobald du sie geschafft hast, oder klicke einen Punkt an, um direkt dorthin zu springen.
                 Dein Fortschritt wird lokal in diesem Browser gespeichert.
             </p>
+            <section class="level-guide-panel" aria-labelledby="levelGuideTitle">
+                <div class="level-guide-panel-header">
+                    <div>
+                        <p class="section-eyebrow">DEIN NÄCHSTER SCHRITT</p>
+                        <h2 id="levelGuideTitle">Geführter Fortschritt nach Levelbereich</h2>
+                    </div>
+                    <label class="level-band-picker">Abschnitt
+                        <select id="guideStepSelect" aria-label="Guide-Abschnitt auswählen"></select>
+                    </label>
+                </div>
+                <div id="levelGuideHost" aria-live="polite"></div>
+            </section>
 
             <!-- Interactive quest phase tracker (rendered by renderWegweiser()) -->
             <div class="quest-track" id="questTrack"></div>
