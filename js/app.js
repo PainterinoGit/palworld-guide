@@ -571,8 +571,11 @@
         };
 
         // Small icon (wiki "_icon.png" thumbnail) for avatars/table rows.
+        // MediaWiki file names use underscores instead of spaces — encodeURIComponent
+        // alone produces %20, which 404s on the raw /images/ file path (unlike
+        // Special:FilePath below, which normalizes it server-side).
         function palIconUrl(name, size) {
-            const file = `${name}_icon.png`;
+            const file = `${name.replace(/ /g, '_')}_icon.png`;
             return `https://palworld.wiki.gg/images/thumb/${encodeURIComponent(file)}/${size}px-${encodeURIComponent(file)}`;
         }
 
