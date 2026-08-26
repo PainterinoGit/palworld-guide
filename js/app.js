@@ -282,6 +282,15 @@
 
         const TIER_SORT_ORDER = { s: 0, a: 1, b: 2, c: 3 };
 
+        function palUsageReason(entry) {
+            if (entry.note) return entry.note;
+            const skills = Object.entries(entry.skills || {}).sort((a, b) => b[1] - a[1]);
+            if (skills.length) return `Am besten für ${skills.slice(0, 2).map(([skill, level]) => `${skill} Lv.${level}`).join(' und ')}.`;
+            if (entry.roles?.length) return `Besonders geeignet für ${entry.roles.slice(0, 3).join(', ')}.`;
+            if (entry.partnerSkill) return 'Nutzen vor allem über den Partner-Skill im Kampf oder beim Reiten.';
+            return 'Noch keine zusätzliche Nutzungsempfehlung hinterlegt.';
+        }
+
         function renderPalsTable() {
             populatePalFilterOptions();
             const search = (document.getElementById('palSearchInput')?.value || '').toLowerCase().trim();
@@ -318,6 +327,7 @@
                     : '—';
                 const partnerHtml = e.partnerSkill ? e.partnerSkill : '—';
                 const roleNote = e.roles.length ? `<div class="pal-role-note">${palRoleSummary(e)}</div>` : '';
+                const usageReason = palUsageReason(e);
                 return `
                 <tr>
                     <td class="hb-name" data-pal="${e.name}">${featuredMark}${e.name}</td>
@@ -326,6 +336,7 @@
                     <td>${palStageBadges(e)}</td>
                     <td class="pal-partner-skill">${partnerHtml}</td>
                     <td><div class="suit-chips">${suitHtml}</div>${roleNote}</td>
+                    <td class="pal-usage-reason">${usageReason}</td>
                     <td>${e.location || (e.note ? e.note : '—')}</td>
                 </tr>`;
             }).join('');
