@@ -1865,6 +1865,14 @@
                     <option value="name">Sortieren: Name (A–Z)</option>
                     <option value="tier">Sortieren: Tier (S→C)</option>
                 </select>
+                <div class="pals-goal-chips">
+                    <button class="filter-chip active" data-goal="all" onclick="setPalGoalFilter('all', this)">Alle Ziele</button>
+                    <button class="filter-chip" data-goal="combat" onclick="setPalGoalFilter('combat', this)">⚔️ Kampf</button>
+                    <button class="filter-chip" data-goal="worker" onclick="setPalGoalFilter('worker', this)">🏭 Worker</button>
+                    <button class="filter-chip" data-goal="mount" onclick="setPalGoalFilter('mount', this)">🐎 Mount</button>
+                    <button class="filter-chip" data-goal="fang" onclick="setPalGoalFilter('fang', this)">🎯 Fangen</button>
+                    <button class="filter-chip" data-goal="upgrade" onclick="setPalGoalFilter('upgrade', this)">⬆️ Team-Upgrade</button>
+                </div>
                 <div class="pals-stage-chips">
                     <button class="filter-chip active" data-stage="all" onclick="setPalsStageFilter('all', this)">Alle</button>
                     <button class="filter-chip" data-stage="early" onclick="setPalsStageFilter('early', this)">🔵 Early</button>

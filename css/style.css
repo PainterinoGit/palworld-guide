@@ -1062,6 +1062,13 @@
             gap: 0.4rem;
         }
 
+        .pals-goal-chips {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            flex-basis: 100%;
+        }
+
         .pals-count {
             font-size: 0.8rem;
             color: var(--text-tertiary);

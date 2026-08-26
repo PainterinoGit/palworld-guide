@@ -256,6 +256,26 @@
             filterPalsTable();
         }
 
+        let palsGoalFilter = 'all';
+        function setPalGoalFilter(goal, btnEl) {
+            palsGoalFilter = goal;
+            document.querySelectorAll('#pals [data-goal]').forEach(button => button.classList.toggle('active', button === btnEl));
+            filterPalsTable();
+        }
+
+        function palMatchesGoal(entry, goal) {
+            if (goal === 'all') return true;
+            const text = `${entry.name} ${entry.roles.join(' ')} ${Object.keys(entry.skills).join(' ')} ${entry.note || ''}`.toLowerCase();
+            const patterns = {
+                combat: /damage|offensive|tank|kampf|dps|support/,
+                worker: /worker|base|handiwork|mining|planting|transport|gather|cooling|kindling|watering|farming|medicine/,
+                mount: /mount|reit|flug|mobility|mobilität/,
+                fang: /fang|catch|dot|poison|burn|sleep/,
+                upgrade: /featured|guide|s-tier|upgrade|empfehl/,
+            };
+            return patterns[goal]?.test(text) ?? false;
+        }
+
         function filterPalsTable() {
             renderPalsTable();
         }
@@ -273,6 +293,7 @@
             if (typeFilter !== 'all') entries = entries.filter(e => e.types.some(t => t.split('/').map(x => x.trim()).includes(typeFilter)));
             if (palsStageFilter !== 'all') entries = entries.filter(e => e.stages.includes(palsStageFilter));
             if (palsFeaturedOnly) entries = entries.filter(e => e.featured);
+            entries = entries.filter(e => palMatchesGoal(e, palsGoalFilter));
 
             if (sortKey === 'tier') {
                 entries.sort((a, b) => (TIER_SORT_ORDER[a.tier] ?? 9) - (TIER_SORT_ORDER[b.tier] ?? 9) || a.name.localeCompare(b.name));
