@@ -498,7 +498,7 @@
         }
 
         .tooltip-coords {
-            font-family: 'Courier Prime', monospace;
+            font-family: 'Inter', sans-serif;
             color: var(--primary);
             font-weight: 600;
             font-size: 0.85rem;
@@ -1327,7 +1327,7 @@
         }
 
         .base-card-coords {
-            font-family: 'Courier Prime', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
             color: var(--primary);
             font-weight: 600;
@@ -1830,7 +1830,7 @@
         }
 
         .maplink-card .ml-url {
-            font-family: 'Courier Prime', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 0.78rem;
             color: var(--primary);
             margin-top: 0.6rem;
