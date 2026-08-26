@@ -40,10 +40,9 @@
 
 ### Typography
 
-- **Heading Font:** Russo One
-- **Body Font:** Chakra Petch
+- **Font System:** Inter for body, labels, navigation, data and headings; weight and size create hierarchy.
 - **Mood:** gaming, bold, action, esports, competitive, energetic
-- **Google Fonts:** [Russo One + Chakra Petch](https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap)
+- **Google Fonts:** [Inter](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap)
 
 **CSS Import:**
 ```css

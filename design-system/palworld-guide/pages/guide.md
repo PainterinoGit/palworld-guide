@@ -17,8 +17,8 @@ The guide uses a dark-first gaming interface with a restrained Swiss/block layou
 
 ## Typography
 
-- Headings and navigation: Russo One
-- Body and data labels: Chakra Petch
+- All interface text: Inter
+- Hierarchy: Inter 800 for headings, 700 for controls and labels, 400–600 for reading and data
 - Body copy: minimum 16px on mobile, line-height 1.5–1.75
 - Data values use tabular figures where possible
 
