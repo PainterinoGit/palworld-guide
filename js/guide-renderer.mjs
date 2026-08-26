@@ -6,6 +6,7 @@ const escapeHtml = value => String(value ?? '')
   .replaceAll("'", '&#039;');
 
 const list = values => values.map(value => `<li>${escapeHtml(value)}</li>`).join('');
+const locationList = values => values.map(value => `<li><button class="guide-location-link" type="button" data-target-location="${escapeHtml(value)}" onclick="switchTab('locations'); selectLocation('${escapeHtml(value)}')">${escapeHtml(value)}</button></li>`).join('');
 
 export function renderGuideStep(step) {
   return `<article class="guide-step-card" data-guide-step="${escapeHtml(step.id)}">
@@ -14,7 +15,7 @@ export function renderGuideStep(step) {
     <div class="guide-step-columns">
       <section><h3>Vorbereitung</h3><ul>${list(step.preparation)}</ul></section>
       <section><h3>Items</h3><ul>${list(step.items)}</ul></section>
-      <section><h3>Orte</h3><ul>${list(step.locationIds)}</ul></section>
+      <section><h3>Orte</h3><ul>${locationList(step.locationIds)}</ul></section>
     </div>
     <div class="guide-step-completion"><strong>Erfolgskriterium:</strong> ${escapeHtml(step.completion)}</div>
   </article>`;

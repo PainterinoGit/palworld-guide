@@ -35,7 +35,7 @@ export function renderTeamSlot(teamSlot, context = 'combat') {
     .filter(Boolean)
     .map(candidate => candidate.name)
     .join(', ') || 'keine nötig';
-  return `<div class="team-slot" data-pal-id="${escapeHtml(pal.id)}" data-context="${escapeHtml(context)}" tabindex="0">
+  return `<div class="team-slot" data-pal-id="${escapeHtml(pal.id)}" data-context="${escapeHtml(context)}" tabindex="0" role="button" aria-label="${escapeHtml(pal.name)}: Details und Datenbank öffnen">
     <div class="team-slot-pal"><span class="team-slot-index">${escapeHtml(teamSlot.role)}</span><strong>${escapeHtml(pal.name)}</strong><small>${escapeHtml(pal.types.join(' / '))}</small></div>
     <div class="team-slot-copy"><strong>${escapeHtml(contextLabel[context] || context)}</strong><span>${escapeHtml(teamSlot.reason)}</span><small>Alternative: ${escapeHtml(alternatives)}</small></div>
   </div>`;

@@ -60,10 +60,26 @@ function attachTeamSlotDetails(host) {
     slot.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
     slot.addEventListener('focus', show);
     slot.addEventListener('blur', () => tooltip.classList.remove('visible'));
+    const openDatabase = () => {
+      const search = document.getElementById('palSearchInput');
+      if (search) {
+        search.value = pal.name;
+        search.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      if (typeof window.switchTab === 'function') window.switchTab('pals');
+    };
+    slot.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openDatabase();
+      }
+    });
     slot.addEventListener('click', event => {
       if (window.matchMedia('(hover: none)').matches) {
         event.stopPropagation();
         tooltip.classList.toggle('visible');
+      } else {
+        openDatabase();
       }
     });
   });

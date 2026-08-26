@@ -7,5 +7,6 @@ assert.match(firstStep, /Erste Base stabil aufbauen/);
 assert.match(firstStep, /Vorbereitung/);
 assert.match(firstStep, /Erfolgskriterium/);
 assert.match(firstStep, /Startbase/);
+assert.match(firstStep, /data-target-location="plateau-nord"/);
 
 console.log('guide renderer: ok');

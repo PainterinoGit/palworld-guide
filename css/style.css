@@ -1972,6 +1972,7 @@
 .legacy-team-library summary { min-height:44px; padding:1rem .25rem; color:var(--text-secondary); cursor:pointer; font-size:.85rem; font-weight:700; list-style-position:inside; }
 .legacy-team-library summary:hover { color:var(--text-primary); }
 .legacy-team-library[open] summary { margin-bottom:1rem; color:var(--text-primary); }
+#questTrack, #questDetailHost, .wg-reset-row { display:none; }
 .level-guide-panel { margin:1rem 0 1.5rem; padding:1rem; border:1px solid var(--border-color); border-radius:14px; background:rgba(15,23,42,.32); }
 .level-guide-panel-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
 .level-guide-panel h2 { margin:.1rem 0 .4rem; font-size:1.15rem; }
@@ -1981,6 +1982,8 @@
 .guide-step-columns { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
 .guide-step-columns h3 { margin:0 0 .35rem; font-size:.8rem; }
 .guide-step-columns ul { margin:0; padding-left:1.1rem; color:var(--text-secondary); font-size:.8rem; line-height:1.55; }
+.guide-location-link { min-height:44px; padding:.25rem .45rem; border:0; color:#a5b4fc; background:transparent; cursor:pointer; text-align:left; text-decoration:underline; text-underline-offset:3px; }
+.guide-location-link:hover { color:var(--color-accent); }
 .guide-step-completion { margin-top:1rem; padding-top:.8rem; border-top:1px solid var(--border-color); color:var(--text-secondary); font-size:.8rem; }
 @media (max-width: 900px) { .level-team-grid, .level-special-grid { grid-template-columns:1fr; } }
 @media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } }
