@@ -1962,6 +1962,12 @@
 .team-slot-pal { display:grid; min-width:88px; gap:.12rem; }
 .team-slot-pal strong { color:var(--text-primary); font-size:.82rem; }
 .team-slot-pal small, .team-slot-index { color:var(--text-secondary); font-size:.65rem; }
+.pal-inline-name { display:inline-flex; align-items:center; gap:.28rem; vertical-align:middle; }
+.pal-inline-icon { flex:0 0 auto; width:24px; height:24px; object-fit:contain; filter:drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
+.team-slot-pal .pal-inline-name { gap:.35rem; }
+.team-slot-pal .pal-inline-icon { width:28px; height:28px; }
+.team-alternatives { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem .45rem; }
+.team-alternatives .pal-inline-icon { width:18px; height:18px; }
 .team-slot-copy { display:grid; gap:.1rem; color:var(--text-secondary); font-size:.72rem; }
 .team-slot-copy strong { color:#c7d2fe; font-size:.68rem; text-transform:uppercase; }
 .team-slot-copy small { color:#94a3b8; font-size:.66rem; }

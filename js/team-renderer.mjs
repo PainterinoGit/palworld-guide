@@ -15,16 +15,25 @@ const contextLabel = {
   special: 'Spezial',
 };
 
+function palIconUrl(name, size = 24) {
+  const file = `${name.replace(/ /g, '_')}_icon.png`;
+  return `https://palworld.wiki.gg/images/thumb/${encodeURIComponent(file)}/${size}px-${encodeURIComponent(file)}`;
+}
+
+function palLabel(pal, size = 24) {
+  return `<span class="pal-inline-name"><img class="pal-inline-icon" src="${palIconUrl(pal.name, size)}" alt="" aria-hidden="true" onerror="this.style.display='none'"><span>${escapeHtml(pal.name)}</span></span>`;
+}
+
 export function renderTeamSlot(teamSlot, context = 'combat') {
   if (teamSlot.palId === null) {
     const alternatives = teamSlot.alternativePalIds
       .map(getPalById)
       .filter(Boolean)
-      .map(pal => pal.name)
-      .join(', ');
+      .map(pal => palLabel(pal, 18))
+      .join('');
     return `<div class="team-slot team-slot-variable" data-context="${escapeHtml(context)}">
       <div class="team-slot-pal team-slot-question">?</div>
-      <div class="team-slot-copy"><strong>Variabler Slot</strong><span>${escapeHtml(teamSlot.reason)}</span>${alternatives ? `<small>Optionen: ${escapeHtml(alternatives)}</small>` : ''}</div>
+      <div class="team-slot-copy"><strong>Variabler Slot</strong><span>${escapeHtml(teamSlot.reason)}</span>${alternatives ? `<small class="team-alternatives">Optionen: ${alternatives}</small>` : ''}</div>
     </div>`;
   }
 
@@ -33,11 +42,11 @@ export function renderTeamSlot(teamSlot, context = 'combat') {
   const alternatives = teamSlot.alternativePalIds
     .map(getPalById)
     .filter(Boolean)
-    .map(candidate => candidate.name)
-    .join(', ') || 'keine nötig';
+    .map(candidate => palLabel(candidate, 18))
+    .join('') || 'keine nötig';
   return `<div class="team-slot" data-pal-id="${escapeHtml(pal.id)}" data-context="${escapeHtml(context)}" tabindex="0" role="button" aria-label="${escapeHtml(pal.name)}: Details und Datenbank öffnen">
-    <div class="team-slot-pal"><span class="team-slot-index">${escapeHtml(teamSlot.role)}</span><strong>${escapeHtml(pal.name)}</strong><small>${escapeHtml(pal.types.join(' / '))}</small></div>
-    <div class="team-slot-copy"><strong>${escapeHtml(contextLabel[context] || context)}</strong><span>${escapeHtml(teamSlot.reason)}</span><small>Alternative: ${escapeHtml(alternatives)}</small></div>
+    <div class="team-slot-pal"><span class="team-slot-index">${escapeHtml(teamSlot.role)}</span><strong>${palLabel(pal, 28)}</strong><small>${escapeHtml(pal.types.join(' / '))}</small></div>
+    <div class="team-slot-copy"><strong>${escapeHtml(contextLabel[context] || context)}</strong><span>${escapeHtml(teamSlot.reason)}</span><small class="team-alternatives">Alternative: ${alternatives}</small></div>
   </div>`;
 }
 
