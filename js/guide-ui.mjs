@@ -5,6 +5,27 @@ import { renderTeamCard } from './team-renderer.mjs';
 import { renderGuideStep } from './guide-renderer.mjs';
 
 const STORAGE_KEY = 'palworld-level-band';
+const GUIDE_STORAGE_KEY = 'palworld-guide-step';
+const GUIDE_DONE_KEY = 'palworld-guide-done';
+
+function readDoneSteps() {
+  try { return new Set(JSON.parse(window.localStorage.getItem(GUIDE_DONE_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+
+function writeDoneSteps(done) {
+  window.localStorage.setItem(GUIDE_DONE_KEY, JSON.stringify([...done]));
+}
+
+function renderLevelTimeline(activeId) {
+  const host = document.getElementById('levelBandTimeline');
+  if (!host) return;
+  host.innerHTML = LEVEL_BANDS.map((band, index) => `<button class="level-band-node${band.id === activeId ? ' is-active' : ''}" type="button" data-level-band="${band.id}" aria-pressed="${band.id === activeId}">
+    <span class="level-band-node-line" aria-hidden="true"><span>${index + 1}</span></span>
+    <span class="level-band-node-copy"><strong>${band.label}</strong><small>${band.summary}</small></span>
+  </button>`).join('');
+  host.querySelectorAll('[data-level-band]').forEach(button => button.addEventListener('click', () => renderLevelBand(button.dataset.levelBand)));
+}
 
 function getInitialBandId() {
   const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -18,6 +39,7 @@ function renderLevelBand(bandId) {
   const summary = document.getElementById('levelBandSummary');
   if (!host || !summary || !specialHost) return;
 
+  renderLevelTimeline(band.id);
   summary.innerHTML = `<strong>${band.label}</strong><span>${band.summary}</span>`;
   host.innerHTML = TEAMS
     .filter(team => team.levelBandId === band.id && ['combat', 'roaming', 'base'].includes(team.kind))
@@ -86,28 +108,41 @@ function attachTeamSlotDetails(host) {
 }
 
 export function initLevelTeams() {
-  const select = document.getElementById('levelBandSelect');
-  if (!select) return;
-  select.innerHTML = LEVEL_BANDS.map(band => `<option value="${band.id}">${band.label}</option>`).join('');
-  select.value = getInitialBandId();
-  renderLevelBand(select.value);
-  select.addEventListener('change', () => renderLevelBand(select.value));
+  if (!document.getElementById('levelBandTimeline')) return;
+  renderLevelBand(getInitialBandId());
 }
 
 export function initGuideSteps() {
-  const select = document.getElementById('guideStepSelect');
+  const roadmap = document.getElementById('guideRoadmapHost');
   const host = document.getElementById('levelGuideHost');
-  if (!select || !host) return;
-  select.innerHTML = GUIDE_STEPS.map(step => `<option value="${step.id}">${step.levelBandId} · ${step.goal}</option>`).join('');
-  const saved = window.localStorage.getItem('palworld-guide-step');
-  select.value = GUIDE_STEPS.some(step => step.id === saved) ? saved : GUIDE_STEPS[0].id;
+  if (!roadmap || !host) return;
+  let activeId = window.localStorage.getItem(GUIDE_STORAGE_KEY);
+  if (!GUIDE_STEPS.some(step => step.id === activeId)) activeId = GUIDE_STEPS[0].id;
   const render = () => {
-    const step = GUIDE_STEPS.find(item => item.id === select.value) || GUIDE_STEPS[0];
+    const step = GUIDE_STEPS.find(item => item.id === activeId) || GUIDE_STEPS[0];
+    const done = readDoneSteps();
+    roadmap.innerHTML = GUIDE_STEPS.map((step, index) => `<div class="guide-roadmap-item${step.id === activeId ? ' is-active' : ''}${done.has(step.id) ? ' is-done' : ''}">
+      <button class="guide-roadmap-step" type="button" data-guide-step="${step.id}" aria-pressed="${step.id === activeId}">
+        <span class="guide-roadmap-number">${done.has(step.id) ? '✓' : index + 1}</span>
+        <span><strong>${step.levelBandId}</strong><small>${step.goal}</small></span>
+      </button>
+      <label class="guide-roadmap-check"><input type="checkbox" data-guide-done="${step.id}"${done.has(step.id) ? ' checked' : ''}> erledigt</label>
+    </div>`).join('');
+    roadmap.querySelectorAll('[data-guide-step]').forEach(button => button.addEventListener('click', () => {
+      activeId = button.dataset.guideStep;
+      window.localStorage.setItem(GUIDE_STORAGE_KEY, activeId);
+      render();
+    }));
+    roadmap.querySelectorAll('[data-guide-done]').forEach(input => input.addEventListener('change', () => {
+      const nextDone = readDoneSteps();
+      input.checked ? nextDone.add(input.dataset.guideDone) : nextDone.delete(input.dataset.guideDone);
+      writeDoneSteps(nextDone);
+      render();
+    }));
     host.innerHTML = renderGuideStep(step);
-    window.localStorage.setItem('palworld-guide-step', step.id);
+    window.localStorage.setItem(GUIDE_STORAGE_KEY, step.id);
   };
   render();
-  select.addEventListener('change', render);
 }
 
 if (document.readyState === 'loading') {
