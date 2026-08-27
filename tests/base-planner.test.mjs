@@ -29,7 +29,7 @@ assert.match(breeding.buildings, /2× Weizenplantage.*1× Beerenplantage/i, 'Bre
 assert.match(breeding.workers.join(' · '), /2× Chikipi.*2× Mozzarina.*2× Beegarde/i, 'Breedingbase nennt Ranch-Pals mit Mengen');
 assert.match(breeding.note, /Kuchenproduktion/i, 'Breedingbase erklärt den Produktionszweck');
 const threeBasePlan = getBasePlan(3);
-assert.ok(threeBasePlan.bases.every(base => base.workers.length === 15), 'jede Base im 3-Basen-Layout plant 15 Worker-Slots');
+assert.ok(threeBasePlan.bases.every(base => base.workers.length === 20), 'jede Base im 3-Basen-Layout plant 20 Worker-Slots');
 assert.ok(threeBasePlan.bases.every(base => base.workers.every(worker => /Monitoring:/i.test(worker))), '3-Basen-Layout erklärt die Monitoring-Einstellung je Worker');
 const allBuildingText = Object.values(BASE_PLANS).flatMap(plan => plan.bases.map(base => base.buildings)).join(' ');
 for (const building of ['Palbox', 'Futterbox', 'Betten', 'Heiße Quelle', 'Monitoring Stand', 'Lager', 'Klinik', 'Mühle', 'Breeding Farm|Ancient Hatchery']) {
