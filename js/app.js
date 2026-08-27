@@ -273,6 +273,80 @@
             }).join('');
         }
 
+        const RESOURCE_RARITY_CLASS = {
+            'Häufig': 'common',
+            'Wichtig': 'important',
+            'Selten': 'rare',
+            'Sehr selten': 'very-rare',
+        };
+
+        function resourcePinId(item) {
+            return ({ Öl: 'crude-oil', Kohle: 'coal', Erz: 'ore', Schwefel: 'sulfur' })[item.resource] || '';
+        }
+
+        function positionResourceTooltip(event) {
+            const tooltip = document.getElementById('resourceDetailTooltip');
+            if (!tooltip.classList.contains('visible')) return;
+            const offset = 16;
+            const rect = tooltip.getBoundingClientRect();
+            let x = event ? event.clientX + offset : 24;
+            let y = event ? event.clientY + offset : 24;
+            if (x + rect.width > window.innerWidth - 8) x = (event?.clientX || window.innerWidth) - rect.width - offset;
+            if (y + rect.height > window.innerHeight - 8) y = (event?.clientY || window.innerHeight) - rect.height - offset;
+            tooltip.style.left = `${Math.max(8, x)}px`;
+            tooltip.style.top = `${Math.max(8, y)}px`;
+        }
+
+        function showResourceTooltip(resource, event) {
+            const tooltip = document.getElementById('resourceDetailTooltip');
+            const image = resource.image && RESOURCE_IMAGES[resource.image]
+                ? `<img src="${RESOURCE_IMAGES[resource.image]}" alt="${resource.name} Fundort" class="resource-tooltip-image">`
+                : '';
+            tooltip.innerHTML = `
+                ${image}
+                <div class="resource-tooltip-kicker">${resource.category} · ${resource.rarity}</div>
+                <div class="resource-tooltip-name">${resource.name}</div>
+                <p>${resource.note}</p>
+                <div class="resource-tooltip-loc"><strong>Fundorte:</strong> ${resource.locations}<br><strong>Koordinaten:</strong> ${resource.coords}</div>`;
+            tooltip.classList.add('visible');
+            tooltip.setAttribute('aria-hidden', 'false');
+            positionResourceTooltip(event);
+        }
+
+        function hideResourceTooltip() {
+            const tooltip = document.getElementById('resourceDetailTooltip');
+            tooltip.classList.remove('visible');
+            tooltip.setAttribute('aria-hidden', 'true');
+        }
+
+        function bindResourceDetails() {
+            document.querySelectorAll('[data-resource-id]').forEach(element => {
+                const resource = RESOURCE_CATALOG.find(item => item.id === element.dataset.resourceId);
+                if (!resource || element.dataset.resourceBound) return;
+                element.dataset.resourceBound = 'true';
+                element.addEventListener('mouseenter', event => showResourceTooltip(resource, event));
+                element.addEventListener('mousemove', positionResourceTooltip);
+                element.addEventListener('mouseleave', hideResourceTooltip);
+                element.addEventListener('focus', () => showResourceTooltip(resource));
+                element.addEventListener('blur', hideResourceTooltip);
+            });
+        }
+
+        function renderResourceCatalog() {
+            const body = document.getElementById('resourceCatalog');
+            if (!body) return;
+            body.innerHTML = RESOURCE_CATALOG.map(resource => `
+                <tr data-resource-id="${resource.id}" tabindex="0">
+                    <th scope="row"><strong>${resource.name}</strong><small>${resource.category}</small></th>
+                    <td>${resource.category}</td>
+                    <td>${resource.early}</td>
+                    <td>${resource.durable}</td>
+                    <td><span class="resource-location-text">${resource.locations}</span><small class="resource-coords">${resource.coords}</small></td>
+                    <td><span class="resource-rarity ${RESOURCE_RARITY_CLASS[resource.rarity] || ''}">${resource.rarity}</span></td>
+                </tr>`).join('');
+            bindResourceDetails();
+        }
+
         function filterLocations(filter, btnEl) {
             currentFilter = filter;
             document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
@@ -332,6 +406,7 @@
 
             renderPhotoPins();
             renderLocationList('all');
+            bindResourceDetails();
         }
 
         // Original, non-infringing per-pal visuals: a colored initial-badge (by element type)
@@ -520,6 +595,8 @@
 
         renderPhotoPins();
         renderLocationList('all');
+        renderResourceCatalog();
+        bindResourceDetails();
         applyPalVisuals();
         applyPalThumbs();
         applySynergyChipIcons();
@@ -548,7 +625,7 @@
                     return `<div class="photo-pin" data-id="${item.id}" data-stage="${item.stage}" onclick="selectLocation('${item.id}')" style="left:${leftPct}%; top:${topPct}%; background:${color};" data-label="${item.name}"></div>`;
                 }
                 const color = RESOURCE_TIER_COLOR[item.tier];
-                return `<div class="photo-pin" data-id="${item.id}" data-tier="${item.tier}" onclick="selectLocation('${item.id}')" style="left:${leftPct}%; top:${topPct}%; background:${color};" data-label="${item.name}"></div>`;
+                return `<div class="photo-pin" data-id="${item.id}" data-tier="${item.tier}" data-resource-id="${resourcePinId(item)}" tabindex="0" onclick="selectLocation('${item.id}')" style="left:${leftPct}%; top:${topPct}%; background:${color};" data-label="${item.name}"></div>`;
             }).join('');
         }
 
