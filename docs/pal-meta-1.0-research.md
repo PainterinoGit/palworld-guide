@@ -149,3 +149,36 @@ Wichtig: „Level 8“ ist der natürliche Startwert. Die 1.0-Daten ändern auß
 4. Jede Empfehlung braucht mindestens eine Alternative für den vorherigen Levelbereich.
 5. Quellen und Prüfdatum müssen direkt am Pal-Detail sichtbar sein.
 
+## Nutzer-Videoliste: Transkript-Abgleich
+
+Die vom Nutzer gelieferten Videos wurden am 27.08.2026 über `yt-dlp` geprüft. Für 13 der 14 Videos waren englische oder deutsche Untertitel abrufbar; beim Sammelabruf trat zeitweise ein YouTube-Rate-Limit auf, deshalb wurden die fehlenden Videos einzeln mit Pausen nachgeladen. Die Transkripte bleiben außerhalb des Repositories in einem temporären Arbeitsverzeichnis und werden aus Copyright-Gründen nicht in die Seite kopiert.
+
+### Wiederkehrende Signale
+
+- **Orserk** taucht in mehreren Endgame-Kampf- und Base-Videos als Electric-Kern, Support oder Raid-Armee auf.
+- **Anubis** bleibt in mehreren Base-Videos der praktische Handiwork-/Mining-Allrounder und wird in Übergangs- und Zucht-Setups häufig genannt.
+- **Jormuntide Ignis** wird wiederholt als Fire-Kampfpal mit sehr starkem Kindling-Nutzen kombiniert.
+- **Frostallion**, **Shaolong** und **Bellanoir/Bellanoir Libero** erscheinen in Endgame-Kampfkompositionen; die konkrete beste Wahl hängt vom Gegner und der Elementabdeckung ab.
+- **Bastigor**, **Knocklem** und **Wumpo** erscheinen in Base-/Logistik-Kontexten; das unterstützt die Trennung von Kühlung, Transport und Kampf.
+- **Lyleen** wird eher als Heil-/Sustain- oder Base-Pal eingeordnet als als universeller DPS-Carry.
+
+### Quellenmatrix
+
+| Video | Kanal | Schwerpunkt | Transkriptstatus |
+|---|---|---|---|
+| [Top 5 Combat Pals](https://www.youtube.com/watch?v=amZY6qiPAdQ) | The Pal Professor | Kampf-Pals und Full-Damage-Partys | EN verfügbar |
+| [20 Most Overpowered Pals](https://www.youtube.com/watch?v=toYU7ofg3-s) | The Pal Professor | Kampf, Raid, Support und Base | EN verfügbar |
+| [Top 5 Combat Builds](https://www.youtube.com/watch?v=uCX1SaQf64w) | The Pal Professor | konkrete Party-Builds | EN verfügbar |
+| [Best Combat Party Comps](https://www.youtube.com/watch?v=I2yWYKBcQqQ) | ItalianSpartacus | Endgame-Kampfkompositionen | EN verfügbar |
+| [Die besten Teams](https://www.youtube.com/watch?v=N2LYB2yBC4E) | Briot | Teamzusammenstellungen | DE verfügbar |
+| [Top 5 Builds](https://www.youtube.com/watch?v=82ims6y0nzQ) | Jay Dunna | Spieler- und Pal-Schaden | EN verfügbar |
+| [Top 5 OP Combat Builds](https://www.youtube.com/watch?v=y8C6lM0Kcl0) | RageGamingVideos | Endgame-Kampf-Builds | EN verfügbar |
+| [Any Pal OP machen](https://www.youtube.com/watch?v=2VZqwIiCcNc) | RageGamingVideos | Power-Items und Aufwertung | DE/EN abrufbar, wenig verwertbare Namenssignale |
+| [Infinite Resource Base](https://www.youtube.com/watch?v=kVmjm8JvdlU) | RageGamingVideos | Ressourcenbase und Worker | DE/EN verfügbar |
+| [Beste Base-Pals je Eignung](https://www.youtube.com/watch?v=WHgjoElqM_4) | Shario | Work-Suitability und Base-Rollen | DE/EN verfügbar |
+| [Best Base Pals getestet](https://www.youtube.com/watch?v=S-2-aMdw7Qw) | TropsPlays | neue Base-Pals im Praxistest | DE/EN verfügbar |
+| [Best Base Pals / Work Level 10](https://www.youtube.com/watch?v=Dj-DQN50zkI) | The Pal Professor | Level-10-Worker und Ranch | EN verfügbar |
+| [True Best Base Pals](https://www.youtube.com/watch?v=oe2sMmKzx0I) | RageGamingVideos | Worker-Setup und Skills | DE/EN verfügbar |
+| [Top 10 Overpowered Pals](https://www.youtube.com/watch?v=dmDCXW1-j14) | Vilestride | allgemeine Overpowered-Picks | EN verfügbar |
+
+Die Videoaussagen bestätigen die Rollenlogik der schriftlichen Quellen, ersetzen aber keine Spieldaten. Aussagen wie „beste“, „unendlich“ oder konkrete Schadenswerte werden nur als Praxiserfahrung markiert, bis sie durch Patchdaten, Work-Suitability oder reproduzierbare Tests gestützt sind.
