@@ -298,7 +298,7 @@
                         <div class="base-card-name">${item.name}</div>
                         <div class="base-card-coords">${item.x}, ${item.y}</div>
                     </div>
-                    <div class="base-card-stage">${STAGE_LABEL[item.stage]}</div>
+                    <div class="base-card-stage">${PAL_STAGE_LABEL[item.stage] || item.stage}</div>
                     <div class="base-card-resources"><strong>Ressourcen:</strong> ${item.resources}</div>
                     <div class="base-card-note">${item.note}</div>
                 </div>`;

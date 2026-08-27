@@ -64,6 +64,7 @@ for (const [index, id] of tabIds.entries()) {
 }
 assert.match(app, /function switchTab\s*\(tabName/);
 assert.match(app, /document\.getElementById\(tabName\)\.classList\.add\('active'\)/);
+assert.doesNotMatch(app, /\bSTAGE_LABEL\b/, 'die Standortansicht darf keine nicht definierte Label-Konstante verwenden');
 
 const rosterScript = '<script src="data/pals-roster.js"></script>';
 const bootstrapScript = '<script type="module" src="js/bootstrap.mjs"></script>';
