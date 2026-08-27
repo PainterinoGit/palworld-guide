@@ -1,10 +1,8 @@
 import assert from 'node:assert/strict';
 import { renderTeamSlot, renderTeamCard } from '../js/team-renderer.mjs';
 import { COMBAT_TEAMS } from '../data/teams.mjs';
-import { META_SOURCES, META_VERSION } from '../data/meta-sources.mjs';
 
 const combatTeam = COMBAT_TEAMS.find(team => team.levelBandId === '1-10');
-const firstTeamSource = META_SOURCES.find(source => combatTeam.sources.includes(source.id));
 const optionalSlot = combatTeam.slots.find(teamSlot => teamSlot.palId === null);
 const concreteSlot = combatTeam.slots.find(teamSlot => teamSlot.palId !== null);
 const card = renderTeamCard(combatTeam, 'combat');
@@ -27,17 +25,17 @@ assert.match(card, /Kombination|Zusammenstellung|Begründung/i);
 assert.match(card, /Zugang|Freischaltung/i);
 assert.match(card, /Wechseln|Wechselkriterium/i);
 assert.match(card, /Rolle|role/i);
-assert.match(card, /Quellen|Quelle|Source/i);
-assert.match(card, new RegExp(firstTeamSource.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-assert.match(card, new RegExp(META_VERSION.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-assert.match(card, /2026-08-27/);
-assert.match(
+assert.doesNotMatch(card, /team-source-badge|META_VERSION|2026-08-27/);
+assert.doesNotMatch(card, /href="https?:\/\//);
+assert.match(card, /team-slot-role/);
+assert.match(card, /team-slot-type/);
+assert.doesNotMatch(
   renderTeamCard({
     ...combatTeam,
     sourceIds: ['not-a-source-id'],
     sources: undefined,
   }, 'combat'),
-  /Unbekannte Quellen-ID: not-a-source-id/
+  /not-a-source-id/
 );
 
 console.log('team renderer: ok');

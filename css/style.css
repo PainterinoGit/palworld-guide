@@ -2111,23 +2111,26 @@
 .team-card-purpose { min-height:2.5em; margin:0 0 .8rem; color:var(--text-secondary); font-size:.85rem; }
 .team-card-slots { display:grid; gap:.45rem; }
 .team-card-slots-label { color:var(--text-secondary); font-size:.75rem; font-weight:700; }
-.team-slot { display:flex; gap:.6rem; align-items:center; min-height:52px; padding:.55rem; border:1px solid rgba(148,163,184,.16); border-radius:10px; background:rgba(30,41,59,.58); cursor:help; transition:border-color .2s ease, background-color .2s ease; }
+.team-slot { display:grid; grid-template-columns:minmax(96px, .75fr) minmax(0, 1.5fr); gap:.7rem; align-items:start; min-height:66px; padding:.7rem; border:1px solid rgba(148,163,184,.16); border-radius:10px; background:rgba(30,41,59,.58); cursor:help; transition:border-color .2s ease, background-color .2s ease; }
 .team-slot:hover { border-color:rgba(165,180,252,.7); background:rgba(49,46,129,.32); }
 .team-slot:focus-visible { outline:2px solid #a5b4fc; outline-offset:2px; }
-.team-slot-pal { display:grid; min-width:88px; gap:.12rem; }
-.team-slot-pal strong { color:var(--text-primary); font-size:.82rem; }
+.team-slot-pal { display:grid; min-width:0; gap:.3rem; }
+.team-slot-pal strong { color:var(--text-primary); font-size:.82rem; line-height:1.2; }
 .team-slot-pal small, .team-slot-index { color:var(--text-secondary); font-size:.65rem; }
+.team-slot-type { width:max-content; max-width:100%; padding:.16rem .38rem; border:1px solid rgba(165,180,252,.22); border-radius:5px; color:#c7d2fe; background:rgba(99,102,241,.14); font-size:.62rem; line-height:1.25; }
 .pal-inline-name { display:inline-flex; align-items:center; gap:.28rem; vertical-align:middle; }
 .pal-inline-icon { flex:0 0 auto; width:24px; height:24px; object-fit:contain; filter:drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
 .team-slot-pal .pal-inline-name { gap:.35rem; }
 .team-slot-pal .pal-inline-icon { width:28px; height:28px; }
 .team-alternatives { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem .45rem; }
 .team-alternatives .pal-inline-icon { width:18px; height:18px; }
-.team-slot-copy { display:grid; gap:.1rem; color:var(--text-secondary); font-size:.72rem; }
-.team-slot-copy strong { color:#c7d2fe; font-size:.68rem; text-transform:uppercase; }
+.team-slot-copy { display:grid; min-width:0; gap:.28rem; color:var(--text-secondary); font-size:.72rem; line-height:1.4; }
+.team-slot-copy strong { color:#dbe4ff; font-size:.72rem; }
+.team-slot-role { width:max-content; max-width:100%; padding:.2rem .45rem; border-radius:5px; color:#dbe4ff; background:rgba(129,140,248,.18); font-size:.64rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; }
+.team-slot-reason { min-width:0; }
 .team-slot-copy small { color:#94a3b8; font-size:.66rem; }
 .team-slot-variable { border-style:dashed; }
-.team-slot-question { display:grid; flex:0 0 44px; width:44px; height:44px; place-items:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
+.team-slot-question { display:grid; width:44px; height:44px; place-items:center; align-self:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
 .team-card-meta { margin-top:.8rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
 .legacy-team-library { margin-top:1.5rem; border-top:1px solid var(--border-color); }
 .legacy-team-library summary { min-height:44px; padding:1rem .25rem; color:var(--text-secondary); cursor:pointer; font-size:.85rem; font-weight:700; list-style-position:inside; }
@@ -2174,3 +2177,4 @@
 @media (max-width: 900px) { .level-team-grid, .level-special-grid { grid-template-columns:1fr; } }
 @media (max-width: 700px) { .level-band-timeline { grid-template-columns:repeat(6, 140px); padding-bottom:.35rem; } .level-band-node-copy { text-align:left; } .level-band-node-line { justify-content:flex-start; } .level-band-node::after { left:31px; width:calc(100% - 31px); } }
 @media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } .guide-roadmap-item { grid-template-columns:1fr; gap:.1rem; } .guide-roadmap-check { padding-left:3.35rem; } }
+@media (max-width: 560px) { .team-slot { grid-template-columns:1fr; } .team-slot-pal { grid-template-columns:minmax(0, 1fr) auto; align-items:center; } .team-slot-type { justify-self:end; } }
