@@ -11,7 +11,7 @@ function renderBasePlan(plan) {
   return `<div class="base-plan-grid">${plan.bases.map((base, index) => `<article class="base-plan-card">
     <div class="base-plan-card-top"><span class="base-plan-number">0${index + 1}</span><span class="base-plan-kicker">${escapeHtml(plan.baseCount)}-BASE-SETUP</span></div>
     <h3>${escapeHtml(base.name)}</h3><p class="base-plan-purpose">${escapeHtml(base.purpose)}</p>
-    <div class="base-plan-section"><h4>Worker-Pool</h4><ul>${base.workers.map(worker => `<li>${escapeHtml(worker)}</li>`).join('')}</ul></div>
+    <div class="base-plan-section"><h4>Worker-Pool · ${base.workers.length} Slots</h4><ul>${base.workers.map(worker => `<li>${escapeHtml(worker)}</li>`).join('')}</ul></div>
     <div class="base-plan-section"><h4>Gebäude & Layout</h4><p>${escapeHtml(base.buildings)}</p></div>
     <p class="base-plan-note"><strong>Praxis:</strong> ${escapeHtml(base.note)}</p>
     <div class="base-plan-sources"><span>Quellen</span>${sourceLinks(base.sources)}</div>

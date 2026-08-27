@@ -16,6 +16,10 @@ assert.equal(getBasePlan(99), getBasePlan(3), 'unbekannte Auswahl fällt auf die
 const twoBasePlan = getBasePlan(2);
 const production = twoBasePlan.bases[0];
 const breeding = twoBasePlan.bases[1];
+assert.equal(production.workers.length, 12, 'Produktionsbase plant alle 12 Worker-Slots');
+assert.equal(breeding.workers.length, 12, 'Breedingbase plant alle 12 Worker-Slots');
+assert.match(production.workers.join(' · '), /Reserve/i, 'Produktionsbase kennzeichnet Reserve-Worker');
+assert.match(breeding.workers.join(' · '), /Ranch-Reserve/i, 'Breedingbase kennzeichnet Ranch-Reserve');
 assert.match(production.buildings, /2× Beerenplantage.*2× Salatplantage/i, 'Produktionsbase nennt konkrete Futterplantagen');
 assert.match(breeding.buildings, /2× Weizenplantage.*1× Beerenplantage/i, 'Breedingbase nennt konkrete Kuchenplantagen');
 assert.match(breeding.workers.join(' · '), /2× Chikipi.*2× Mozzarina.*2× Beegarde/i, 'Breedingbase nennt Ranch-Pals mit Mengen');
