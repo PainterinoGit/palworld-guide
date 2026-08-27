@@ -7,12 +7,13 @@ const app = read('../js/app.js');
 const html = read('../index.html');
 
 assert.match(resources, /const RESOURCE_CATALOG\s*=\s*\[/);
-for (const resource of ['Holz', 'Stein', 'Fasern', 'Paldium', 'Erz', 'Kohle', 'Schwefel', 'Reiner Quarz', 'Rohöl', 'Hexolith', 'Chromit']) {
+for (const resource of ['Holz', 'Hartholz', 'Stein', 'Fasern', 'Paldium', 'Erz', 'Kohle', 'Schwefel', 'Reiner Quarz', 'Rohöl', 'Hexolith', 'Chromit']) {
   assert.match(resources, new RegExp(`name: '${resource}'`), `${resource} muss im Rohstoffkatalog enthalten sein`);
 }
 assert.match(app, /resourceCatalog|RESOURCE_CATALOG/);
 assert.match(html, /id="resourceCatalog"/);
 assert.match(html, /resource-table/);
 assert.match(html, /id="resourceDetailTooltip"/);
+assert.match(resources, /resource: 'Hartholz'/);
 
 console.log('resource catalog contract: ok');

@@ -11,6 +11,7 @@ const RESOURCE_IMAGES = {
 // Compact raw-material reference used by the resource database below.
 const RESOURCE_CATALOG = [
     { id: 'wood', name: 'Holz', category: 'Organisch', early: 'Bäume und Holzfällplatz in jeder Startregion', durable: 'Holzfällplatz in der Basis', locations: 'Überall auf den Inseln', coords: '—', rarity: 'Häufig', note: 'Grundmaterial für Werkzeuge, Bauten und frühe Produktion.' },
+    { id: 'hardwood', name: 'Hartholz', category: 'Hochwertiges Holz', early: 'Twilight Dunes bei der Anubis-Statue', durable: 'Holzfällerlager II ab Level 43', locations: 'Twilight Dunes; Sakurajima; später Feybreak', coords: '(-127, -81) · (-602, 215)', rarity: 'Selten', note: 'Neue 1.0-Ressource: passende Kaktus- und Kirschbäume fällen; für fortgeschrittene Waffen, Bauten und Pal-Sphären.', image: null },
     { id: 'stone', name: 'Stein', category: 'Mineral', early: 'Steinbrocken rund um den Spawn', durable: 'Steinbruch in der Basis', locations: 'Überall; große Cluster an Basen', coords: '—', rarity: 'Häufig', note: 'Früh per Hand sammeln, später über den Steinbruch automatisieren.' },
     { id: 'fiber', name: 'Fasern', category: 'Organisch', early: 'Büsche und Pflanzen im Startgebiet', durable: 'Faserplantage bzw. passende Drops', locations: 'Grasland und Waldregionen', coords: '—', rarity: 'Häufig', note: 'Wichtig für Betten, Stoff, Seile und frühe Ausrüstung.' },
     { id: 'paldium', name: 'Paldium', category: 'Mineral', early: 'Blaue Paldium-Knoten nahe dem Spawn', durable: 'Paldium-Knoten und Brecher', locations: 'Flüsse, Strände und blaue Knoten', coords: '—', rarity: 'Häufig', note: 'Für Sphären, Palbox, Reparaturen und Technologie.' },
@@ -51,6 +52,12 @@ const RESOURCE_CATALOG = [
             { id: 'res-sulfur-s', name: 'Schwefel S-Tier', tier: 's', resource: 'Schwefel',
                x: -590, y: 403, image: null,
                note: '8 Schwefel-Knoten; Vulkanregion, schwebende Pals werden empfohlen.' },
+            { id: 'res-hardwood-twilight', name: 'Hartholz (Twilight Dunes)', tier: 'a', resource: 'Hartholz',
+               x: -127, y: 81, image: null,
+               note: 'Früh erreichbare Route bei der Anubis-Statue; passende Kaktusbäume droppen Hartholz.' },
+            { id: 'res-hardwood-sakurajima', name: 'Hartholz (Sakurajima)', tier: 's', resource: 'Hartholz',
+               x: -602, y: -215, image: null,
+               note: 'Beste Farmroute mit vielen Kirschbäumen beim Moonflower Tower.' },
             { id: 'res-starter', name: 'Startbasis-Hotspot', tier: 's', resource: 'Allround',
                x: 232, y: 487, image: 'starter_base',
                note: 'Klassiker direkt neben Spawn – deckt sich mit unserer Base „Plateau of Beginnings Nord".' },

@@ -281,7 +281,7 @@
         };
 
         function resourcePinId(item) {
-            return ({ Öl: 'crude-oil', Kohle: 'coal', Erz: 'ore', Schwefel: 'sulfur' })[item.resource] || '';
+            return ({ Öl: 'crude-oil', Kohle: 'coal', Erz: 'ore', Schwefel: 'sulfur', Hartholz: 'hardwood' })[item.resource] || '';
         }
 
         function positionResourceTooltip(event) {
