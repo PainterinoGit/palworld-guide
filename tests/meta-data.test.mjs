@@ -1,5 +1,16 @@
 import assert from 'node:assert/strict';
-import { PALS } from '../data/pals.mjs';
+import {
+  ACTIVE_META_PAL_IDS,
+  ACTIVE_META_PALS,
+  PALS,
+  getPalById,
+} from '../data/pals.mjs';
+import {
+  ACTIVE_META_PAL_IDS as REEXPORTED_ACTIVE_META_PAL_IDS,
+  ACTIVE_META_PALS as REEXPORTED_ACTIVE_META_PALS,
+  PALS as REEXPORTED_PALS,
+  getPalById as reexportedGetPalById,
+} from '../data/index.mjs';
 import { ACTIVE_SOURCE_IDS } from '../data/meta-sources.mjs';
 
 const REQUIRED_ACTIVE_IDS = [
@@ -47,13 +58,29 @@ assert.deepEqual(
 
 for (const pal of PALS) {
   assert.ok(typeof pal.image === 'string' && pal.image.trim(), `${pal.id}: Bildreferenz fehlt`);
+  assert.equal(getPalById(pal.image), pal, `${pal.id}: Bildreferenz muss auf denselben Pal auflösen`);
   assert.ok(Array.isArray(pal.aliases), `${pal.id}: aliases muss ein Array sein`);
   assert.ok(pal.aliases.every(alias => typeof alias === 'string' && alias.trim()), `${pal.id}: Alias ungültig`);
+  for (const alias of pal.aliases) {
+    assert.equal(getPalById(alias), pal, `${pal.id}: Alias ${alias} muss auf denselben Pal auflösen`);
+  }
   if (pal.variantOf !== null) {
     assert.ok(typeof pal.variantOf === 'string' && pal.variantOf.trim(), `${pal.id}: variantOf ungültig`);
     assert.notEqual(pal.variantOf, pal.id, `${pal.id}: darf nicht auf sich selbst zeigen`);
+    assert.ok(getPalById(pal.variantOf), `${pal.id}: variantOf muss auflösbar sein`);
+  }
+  for (const field of ['alternatives', 'upgradeFrom', 'upgradeTo']) {
+    assert.ok(Array.isArray(pal[field]), `${pal.id}: ${field} muss ein Array sein`);
+    for (const targetId of pal[field]) {
+      assert.ok(getPalById(targetId), `${pal.id}: ${field}-Referenz ${targetId} muss auflösbar sein`);
+    }
   }
 }
+
+assert.equal(REEXPORTED_PALS, PALS, 'data/index.mjs muss PALS unverändert re-exportieren');
+assert.equal(REEXPORTED_ACTIVE_META_PALS, ACTIVE_META_PALS, 'data/index.mjs muss ACTIVE_META_PALS unverändert re-exportieren');
+assert.equal(REEXPORTED_ACTIVE_META_PAL_IDS, ACTIVE_META_PAL_IDS, 'data/index.mjs muss ACTIVE_META_PAL_IDS unverändert re-exportieren');
+assert.equal(reexportedGetPalById, getPalById, 'data/index.mjs muss getPalById unverändert re-exportieren');
 
 for (const pal of activePals) {
   for (const field of ['combat', 'base', 'roaming', 'progression']) {

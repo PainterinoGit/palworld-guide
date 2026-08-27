@@ -130,7 +130,7 @@ export const PALS = [
     roaming: { roles: ['roaming'], reason: 'Der Feuerwerfer hilft bei kurzen Erkundungs- und Fangläufen.', bestFor: 'Frühe Wege mit Fire-Abdeckung.', switchWhen: 'Bei langen Routen Mobilität oder Element-Counter priorisieren.' },
     progression: { phase: 'early', roles: ['early-game', 'transition'], reason: 'Er ist ohne Endgame-Zugang sofort in Kampf und Base einsetzbar.', bestFor: 'Den ersten Standardteam-Kern.', switchWhen: 'Beim Midgame-Upgrade nicht anstelle eines aktuellen Spezialisten behalten.' },
     sources: ['pal-compass-role-rankings', 'video-pal-professor-combat-top-5'], confidence: 'community-cross-check',
-    alternatives: ['rooby'], upgradeTo: ['jormuntide-ignis'],
+    upgradeTo: ['jormuntide-ignis'],
   }),
   activePal({
     id: 'daedream', name: 'Daedream', types: ['Dark'], availability: 'wild-early-night',
@@ -145,7 +145,7 @@ export const PALS = [
     roaming: { roles: ['roaming', 'support'], reason: 'Zusätzliche Geschosse vereinfachen Nacht- und Dungeonläufe.', bestFor: 'Frühe Erkundung mit kleinem Team.', switchWhen: 'Für lange Wege Mount und Ressourcenrollen priorisieren.' },
     progression: { phase: 'early', roles: ['early-game', 'transition'], reason: 'Er liefert sofortigen Teamwert, solange noch wenige Pals vorhanden sind.', bestFor: 'Den frühen Standardteam-Support.', switchWhen: 'Nicht als dauerhaften Endgame-Support einplanen.' },
     sources: ['pal-compass-role-rankings', 'video-briot-best-teams'], confidence: 'community-cross-check',
-    alternatives: ['hoocrates'], upgradeTo: ['felbat'],
+    alternatives: [], upgradeTo: [],
   }),
   activePal({
     id: 'vixy', name: 'Vixy', types: ['Normal'], availability: 'wild-early',
@@ -160,15 +160,15 @@ export const PALS = [
     roaming: { roles: ['roaming', 'utility'], reason: 'Sie unterstützt die Vorbereitung von Fang- und Sammelläufen.', bestFor: 'Kurze frühe Fangvorbereitung.', switchWhen: 'Für ein Mount oder einen Kampfslot nicht dauerhaft mitnehmen.' },
     progression: { phase: 'early', roles: ['early-game', 'transition'], reason: 'Ihr Wert liegt in der Infrastruktur des frühen Spiels, nicht in Endgame-Kampfwerten.', bestFor: 'Den Start der Ressourcen- und Fangökonomie.', switchWhen: 'Mit wachsender Base-Aufgabe gezielt durch Ranch-Spezialisten ersetzen.' },
     sources: ['pal-compass-role-rankings', 'video-ragegaming-infinite-resource-base'], confidence: 'single-editorial',
-    alternatives: ['chikipi'],
+    alternatives: [],
   }),
   referencePal({
     id: 'lamball', name: 'Lamball', types: ['Neutral'], availability: 'wild-early', location: 'Frühe Grasgebiete', roles: ['tank', 'ranch'],
-    workSuitability: { Handiwork: 1, Transporting: 1, Farming: 1 }, partnerSkill: 'Kann als Schild ausgerüstet werden.', whyGood: 'Einfacher früher Tank und Worker.', alternatives: ['cattiva'], upgradeTo: ['woolipop'],
+    workSuitability: { Handiwork: 1, Transporting: 1, Farming: 1 }, partnerSkill: 'Kann als Schild ausgerüstet werden.', whyGood: 'Einfacher früher Tank und Worker.', alternatives: ['cattiva'],
   }),
   referencePal({
     id: 'rushoar', name: 'Rushoar', types: ['Ground'], availability: 'wild-early', location: 'Felsige Gebiete nahe dem Start', roles: ['ground-dps', 'mount'],
-    workSuitability: { Mining: 1 }, partnerSkill: 'Frühes Boden-Mount mit besserem Abbau von Fels.', whyGood: 'Liefert Ground-Abdeckung und frühe Mobilität.', alternatives: ['dumud'], upgradeTo: ['anubis'],
+    workSuitability: { Mining: 1 }, partnerSkill: 'Frühes Boden-Mount mit besserem Abbau von Fels.', whyGood: 'Liefert Ground-Abdeckung und frühe Mobilität.', upgradeTo: ['anubis'],
   }),
   activePal({
     id: 'eikthyrdeer', name: 'Eikthyrdeer', types: ['Neutral'], availability: 'wild-mid',
@@ -183,7 +183,7 @@ export const PALS = [
     roaming: { roles: ['mount', 'roaming'], reason: 'Das Boden-Mount reduziert Wege zwischen Base, Dungeons und Ressourcenpunkten.', bestFor: 'Midgame-Routen mit Gelände und kurzen Sammelzielen.', switchWhen: 'Beim Freischalten eines schnellen Flug-Mounts wechseln.' },
     progression: { phase: 'mid', roles: ['mid-game', 'transition'], reason: 'Er ist ein sinnvoller Brückenschritt zwischen Startteam und Endgame-Mobilität.', bestFor: 'Den Midgame-Roadmap-Abschnitt.', switchWhen: 'Nicht gegen Jetragon erzwingen, wenn die Endgame-Anforderung noch nicht erfüllt ist.' },
     sources: ['pcgamer-best-pals', 'pal-compass-role-rankings'], confidence: 'single-editorial',
-    alternatives: ['direhowl'], upgradeTo: ['fenglope'],
+    alternatives: [], upgradeTo: [],
   }),
   activePal({
     id: 'anubis', name: 'Anubis', aliases: ['Anubis Alpha'], types: ['Ground'], availability: 'boss-or-breeding-mid',
@@ -202,7 +202,7 @@ export const PALS = [
   }),
   referencePal({
     id: 'digtoise', name: 'Digtoise', types: ['Ground'], availability: 'wild-mid', location: 'Wüstenregionen', roles: ['mining', 'resource'],
-    workSuitability: { Mining: 3 }, partnerSkill: 'Hoher Schaden an Erzadern.', whyGood: 'Praktischer Mining-Spezialist für die erste Ressourcenphase.', alternatives: ['anubis'], upgradeTo: ['astegon'],
+    workSuitability: { Mining: 3 }, partnerSkill: 'Hoher Schaden an Erzadern.', whyGood: 'Praktischer Mining-Spezialist für die erste Ressourcenphase.', alternatives: ['anubis'],
   }),
   activePal({
     id: 'lily', name: 'Lyleen', aliases: ['Lily'], canonicalId: 'lyleen', types: ['Grass'], availability: 'alpha-or-late',
@@ -217,11 +217,11 @@ export const PALS = [
     roaming: { roles: ['roaming', 'support'], reason: 'Heilung ist auf langen Midgame-Erkundungen ein praktischer Sicherheitsgewinn.', bestFor: 'Dungeons und Gebiete ohne häufige Rückkehr zur Base.', switchWhen: 'Für schnelle Ressourcenrouten gegen Mount oder Carry tauschen.' },
     progression: { phase: 'mid', roles: ['mid-game', 'transition'], reason: 'Sie bleibt als Übergangswert aktiv, ohne eine universelle Endgame-Rolle zu behaupten.', bestFor: 'Den Midgame-Abschnitt mit Sustain.', switchWhen: 'Endgame-Rollen nach Base-Aufgabe und Gegner statt nach altem Tier-Rang ersetzen.' },
     sources: ['pal-compass-role-rankings', 'pcgamer-best-pals', 'video-pal-professor-overpowered'], confidence: 'community-cross-check',
-    alternatives: ['teafant'], upgradeTo: ['lyleen-noct'],
+    alternatives: [], upgradeTo: [],
   }),
   referencePal({
     id: 'foxcicle', name: 'Foxcicle', types: ['Ice'], availability: 'wild-mid', location: 'Kältegebiete', roles: ['ice-dps', 'cooling'],
-    workSuitability: { Cooling: 2 }, partnerSkill: 'Unterstützt Ice-Schaden.', whyGood: 'Günstige Ice-Abdeckung für mittlere Kämpfe.', alternatives: ['chillet'], upgradeTo: ['frostallion'],
+    workSuitability: { Cooling: 2 }, partnerSkill: 'Unterstützt Ice-Schaden.', whyGood: 'Günstige Ice-Abdeckung für mittlere Kämpfe.', upgradeTo: ['frostallion'],
   }),
   referencePal({
     id: 'blazehowl', name: 'Blazehowl', types: ['Fire'], availability: 'wild-mid', location: 'Vulkanregion', roles: ['fire-dps', 'kindling'],
@@ -254,10 +254,18 @@ export const PALS = [
     id: 'paladius', name: 'Paladius', types: ['Neutral'], availability: 'legendary-late', location: 'The Furthest Flats', roles: ['tank', 'mount'],
     workSuitability: { Mining: 2, Lumbering: 2 }, partnerSkill: 'Boden-Mount mit Dreifachsprung.', whyGood: 'Defensiver Endgame-Pal und starke Mobilitätsoption.', alternatives: ['eikthyrdeer'],
   }),
+  referencePal({
+    id: 'dynamoff', name: 'Dynamoff', types: ['Electric'], availability: 'world-tree-mid', location: 'Sunreach Skies und World Tree', roles: ['electricity', 'utility'],
+    workSuitability: { Electricity: 6, Gathering: 3, Transporting: 3 }, partnerSkill: 'Electro-Massage Incubation: Flug-Mount; verkürzt an der Basis die Ei-Inkubationszeit.', whyGood: 'Belegte Electricity-Alternative für Orserk.',
+  }),
+  referencePal({
+    id: 'neptilius', name: 'Neptilius', types: ['Water'], availability: 'legendary-late', location: 'Isle of the Glacial Core', roles: ['watering', 'support'],
+    workSuitability: { Watering: 7 }, partnerSkill: 'Sentinel of the Great Sea: Begleitet im Team Spielerangriffe mit Wasser-Speerstößen.', whyGood: 'Belegte Watering-Alternative für Shaolong.',
+  }),
   activePal({
     id: 'orserk', name: 'Orserk', types: ['Electric', 'Dragon'], availability: 'world-tree-late', location: 'World Tree, östlicher Bereich',
     roles: ['carry', 'support', 'electricity', 'late-game'], workSuitability: { Electricity: 4, Handiwork: 2, Transporting: 3 },
-    partnerSkill: 'Ferocious Thunder Dragon: Verstärkt Electric-Schaden und verbessert die Beute von Water-Pals.',
+    partnerSkill: 'Ferocious Thunder Dragon: Besiegte Water-Pals lassen im gemeinsamen Kampf mehr Gegenstände fallen.',
     whyGood: 'Hoher Electric-/Dragon-Kampfwert plus die natürliche Electricity-Spitzenrolle in der Base.',
     bestFor: 'Electric-Coverage gegen Water-Ziele und Stromversorgung einer spezialisierten Endgame-Base.',
     switchWhen: 'Bei einem Gegner ohne Electric-Schwäche oder wenn ein anderer Spezialist den Base-Engpass besser löst.',
@@ -266,7 +274,7 @@ export const PALS = [
     roaming: { roles: ['roaming', 'utility'], reason: 'Er bringt Kampf- und Partnerwert auf gefährliche Endgame-Routen.', bestFor: 'World-Tree- und Raid-Vorbereitung.', switchWhen: 'Für ein schnelleres Mount oder den elementaren Counter austauschen.' },
     progression: { phase: 'late', roles: ['late-game', 'endgame'], reason: 'Sein Wert beginnt mit Endgame-Zugang und sollte nicht als früher Farm-Tipp erscheinen.', bestFor: 'Die Endgame-Elementabdeckung und die Strombase.', switchWhen: 'Bei neuen Raid-Daten jede Rolle erneut gegen Bossmechanik prüfen.' },
     sources: ['palworld-calc-1-0-tier-list', 'palmods-work-suitability', 'video-pal-professor-overpowered'], confidence: 'community-cross-check',
-    alternatives: ['dynamoss'],
+    alternatives: ['dynamoff'],
   }),
   activePal({
     id: 'shaolong', name: 'Shaolong', types: ['Dragon', 'Water'], availability: 'world-tree-late', location: 'World Tree, Level 76–78, sowie Water-God-Boss',
@@ -354,7 +362,7 @@ export const PALS = [
   }),
   activePal({
     id: 'renjishi', name: 'Renjishi', types: ['Fire'], availability: 'world-tree-late', location: 'World Tree, späte Fire-Region', roles: ['kindling', 'utility', 'late-game'], workSuitability: { Kindling: 8 },
-    partnerSkill: 'Blazing Mane: Unterstützt Fire-Schaden und verstärkt die Feuerrolle.',
+    partnerSkill: 'Stage Combat: Erhöht im Team den Verbrennungsaufbau der Spielerangriffe.',
     whyGood: 'Aktueller natürlicher Kindling-Spitzenwert für eine auf Durchsatz optimierte Base.',
     bestFor: 'Große Öfen und Produktionsketten mit dauerhaftem Kindling-Engpass.',
     switchWhen: 'Wenn mehrere Rollen gleichzeitig gebraucht werden und Jormuntide Ignis flexibler ist.',
@@ -380,7 +388,7 @@ export const PALS = [
   }),
   activePal({
     id: 'solenne', name: 'Solenne', types: ['Dark', 'Neutral'], availability: 'world-tree-late', location: 'World Tree, späte Region', roles: ['handiwork', 'utility', 'late-game'], workSuitability: { Handiwork: 8 },
-    partnerSkill: 'Eclipse Artisan: Unterstützt die Arbeitsleistung und den Neutral-/Dark-Nutzen im Team.',
+    partnerSkill: 'Untainted Maiden: Erhöht den Spielerangriff, wenn alle Team-Pals unterschiedlichen Arten angehören.',
     whyGood: 'Handiwork 8 ist der aktuelle natürliche Spitzenwert für Crafting und Reparatur.',
     bestFor: 'Eine produktionslastige Base mit dauerhaftem Handiwork-Engpass.',
     switchWhen: 'Wenn die Base klein bleibt und Anubis als flexibler Übergangsworker effizienter ist.',
@@ -457,8 +465,8 @@ export const PALS = [
     alternatives: ['bastigor', 'knocklem'],
   }),
   activePal({
-    id: 'aegidron', name: 'Aegidron', types: ['Ground'], availability: 'world-tree-late', location: 'World Tree, späte Mining-Region', roles: ['mining', 'resource', 'late-game'], workSuitability: { Mining: 8 },
-    partnerSkill: 'Aegis Breaker: Unterstützt schwere Ground-/Mining-Aktionen.',
+    id: 'aegidron', name: 'Aegidron', types: ['Dragon', 'Ground'], availability: 'world-tree-late', location: 'World Tree, späte Mining-Region', roles: ['mining', 'resource', 'late-game'], workSuitability: { Mining: 8 },
+    partnerSkill: 'Indestructible Fortress: Reittier; verringert Explosionsschaden für das Team und verleiht Betäubungsimmunität.',
     whyGood: 'Mining 8 ist der aktuelle natürliche Spitzenwert für Erz- und Materialabbau.',
     bestFor: 'Eine Endgame-Erzbase mit dauerhaftem Mining-Engpass.',
     switchWhen: 'Wenn Transport statt Mining der Engpass ist oder das Base-Layout die Uptime verschlechtert.',
@@ -475,5 +483,11 @@ export const ACTIVE_META_PALS = PALS.filter(pal => pal.isActiveRecommendation);
 export const ACTIVE_META_PAL_IDS = ACTIVE_META_PALS.map(pal => pal.id);
 
 export function getPalById(id) {
-  return PALS.find(pal => pal.id === id || pal.canonicalId === id || pal.legacyIds?.includes(id)) ?? null;
+  return PALS.find(pal => [
+    pal.id,
+    pal.name,
+    pal.canonicalId,
+    ...(pal.legacyIds ?? []),
+    ...(pal.aliases ?? []),
+  ].includes(id)) ?? null;
 }

@@ -32,3 +32,22 @@ Abgeschlossen. Die aktive Pal-Meta ist in einer versionierten, rollengetrennten 
 
 - Die aktiven Quellen belegen den vereinbarten Mischstand `Patch 1.0+`; konkrete 1.0.3-Behauptungen werden nicht aus den Meta-Daten abgeleitet.
 - Die UI-/Datenbank-Fallbacks und alten statischen Empfehlungen werden erst in den nachfolgenden SDD-Tasks umgestellt; dieser Task liefert dafür die neue Datenquelle.
+
+## Review-Fixes
+
+- Die Partner-Skills von Orserk, Renjishi, Solenne und Aegidron wurden gegen die lokale Roster-Recherche korrigiert. Aegidron führt außerdem wieder beide belegten Typen `Dragon` und `Ground`.
+- `getPalById` löst neben IDs auch Anzeigenamen, kanonische IDs, Legacy-IDs und Aliase auf. Damit funktionieren insbesondere `Lily`, `Black Frostallion` und `Fire Knocklem`.
+- Die belegten Alternativen `dynamoff` und `neptilius` wurden als Referenz-Pals ergänzt; der nicht vorhandene Tippfehler `dynamoss` wurde ersetzt. Nicht belegte, zuvor nicht auflösbare Alt- und Upgrade-Verweise wurden entfernt.
+- `tests/meta-data.test.mjs` prüft nun echte Auflösung für Bilder, Aliase, Varianten sowie Alternativ- und Upgrade-Referenzen und prüft die Re-Exporte aus `data/index.mjs`.
+
+## Review-Verifikation
+
+- `node tests/meta-data.test.mjs`
+- `node tests/source-integrity.test.mjs`
+- `node tests/guide-data.test.mjs`
+- `node tests/guide-renderer.test.mjs`
+- `node tests/pal-data-adapter.test.mjs`
+- `node tests/team-renderer.test.mjs`
+- `node --check data/pals.mjs`
+- `node --check data/index.mjs`
+- `git diff --check`
