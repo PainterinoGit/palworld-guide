@@ -2,7 +2,32 @@ const sourceSets = {
   combat: ['palworld-calc-1-0-tier-list', 'pindrop-verified-combat-list', 'video-pal-professor-combat-builds'],
   roaming: ['pcgamer-best-pals', 'pal-compass-role-rankings', 'video-italianspartacus-party-comps'],
   base: ['palmods-work-suitability', 'video-ragegaming-infinite-resource-base', 'video-pal-professor-work-level-10'],
-  special: ['pindrop-verified-combat-list', 'video-pal-professor-overpowered', 'video-ragegaming-infinite-resource-base'],
+};
+
+const specialSourceSets = {
+  elementCounter: [
+    'palworld-calc-1-0-tier-list',
+    'pindrop-verified-combat-list',
+    'video-pal-professor-combat-builds',
+    'video-ragegaming-op-combat-builds',
+  ],
+  resourceRun: [
+    'palmods-work-suitability',
+    'pcgamer-best-pals',
+    'video-ragegaming-infinite-resource-base',
+    'video-pal-professor-work-level-10',
+    'video-shario-base-pals',
+    'video-tropsplays-base-pals',
+    'video-ragegaming-true-best-base-pals',
+  ],
+  raidEndgame: [
+    'palworld-calc-1-0-tier-list',
+    'pindrop-verified-combat-list',
+    'video-pal-professor-combat-builds',
+    'video-pal-professor-overpowered',
+    'video-italianspartacus-party-comps',
+    'video-ragegaming-op-combat-builds',
+  ],
 };
 
 export const LEVEL_BANDS = [
@@ -285,7 +310,7 @@ export const SPECIAL_TEAMS = [
     accessNote: 'Nur aufstellen, wenn das Gegner-Element und die eigene Counter-Palette bekannt sind.',
     switchWhen: 'Nach dem Boss oder beim Wechsel der Resistenz zurück zum passenden Standard-/Roaming-Team.',
     combinationReason: 'Anubis und Jormuntide Ignis bilden einen Midgame-Kern, Lyleen hält ihn stabil und die beiden variablen Plätze beantworten die konkrete Schwäche.',
-    sources: sourceSets.special,
+    sources: specialSourceSets.elementCounter,
     slots: [
       slot('anubis', 'carry', 'Grundlegender Ground-Druck gegen passende Ziele.'),
       slot('jormuntide-ignis', 'damage', 'Fire-Druck für Ziele mit Ice- oder Grass-Schwäche.'),
@@ -300,7 +325,7 @@ export const SPECIAL_TEAMS = [
     accessNote: 'Vor einer konkreten Route mit bekanntem Rohstoffziel, ausreichend Inventar und Rückweg.',
     switchWhen: 'Nach der Route zurückwechseln; für lange Wege ein schnelleres Mount priorisieren.',
     combinationReason: 'Eikthyrdeer verkürzt Bodenwege, Digtoise und Anubis lösen Erz/Material, Jormuntide Ignis schützt die Route und der letzte Platz bleibt zielabhängig.',
-    sources: sourceSets.special,
+    sources: specialSourceSets.resourceRun,
     slots: [
       slot('eikthyrdeer', 'mount', 'Praktische Midgame-Mobilität zwischen Ressourcenpunkten.'),
       slot('digtoise', 'mining', 'Spezialisiert auf Erzadern und Materialabbau.'),
@@ -315,7 +340,7 @@ export const SPECIAL_TEAMS = [
     accessNote: 'Erst nach Raid-Zugang, Endgame-Ausrüstung und Prüfung der Bossmechanik einsetzen.',
     switchWhen: 'Nach jedem Raid anhand von Element, Resistenz, Schadenfenster und Support-Uptime neu besetzen.',
     combinationReason: 'Shaolong oder Panthalus trägt, Orserk gibt Electric-Druck, Bellanoir Libero unterstützt und zwei Counterplätze bleiben dem Raidziel vorbehalten.',
-    sources: sourceSets.special,
+    sources: specialSourceSets.raidEndgame,
     slots: [
       slot('shaolong', 'carry', 'Dragon-/Water-Carry für den Endgame-Grundrahmen.', ['panthalus']),
       slot('orserk', 'carry-support', 'Electric-/Dragon-Druck gegen passende Water-Ziele.'),

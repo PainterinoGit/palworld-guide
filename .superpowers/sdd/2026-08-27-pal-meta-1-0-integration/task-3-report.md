@@ -43,3 +43,22 @@ Das sechste interne Levelband bleibt `50-plus`, weil `data/guide.mjs` diese best
 - Die Teamdaten verwenden bestehende Meta-Quellen und den geprüften Stand `Patch 1.0+`; sie behaupten keine darüber hinausgehende Patchpräzision.
 - Neue Renderer-Klassen für Quellen und unbekannte IDs haben noch keine eigene CSS-Gestaltung; die Darstellung bleibt funktional und fällt auf vorhandene Karten-/Meta-Stile zurück.
 - `TEAMS` bleibt für die bestehende UI verfügbar, aktiviert aber nur die neuen strukturierten Empfehlungen.
+
+## Review-Fixes
+
+- Die pauschale `special`-Quellenliste wurde entfernt. Spezialteams verwenden jetzt getrennte, fachlich begründete Quellenmatrizen:
+  - `element-counter`: strukturierte Combat-Daten sowie Combat-/Counter-Builds.
+  - `resource-run`: Work-Suitability-, Base-, Mining- und Transport-/Routenquellen.
+  - `raid-endgame`: Combat-, Raid-, Endgame- und Party-Composition-Quellen.
+- Berechtigte Quellen bleiben im jeweils passenden Spezialteam erhalten; die frühere Vermischung von Combat- und Ressourcen-Quellen ist entfernt.
+- `tests/team-data.test.mjs` prüft jetzt `alternativePalIds`, `sourceIds`, deren Synchronität und unbekannte Referenz-IDs sowie die exakte Spezialquellen-Matrix.
+- `tests/team-renderer.test.mjs` prüft unbekannte Alternativ-Pal-IDs und unbekannte Quellen-IDs auf sichtbare Fehlerausgabe.
+
+## Verifikation der Review-Fixes
+
+- `node tests/*.test.mjs`-Äquivalent über alle sieben Testdateien: erfolgreich, 7/7 bestanden.
+- `node --check data/teams.mjs`: erfolgreich.
+- `node --check js/team-renderer.mjs`: erfolgreich.
+- `node --check tests/team-data.test.mjs`: erfolgreich.
+- `node --check tests/team-renderer.test.mjs`: erfolgreich.
+- `git diff --check`: erfolgreich; nur die erwartete LF/CRLF-Konvertierungswarnung.

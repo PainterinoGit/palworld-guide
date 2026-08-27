@@ -16,6 +16,10 @@ assert.match(renderTeamSlot(concreteSlot, 'combat'), /Foxparks/);
 assert.match(renderTeamSlot(concreteSlot, 'combat'), /Rolle|role/i);
 assert.match(renderTeamSlot({ palId: 'not-in-pals', role: 'counter', reason: 'Testslot' }), /Unbekannter Pal/);
 assert.match(renderTeamSlot({ palId: 'not-in-pals', role: 'counter', reason: 'Testslot' }), /not-in-pals/);
+assert.match(
+  renderTeamSlot({ palId: null, role: 'counter', reason: 'Testslot', alternativePalIds: ['not-in-pals'] }),
+  /Unbekannte Pal-ID: not-in-pals/
+);
 
 assert.match(card, /Level 1–10/);
 assert.match(card, /Zweck|Purpose|Standard/);
@@ -27,5 +31,13 @@ assert.match(card, /Quellen|Quelle|Source/i);
 assert.match(card, new RegExp(firstTeamSource.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 assert.match(card, new RegExp(META_VERSION.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 assert.match(card, /2026-08-27/);
+assert.match(
+  renderTeamCard({
+    ...combatTeam,
+    sourceIds: ['not-a-source-id'],
+    sources: undefined,
+  }, 'combat'),
+  /Unbekannte Quellen-ID: not-a-source-id/
+);
 
 console.log('team renderer: ok');
