@@ -3,6 +3,14 @@ import { readFileSync } from 'node:fs';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
+assert.match(html, /<header\b[^>]*class=["'][^"']*site-header/);
+assert.match(html, /class=["'][^"']*site-brand/);
+assert.match(html, /class=["'][^"']*header-status/);
+assert.match(html, /<footer\b[^>]*class=["'][^"']*site-footer/);
+assert.match(html, /class=["'][^"']*footer-nav/);
+assert.match(html, /class=["'][^"']*footer-github/);
+assert.doesNotMatch(html, /<h1>🎮/);
+
 for (const [id, label] of [
   ['palSearchInput', 'Pal-Suche'],
   ['palTypeFilter', 'Pal-Typ-Filter'],

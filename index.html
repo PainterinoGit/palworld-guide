@@ -18,10 +18,23 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>🎮 Palworld Komplett-Guide</h1>
-        <p>Team, Base, Standorte & Mechaniken – plus dein persönlicher Wegweiser durch die Hauptquest</p>
-    </div>
+    <header class="site-header">
+        <div class="header-shell">
+            <a class="site-brand" href="#wegweiser" aria-label="Palworld Guide – Startseite">
+                <img src="assets/icon.svg" alt="" aria-hidden="true">
+                <span><strong>PALWORLD</strong><small>COMPLETE GUIDE</small></span>
+            </a>
+            <div class="header-status" aria-label="Guide-Status">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>Guide online</span>
+                <b>August 2026</b>
+            </div>
+            <div class="header-copy">
+                <h1>Dein Weg durch die Inseln.</h1>
+                <p>Teams, Basen, Pals und Mechaniken – klar sortiert für deinen nächsten Schritt.</p>
+            </div>
+        </div>
+    </header>
 
     <div class="container">
         <div class="tabs">
@@ -615,13 +628,28 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <footer class="site-footer">
+        <div class="footer-shell">
+            <div class="footer-brand">
+                <span class="footer-mark" aria-hidden="true">P</span>
+                <div>
+                    <strong>PALWORLD / GUIDE</strong>
+                    <p>Dein übersichtlicher Begleiter für jede Spielphase.</p>
+                </div>
+            </div>
+            <nav class="footer-nav" aria-label="Footer-Navigation">
+                <span>Direkt zu</span>
+                <a href="#wegweiser" onclick="switchTab('wegweiser'); return false;">Wegweiser</a>
+                <a href="#teams" onclick="switchTab('teams'); return false;">Teams</a>
+                <a href="#pals" onclick="switchTab('pals'); return false;">Pals</a>
+                <a href="#locations" onclick="switchTab('locations'); return false;">Map</a>
+            </nav>
+            <div class="footer-github">
+                <a href="https://github.com/PainterinoGit/palworld-guide" target="_blank" rel="noopener">Auf GitHub ansehen <span aria-hidden="true">↗</span></a>
+                <small>Feedback und Verbesserungen willkommen.</small>
+            </div>
+        </div>
         <p class="footer-disclaimer">Inoffizieller Fan-Guide – nicht verbunden mit Pocketpair oder Palworld. Alle Marken- und Bildrechte bei den jeweiligen Inhabern.</p>
-        <p class="footer-meta">
-            <a href="https://github.com/PainterinoGit/palworld-guide" target="_blank" rel="noopener">Quelle & Feedback auf GitHub</a>
-            <span aria-hidden="true">·</span>
-            Stand August 2026
-        </p>
     </footer>
 
     <div id="chipTooltip" class="chip-tooltip"></div>
