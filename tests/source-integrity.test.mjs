@@ -6,8 +6,8 @@ import {
   isActiveSourceId
 } from '../data/meta-sources.mjs';
 
-const ALLOWED_TYPES = new Set(['official', 'data', 'editorial', 'video']);
-const ISO_DATE = /^2026-08-27$/;
+const ALLOWED_TYPES = new Set(['official', 'data', 'editorial', 'video', 'calculator']);
+const ISO_DATE = /^2026-08-(27|28)$/;
 const REQUIRED_WRITTEN_SOURCE_URLS = new Set([
   'https://steamdb.info/patchnotes/24088745/',
   'https://docs.palworldgame.com/',
@@ -15,7 +15,8 @@ const REQUIRED_WRITTEN_SOURCE_URLS = new Set([
   'https://www.palmods.gg/guides/whats-new/work-suitability',
   'https://www.pcgamer.com/games/survival-crafting/palworld-best-pals/',
   'https://palcompass.com/guides/best-pals',
-  'https://pindrop.gg/palworld/guides/best-combat-pals'
+  'https://pindrop.gg/palworld/guides/best-combat-pals',
+  'https://www.palmods.gg/blog/palworld-1-0-early-breeding-route'
 ]);
 const REQUIRED_VIDEO_URLS = new Set([
   'https://www.youtube.com/watch?v=amZY6qiPAdQ',
@@ -44,13 +45,14 @@ const writtenSourceUrls = new Set([
 ]);
 
 assert.match(META_VERSION, /Patch 1\.0\+/i);
-assert.match(META_VERSION, /2026-08-27/);
+assert.match(META_VERSION, /2026-08-28/);
 assert.ok(Array.isArray(META_SOURCES));
-assert.equal(META_SOURCES.length, 21);
+assert.equal(META_SOURCES.length, 23);
 assert.equal(urlsByType('official').size, 2);
 assert.equal(urlsByType('data').size, 2);
-assert.equal(urlsByType('editorial').size, 3);
+assert.equal(urlsByType('editorial').size, 4);
 assert.equal(urlsByType('video').size, 14);
+assert.equal(urlsByType('calculator').size, 1);
 assert.deepEqual(writtenSourceUrls, REQUIRED_WRITTEN_SOURCE_URLS);
 assert.deepEqual(urlsByType('video'), REQUIRED_VIDEO_URLS);
 assert.equal(new Set(META_SOURCES.map(source => source.id)).size, META_SOURCES.length);

@@ -2,7 +2,7 @@
  * Versioned source contract for current Palworld meta recommendations.
  * Summaries are repository-owned notes; source content and transcripts are not copied here.
  */
-export const META_VERSION = 'Patch 1.0+ · geprüft am 2026-08-27';
+export const META_VERSION = 'Patch 1.0+ · geprüft am 2026-08-28';
 
 export const META_SOURCES = [
   {
@@ -216,6 +216,26 @@ export const META_SOURCES = [
     scope: 'Patch 1.0+',
     confidence: 'community-cross-check',
     summary: 'Ergänzt den allgemeinen Community-Abgleich für starke Picks.'
+  },
+  {
+    id: 'palworld-gg-breeding-calculator',
+    title: 'Palworld.gg Breeding Calculator',
+    url: 'https://palworld.gg/de/breeding-calculator',
+    type: 'calculator',
+    checkedAt: '2026-08-28',
+    scope: 'Patch 1.0+',
+    confidence: 'structured-data',
+    summary: 'Prüft Elternpaarungen und verhindert, dass optionale oder unklare Wege als garantiert dargestellt werden.'
+  },
+  {
+    id: 'palmods-early-breeding-route',
+    title: 'PalMods – Early Breeding Route 1.0',
+    url: 'https://www.palmods.gg/blog/palworld-1-0-early-breeding-route',
+    type: 'editorial',
+    checkedAt: '2026-08-28',
+    scope: 'Patch 1.0+',
+    confidence: 'community-cross-check',
+    summary: 'Dient als Plausibilitätscheck für die frühen Übergangs- und Base-Linien.'
   }
 ];
 

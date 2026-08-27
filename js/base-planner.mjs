@@ -62,7 +62,7 @@ function renderBreedingRoutes() {
   if (!host) return;
   host.innerHTML = BREEDING_ROUTES.map(route => `<section class="breeding-route">
     <div class="breeding-route-heading"><span class="base-plan-kicker">${escapeHtml(route.phase)}</span><h3>${escapeHtml(route.title)}</h3></div>
-    <div class="breeding-steps">${route.steps.map(step => `<article class="breeding-step"><span class="breeding-step-order">${step.order}</span><div><p class="breeding-pair"><strong>${escapeHtml(step.parents)}</strong><span>→</span><strong>${escapeHtml(step.result)}</strong></p><p>${escapeHtml(step.reason)}</p><p class="breeding-access"><strong>Zugang:</strong> ${escapeHtml(step.access)}</p><div class="base-plan-sources"><span>Quellen</span>${sourceLinks(step.sources)}</div></div></article>`).join('')}</div>
+    <div class="breeding-steps">${route.steps.map(step => `<article class="breeding-step"><span class="breeding-step-order">${step.order}</span><div><p class="breeding-pair"><strong>${escapeHtml(step.parents)}</strong><span>→</span><strong>${escapeHtml(step.result)}</strong></p><div class="breeding-tags"><span class="breeding-tag breeding-priority">${escapeHtml(step.priority)}</span><span class="breeding-tag">${escapeHtml(step.kind)}</span></div><p>${escapeHtml(step.reason)}</p><p class="breeding-access"><strong>Zugang:</strong> ${escapeHtml(step.access)}</p><div class="base-plan-sources"><span>Quellen</span>${sourceLinks(step.sources)}</div></div></article>`).join('')}</div>
   </section>`).join('');
 }
 
