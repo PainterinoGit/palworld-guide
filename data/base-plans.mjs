@@ -36,12 +36,16 @@ const ACTIVE_TASK_UPDATES = {
   'Zwei Basen: Produktion + Zucht': [
     ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
     ['Breeding- & Ranchbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich der Plantagen zuweisen']],
+    ['Breeding- & Ranchbase', ['Vixy · Ranch-Reserve', '1× Orserk · Electricity — Monitoring: nur Electricity aktiv; Strombereich zuweisen']],
+    ['Breeding- & Ranchbase', ['Cremis · Ranch-Reserve', '1× Braloha · Farming/Ranch — Monitoring: nur Farming/Ranch aktiv; allen Breeding Farms zuweisen']],
   ],
   'Drei Basen: spezialisiert und wartungsarm': [
     ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
     ['Ressourcenbase', ['Planting-Reserve', '1× Dandilord · Gathering 5 — Monitoring: nur Gathering aktiv; bei Ressourcenplantagen lassen']],
     ['Breeding- & Ranchbase', ['Watering-Reserve', '1× Shaolong · Watering 8 — Monitoring: nur Watering aktiv; bei den Plantagen lassen']],
     ['Breeding- & Ranchbase', ['Handiwork-Reserve', '1× Solenne · Gathering 4 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
+    ['Breeding- & Ranchbase', ['Orserk · Electricity-Reserve', '1× Orserk · Electricity — Monitoring: nur Electricity aktiv; Strombereich zuweisen']],
+    ['Breeding- & Ranchbase', ['Lyleen · Planting-Reserve', '1× Braloha · Farming/Ranch — Monitoring: nur Farming/Ranch aktiv; allen Breeding Farms zuweisen']],
   ],
 };
 

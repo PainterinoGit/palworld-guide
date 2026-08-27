@@ -179,6 +179,14 @@
             positionPalCaptureTooltip(trigger);
         }
 
+        function findBaseWorkerPal(name) {
+            const entry = Object.values(PAL_DB).find(item => item.name === name);
+            if (entry) return entry;
+            const pal = window.GuideData?.PALS?.find(item => item.name === name);
+            if (!pal) return null;
+            return { ...pal, stages: pal.stage ? [pal.stage] : [], tier: pal.tier || null, types: pal.types || [], workSuitability: pal.workSuitability || {} };
+        }
+
         function enableBaseWorkerTooltips() {
             const host = document.getElementById('basePlanHost');
             if (!host || host.dataset.workerTooltipsEnabled) return;
@@ -186,7 +194,7 @@
             host.addEventListener('mouseover', event => {
                 const trigger = event.target.closest('.base-worker-pal[data-pal-name]');
                 if (!trigger || trigger.contains(event.relatedTarget)) return;
-                const entry = Object.values(PAL_DB).find(item => item.name === trigger.dataset.palName);
+                const entry = findBaseWorkerPal(trigger.dataset.palName);
                 if (entry) showPalCaptureTooltip(entry, trigger);
             });
             host.addEventListener('mouseout', event => {
@@ -195,7 +203,7 @@
             });
             host.addEventListener('focusin', event => {
                 const trigger = event.target.closest('.base-worker-pal[data-pal-name]');
-                const entry = trigger && Object.values(PAL_DB).find(item => item.name === trigger.dataset.palName);
+                const entry = trigger && findBaseWorkerPal(trigger.dataset.palName);
                 if (entry) showPalCaptureTooltip(entry, trigger);
             });
             host.addEventListener('focusout', () => hidePalCaptureTooltip());

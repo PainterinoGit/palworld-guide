@@ -477,6 +477,13 @@ export const PALS = [
     sources: ['palmods-work-suitability', 'video-ragegaming-infinite-resource-base', 'video-shario-base-pals'], confidence: 'community-cross-check',
     alternatives: ['knocklem', 'anubis'],
   }),
+  referencePal({
+    id: 'braloha', name: 'Braloha', types: ['Grass', 'Ground'], availability: 'wild-or-breeding',
+    location: 'Wild ab Level 33+ oder durch Zucht erhältlich', roles: ['farming', 'planting', 'gathering'],
+    workSuitability: { Planting: 4, Gathering: 4 },
+    partnerSkill: 'Balmy Weather: Verkürzt in der Basis die Zeit, bis Breeding Farms neue Eier produzieren.',
+    whyGood: 'Pflicht für eine optimierte Breeding-Base, weil die Partnerfähigkeit die Eierproduktion beschleunigt.',
+  }),
 ];
 
 export const ACTIVE_META_PALS = PALS.filter(pal => pal.isActiveRecommendation);

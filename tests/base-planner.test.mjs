@@ -24,7 +24,7 @@ assert.equal(breeding.workers.length, 12, 'Breedingbase plant alle 12 Worker-Slo
 assert.ok(production.workers.every(worker => /Monitoring:/i.test(worker)), 'Produktionsbase erklärt die Monitoring-Einstellung je Worker');
 assert.ok(breeding.workers.every(worker => /Monitoring:/i.test(worker)), 'Breedingbase erklärt die Monitoring-Einstellung je Worker');
 assert.match(production.workers.join(' · '), /Reserve/i, 'Produktionsbase kennzeichnet Reserve-Worker');
-assert.match(breeding.workers.join(' · '), /Ranch-Reserve/i, 'Breedingbase kennzeichnet Ranch-Reserve');
+assert.match(breeding.workers.join(' · '), /Braloha.*Breeding Farms/i, 'Breedingbase nennt Braloha als Zucht-Worker');
 assert.match(production.buildings, /2× Beerenplantage.*2× Salatplantage/i, 'Produktionsbase nennt konkrete Futterplantagen');
 assert.match(breeding.buildings, /2× Weizenplantage.*1× Beerenplantage/i, 'Breedingbase nennt konkrete Kuchenplantagen');
 assert.match(breeding.workers.join(' · '), /2× Chikipi.*2× Mozzarina.*2× Beegarde/i, 'Breedingbase nennt Ranch-Pals mit Mengen');
@@ -36,7 +36,12 @@ for (const plan of Object.values(BASE_PLANS)) {
   for (const base of plan.bases) {
     assert.ok(base.workers.some(worker => /Watering/i.test(worker) && !/Reserve|Watering aus/i.test(worker)), `${base.name}: aktiver Watering-Worker fehlt`);
     assert.ok(base.workers.some(worker => /Gathering/i.test(worker) && !/Reserve|Gathering aus/i.test(worker)), `${base.name}: aktiver Gathering-Worker fehlt`);
+    assert.ok(base.workers.some(worker => /Electricity/i.test(worker) && !/Reserve|Electricity aus/i.test(worker)), `${base.name}: aktiver Electricity-Worker fehlt`);
   }
+}
+for (const plan of [getBasePlan(2), getBasePlan(3)]) {
+  const breedingBase = plan.bases.find(base => /Breeding/i.test(base.name));
+  assert.match(breedingBase.workers.join(' · '), /Braloha.*Monitoring: nur Farming\/Ranch aktiv.*Breeding Farm/i, `${plan.baseCount}-Basen-Breedingbase nennt Braloha als aktiven Zucht-Worker`);
 }
 const allBuildingText = Object.values(BASE_PLANS).flatMap(plan => plan.bases.map(base => base.buildings)).join(' ');
 for (const building of ['Palbox', 'Futterbox', 'Betten', 'Heiße Quelle', 'Monitoring Stand', 'Lager', 'Klinik', 'Mühle', 'Breeding Farm|Ancient Hatchery']) {
