@@ -18,185 +18,21 @@
         const PAL_STAGE_LABEL = { early: 'Early', mid: 'Mid', late: 'Late' };
         const PAL_STAGE_BADGE_COLOR = { early: '#3B82F6', mid: '#F97316', late: '#8B5CF6' };
 
-        function addOrMergeEntry(db, name, patch) {
-            if (!name) return;
-            name = name.trim();
-            if (!db[name]) {
-                db[name] = { name, types: [], tier: null, stages: [], roles: [], location: null, note: null, skills: {}, tags: [], partnerSkill: null, featured: false };
-            }
-            const e = db[name];
-            if (patch.type && !e.types.includes(patch.type)) e.types.push(patch.type);
-            if (patch.tier && !e.tier) e.tier = patch.tier;
-            if (patch.stage && !e.stages.includes(patch.stage)) e.stages.push(patch.stage);
-            if (patch.roles) patch.roles.forEach(r => { if (!e.roles.includes(r)) e.roles.push(r); });
-            if (patch.location && !e.location) e.location = patch.location;
-            if (patch.note && !e.note) e.note = patch.note;
-            if (patch.partnerSkill && !e.partnerSkill) e.partnerSkill = patch.partnerSkill;
-            if (patch.featured) e.featured = true;
-            if (patch.skills) Object.entries(patch.skills).forEach(([sk, lvl]) => {
-                if (!e.skills[sk] || e.skills[sk] < lvl) e.skills[sk] = lvl;
-            });
-            if (patch.tags) patch.tags.forEach(t => { if (!e.tags.includes(t)) e.tags.push(t); });
-        }
-
-        // Seeds the master DB from the static complete-roster dataset (288 Pals inkl. Varianten,
-        // siehe FULL_PAL_ROSTER weiter oben) — jede Zeile bringt Typ/Tier/Phase/Partner-Skill/
-        // Arbeits-Eignung/Fundort mit. Die anschließenden Guide-Scans in buildPalDB() reichern das
-        // an (Team-Rollen, kuratierte Fundort-Texte, Kontext-Notizen) und markieren "featured".
-        function seedPalDBFromRoster(db) {
-            FULL_PAL_ROSTER.forEach(p => {
-                addOrMergeEntry(db, p.name, {
-                    type: p.types.join('/'),
-                    tier: p.tier,
-                    stage: p.stage,
-                    location: p.location,
-                    partnerSkill: p.partnerSkill,
-                    skills: p.workSuitability,
-                    tags: p.isBoss ? ['Boss'] : [],
-                });
-            });
-        }
-
-        // Builds one master Pal-Datenbank by scanning everything already rendered in this
-        // guide (pal-cards, skill tiers, mount tables, endgame/booster tables, aura table) —
-        // no separate hand-maintained list, so it can never drift from the rest of the page.
         function buildPalDB() {
-            const db = {};
-
-            // 0) Komplettes Roster (288 Pals) als Basis — jeder Pal im Spiel bekommt mindestens
-            // Typ/Tier/Phase/Partner-Skill/Arbeits-Eignung/Fundort, unabhängig davon, ob er in
-            // diesem Guide als Team-Empfehlung vorkommt.
-            seedPalDBFromRoster(db);
-
-            // 1) Full pal-cards (combat + worker) — richest source: type, tier, location, roles/tasks
-            document.querySelectorAll('.pal-card').forEach(card => {
-                const name = card.querySelector('.pal-name')?.textContent.trim();
-                if (!name) return;
-                const type = card.querySelector('.pal-type')?.textContent.trim();
-                const tierEl = card.querySelector('.pal-tier');
-                const tier = tierEl ? tierEl.textContent.trim().toLowerCase() : null;
-                const location = card.querySelector('.pal-loc-mini')?.textContent.replace('📍', '').trim();
-                const note = card.querySelector('.tooltip-note')?.textContent.trim();
-                const roles = Array.from(card.querySelectorAll('.role-tag')).map(r => r.textContent.trim());
-                const tasks = Array.from(card.querySelectorAll('.task-tag')).map(t => t.textContent.replace(/\s+/g, ' ').trim());
-                const stageSection = card.closest('.stage-early, .stage-mid, .stage-late');
-                let stage = null;
-                if (stageSection) {
-                    if (stageSection.classList.contains('stage-early')) stage = 'early';
-                    else if (stageSection.classList.contains('stage-mid')) stage = 'mid';
-                    else if (stageSection.classList.contains('stage-late')) stage = 'late';
-                }
-                const skills = {};
-                tasks.forEach(t => {
-                    const m = t.match(/^(.+?)\s+(\d+)$/);
-                    if (m) skills[m[1]] = parseInt(m[2], 10);
-                });
-                addOrMergeEntry(db, name, {
-                    type, tier, stage, location, note, skills,
-                    roles: roles.length ? roles : undefined,
-                    tags: [card.querySelector('.role-tag') ? 'Kampf' : 'Worker'],
-                    featured: true,
-                });
-            });
-
-            // 2) Skill-Tier-Listen (Top 15 je Arbeitseignung) — deckt Base-Worker ab, die keine
-            // eigene Karte haben. Tag verrät grob die Verfügbarkeit: seed=Grundspiel, boss=Boss/Alpha,
-            // dlc=Feybreak-DLC/Postgame.
-            Object.entries(SKILL_TIERS).forEach(([skillId, data]) => {
-                data.rows.forEach(r => {
-                    const [name, level, tag, note] = r;
-                    const skillLabel = (data.title || skillId).replace(/^[^\s]+\s/, '');
-                    const stage = tag === 'dlc' ? 'late' : (tag === 'seed' ? 'early' : null);
-                    addOrMergeEntry(db, name, {
-                        stage,
-                        skills: { [skillLabel]: level },
-                        note: note || null,
-                        tags: ['Worker'].concat(tag === 'dlc' ? ['Feybreak-DLC'] : []).concat(tag === 'boss' ? ['Boss/Alpha'] : []),
-                        featured: true,
-                    });
-                });
-            });
-
-            // 3) Mount-Tierlisten (Flying/Boden/Wasser) — Tier + grober Mount-Tag
-            ['flyingMountsTable', 'groundMountsTable', 'waterMountsTable'].forEach(tableId => {
-                const table = document.getElementById(tableId);
-                if (!table) return;
-                table.querySelectorAll('tbody tr').forEach(tr => {
-                    const tierEl = tr.querySelector('.pal-tier');
-                    const nameCell = tr.querySelector('td[data-pal]');
-                    if (!nameCell) return;
-                    const tier = tierEl ? tierEl.textContent.trim().toLowerCase() : null;
-                    addOrMergeEntry(db, nameCell.dataset.pal, { tier, tags: ['Mount'], featured: true });
-                });
-            });
-
-            // 4) Flying-Mount-Progression — hat echte Level-Angaben, liefert die genaueste Stage
-            const progTable = document.getElementById('mountProgressionTable');
-            if (progTable) {
-                progTable.querySelectorAll('tbody tr').forEach(tr => {
-                    const cells = tr.querySelectorAll('td');
-                    const nameCell = tr.querySelector('td[data-pal]');
-                    if (!nameCell || cells.length < 4) return;
-                    const levelText = cells[0].textContent.trim();
-                    const levelNum = parseInt(levelText, 10);
-                    let stage = null;
-                    if (!isNaN(levelNum)) stage = levelNum < 25 ? 'early' : (levelNum <= 45 ? 'mid' : 'late');
-                    addOrMergeEntry(db, nameCell.dataset.pal, {
-                        stage, location: cells[2].textContent.trim(), note: cells[3].textContent.trim(), tags: ['Mount'], featured: true,
-                    });
-                });
-            }
-
-            // 5) Transport-Spezialisten (Basis-intern)
-            const transportTable = document.getElementById('transportPalsTable');
-            if (transportTable) {
-                transportTable.querySelectorAll('tbody tr').forEach(tr => {
-                    const nameCell = tr.querySelector('td[data-pal]');
-                    if (!nameCell) return;
-                    const cells = tr.querySelectorAll('td');
-                    addOrMergeEntry(db, nameCell.dataset.pal, {
-                        note: cells[2] ? cells[2].textContent.trim() : null,
-                        tags: ['Worker', 'Transport-Spezialist'],
-                        featured: true,
-                    });
-                });
-            }
-
-            // 6) Endgame-Overpowered + Booster-Pals — Endgame-Meta-Tag, stage=late
-            [['endgameOverpoweredTable', 'Endgame-Meta'], ['boosterPalsTable', 'Booster-Pal']].forEach(([tableId, tag]) => {
-                const table = document.getElementById(tableId);
-                if (!table) return;
-                table.querySelectorAll('tbody tr').forEach(tr => {
-                    const nameCell = tr.querySelector('td[data-pal]');
-                    if (!nameCell) return;
-                    const cells = tr.querySelectorAll('td');
-                    addOrMergeEntry(db, nameCell.dataset.pal, {
-                        stage: 'late', note: cells[1] ? cells[1].textContent.trim() : null, tags: ['Kampf', tag], featured: true,
-                    });
-                });
-            });
-
-            // 7) Aura-Träger (12 Work-Suitability-Aura-Pals)
-            const auraTable = document.getElementById('auraTable');
-            if (auraTable) {
-                auraTable.querySelectorAll('tbody tr').forEach(tr => {
-                    const cells = tr.querySelectorAll('td');
-                    const nameCell = tr.querySelector('td[data-pal]');
-                    if (!nameCell) return;
-                    addOrMergeEntry(db, nameCell.dataset.pal, {
-                        note: `Aura: ${cells[0].textContent.trim()}`, tags: ['Aura-Träger'], featured: true,
-                    });
-                });
-            }
-
-            return db;
+            const guideData = window.GuideData;
+            if (!guideData?.buildPalDatabase) return {};
+            const roster = typeof FULL_PAL_ROSTER !== 'undefined' ? FULL_PAL_ROSTER : [];
+            return guideData.buildPalDatabase(
+                Array.isArray(roster) ? roster : [],
+                guideData.PALS || [],
+                guideData.META_SOURCES || []
+            );
         }
 
         function palRoleSummary(entry) {
             if (entry.roles.length) return entry.roles.join(', ');
-            const skillEntries = Object.entries(entry.skills).sort((a, b) => b[1] - a[1]);
+            const skillEntries = Object.entries(entry.workSuitability || {}).sort((a, b) => b[1] - a[1]);
             if (skillEntries.length) return skillEntries.slice(0, 2).map(([sk, lvl]) => `${sk} ${lvl}`).join(', ');
-            if (entry.tags.length) return entry.tags.join(', ');
             return '—';
         }
 
@@ -219,6 +55,12 @@
             'Oil Extraction': '🛢️',
         };
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
+            }[character]));
+        }
+
         function togglePalsFeaturedFilter(btnEl) {
             palsFeaturedOnly = !palsFeaturedOnly;
             if (btnEl) btnEl.classList.toggle('active', palsFeaturedOnly);
@@ -240,7 +82,7 @@
 
             const sortSelect = document.getElementById('palSortSelect');
             const skillNames = new Set();
-            Object.values(PAL_DB).forEach(e => Object.keys(e.skills).forEach(s => skillNames.add(s)));
+            Object.values(PAL_DB).forEach(e => Object.keys(e.workSuitability || {}).forEach(s => skillNames.add(s)));
             Array.from(skillNames).sort().forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = 'skill:' + s;
@@ -264,16 +106,7 @@
         }
 
         function palMatchesGoal(entry, goal) {
-            if (goal === 'all') return true;
-            const text = `${entry.name} ${entry.roles.join(' ')} ${Object.keys(entry.skills).join(' ')} ${entry.note || ''}`.toLowerCase();
-            const patterns = {
-                combat: /damage|offensive|tank|kampf|dps|support/,
-                worker: /worker|base|handiwork|mining|planting|transport|gather|cooling|kindling|watering|farming|medicine/,
-                mount: /mount|reit|flug|mobility|mobilität/,
-                fang: /fang|catch|dot|poison|burn|sleep/,
-                upgrade: /featured|guide|s-tier|upgrade|empfehl/,
-            };
-            return patterns[goal]?.test(text) ?? false;
+            return window.GuideData?.matchesPalGoal?.(entry, goal) ?? goal === 'all';
         }
 
         function filterPalsTable() {
@@ -282,13 +115,42 @@
 
         const TIER_SORT_ORDER = { s: 0, a: 1, b: 2, c: 3 };
 
-        function palUsageReason(entry) {
-            if (entry.note) return entry.note;
-            const skills = Object.entries(entry.skills || {}).sort((a, b) => b[1] - a[1]);
-            if (skills.length) return `Am besten für ${skills.slice(0, 2).map(([skill, level]) => `${skill} Lv.${level}`).join(' und ')}.`;
-            if (entry.roles?.length) return `Besonders geeignet für ${entry.roles.slice(0, 3).join(', ')}.`;
-            if (entry.partnerSkill) return 'Nutzen vor allem über den Partner-Skill im Kampf oder beim Reiten.';
-            return 'Noch keine zusätzliche Nutzungsempfehlung hinterlegt.';
+        function palUsageReason(entry, goal = palsGoalFilter) {
+            const details = window.GuideData?.getPalDetails?.(entry, goal);
+            if (!details?.reason) return 'Neutrale Referenz – keine aktuelle Meta-Empfehlung hinterlegt.';
+            return `<strong>Warum:</strong> ${escapeHtml(details.reason)}<br><strong>Beste Nutzung:</strong> ${escapeHtml(details.bestFor)}`;
+        }
+
+        function palSourceStatusHtml(entry) {
+            if (!entry.active || !entry.sourceStatus) {
+                return '<span class="pal-source-status pal-source-neutral">Neutrale Referenz</span>';
+            }
+            const links = entry.sourceStatus.sources
+                .filter(source => source.url)
+                .map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(source.title || source.id)}">Quelle</a>`)
+                .join(' · ');
+            return `<div class="pal-source-status"><strong>${escapeHtml(entry.sourceStatus.label || 'Aktuelle Meta')}</strong>${links ? `<span class="pal-source-links">${links}</span>` : ''}</div>`;
+        }
+
+        function palDetailsHtml(entry, goal) {
+            const details = window.GuideData?.getPalDetails?.(entry, goal);
+            if (!details) return '';
+            const alternatives = details.alternatives?.length ? details.alternatives.join(', ') : 'Keine Alternative hinterlegt.';
+            const reason = details.reason || 'Neutrale Referenz – keine aktuelle Meta-Empfehlung hinterlegt.';
+            const bestFor = details.bestFor || 'Keine aktuelle beste Nutzung hinterlegt.';
+            const switchWhen = details.switchWhen || 'Kein aktueller Wechselhinweis hinterlegt.';
+            return `
+                <div class="pal-detail-popover" id="pal-detail-${escapeHtml(entry.id)}" role="region" aria-label="Details zu ${escapeHtml(entry.name)}">
+                    <img class="pal-detail-image" src="${escapeHtml(palImageUrl(details.image))}" alt="${escapeHtml(entry.name)}" loading="lazy" onerror="this.style.display='none'">
+                    <div class="pal-detail-copy">
+                        <strong>Fundort</strong><p>${escapeHtml(details.location)}</p>
+                        <strong>Einsatzgrund</strong><p>${escapeHtml(reason)}</p>
+                        <strong>Beste Nutzung</strong><p>${escapeHtml(bestFor)}</p>
+                        <strong>Alternativen</strong><p>${escapeHtml(alternatives)}</p>
+                        <strong>Wechselhinweis</strong><p>${escapeHtml(switchWhen)}</p>
+                        <div class="pal-detail-source">${palSourceStatusHtml(entry)}</div>
+                    </div>
+                </div>`;
         }
 
         function renderPalsTable() {
@@ -298,7 +160,7 @@
             const sortKey = document.getElementById('palSortSelect')?.value || 'name';
 
             let entries = Object.values(PAL_DB);
-            if (search) entries = entries.filter(e => e.name.toLowerCase().includes(search));
+            if (search) entries = entries.filter(e => [e.name, ...(e.aliases || [])].some(name => name.toLowerCase().includes(search)));
             if (typeFilter !== 'all') entries = entries.filter(e => e.types.some(t => t.split('/').map(x => x.trim()).includes(typeFilter)));
             if (palsStageFilter !== 'all') entries = entries.filter(e => e.stages.includes(palsStageFilter));
             if (palsFeaturedOnly) entries = entries.filter(e => e.featured);
@@ -308,7 +170,7 @@
                 entries.sort((a, b) => (TIER_SORT_ORDER[a.tier] ?? 9) - (TIER_SORT_ORDER[b.tier] ?? 9) || a.name.localeCompare(b.name));
             } else if (sortKey.startsWith('skill:')) {
                 const sk = sortKey.slice(6);
-                entries.sort((a, b) => (b.skills[sk] || 0) - (a.skills[sk] || 0) || a.name.localeCompare(b.name));
+                entries.sort((a, b) => (b.workSuitability?.[sk] || 0) - (a.workSuitability?.[sk] || 0) || a.name.localeCompare(b.name));
             } else {
                 entries.sort((a, b) => a.name.localeCompare(b.name));
             }
@@ -320,27 +182,58 @@
 
             body.innerHTML = entries.map(e => {
                 const tierHtml = e.tier ? `<span class="pal-tier ${e.tier}">${e.tier.toUpperCase()}</span>` : '—';
-                const featuredMark = e.featured ? '<span class="pal-featured-star" title="Wird im Guide als Team-Pick oder Base-Worker empfohlen">⭐</span> ' : '';
-                const suitEntries = Object.entries(e.skills).sort((a, b) => b[1] - a[1]);
+                const featuredMark = e.featured ? '<span class="pal-featured-star" title="Aktuelle Meta-Empfehlung">⭐</span> ' : '';
+                const suitEntries = Object.entries(e.workSuitability || {}).sort((a, b) => b[1] - a[1]);
                 const suitHtml = suitEntries.length
                     ? suitEntries.map(([sk, lvl]) => `<span class="suit-chip${sortKey === 'skill:' + sk ? ' suit-current' : ''}">${WORK_SUIT_EMOJI[sk] || '⭐'} ${lvl}</span>`).join('')
                     : '—';
-                const partnerHtml = e.partnerSkill ? e.partnerSkill : '—';
-                const roleNote = e.roles.length ? `<div class="pal-role-note">${palRoleSummary(e)}</div>` : '';
+                const partnerHtml = e.partnerSkill ? escapeHtml(e.partnerSkill) : '—';
+                const roleNote = e.roles.length ? `<div class="pal-role-note">${escapeHtml(palRoleSummary(e))}</div>` : '';
                 const usageReason = palUsageReason(e);
+                const imageName = window.GuideData?.resolvePalImageName?.(PAL_DB, e.name) || e.image || e.name;
+                const detailId = `pal-detail-${e.id}`;
                 return `
                 <tr>
-                    <td class="hb-name" data-pal="${e.name}">${featuredMark}${e.name}</td>
-                    <td>${e.types.join(' / ') || '—'}</td>
+                    <td class="hb-name pal-name-cell" data-pal="${escapeHtml(e.name)}">
+                        <button class="pal-detail-trigger" type="button" aria-expanded="false" aria-controls="${escapeHtml(detailId)}">
+                            <img class="pal-db-thumb" src="${escapeHtml(palIconUrl(imageName, 32))}" alt="" loading="lazy" onerror="this.style.display='none'">
+                            <span>${featuredMark}${escapeHtml(e.name)}</span>
+                        </button>
+                        ${palDetailsHtml(e, palsGoalFilter)}
+                    </td>
+                    <td>${escapeHtml(e.types.join(' / ') || '—')}</td>
                     <td>${tierHtml}</td>
                     <td>${palStageBadges(e)}</td>
                     <td class="pal-partner-skill">${partnerHtml}</td>
                     <td><div class="suit-chips">${suitHtml}</div>${roleNote}</td>
                     <td class="pal-usage-reason">${usageReason}</td>
-                    <td>${e.location || (e.note ? e.note : '—')}</td>
+                    <td>${escapeHtml(e.location || '—')}</td>
+                    <td>${palSourceStatusHtml(e)}</td>
                 </tr>`;
             }).join('');
             applyPalThumbs();
+        }
+
+        function enablePalDetailInteractions() {
+            const body = document.getElementById('palsTableBody');
+            if (!body || body.dataset.detailsEnabled) return;
+            body.dataset.detailsEnabled = 'true';
+            body.addEventListener('click', event => {
+                const trigger = event.target.closest('.pal-detail-trigger');
+                if (!trigger) return;
+                const cell = trigger.closest('.pal-name-cell');
+                const isOpen = cell.classList.toggle('is-open');
+                trigger.setAttribute('aria-expanded', String(isOpen));
+            });
+            body.addEventListener('keydown', event => {
+                if (event.key !== 'Escape') return;
+                const cell = event.target.closest('.pal-name-cell');
+                const trigger = cell?.querySelector('.pal-detail-trigger');
+                if (!trigger) return;
+                cell.classList.remove('is-open');
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+            });
         }
 
         function renderSkillTable(skillId) {
@@ -607,12 +500,14 @@
         // alone produces %20, which 404s on the raw /images/ file path (unlike
         // Special:FilePath below, which normalizes it server-side).
         function palIconUrl(name, size) {
+            name = window.GuideData?.resolvePalImageName?.(PAL_DB, name) || name;
             const file = `${name.replace(/ /g, '_')}_icon.png`;
             return `https://palworld.wiki.gg/images/thumb/${encodeURIComponent(file)}/${size}px-${encodeURIComponent(file)}`;
         }
 
         // Full-resolution artwork, shown only on hover (inside the tooltip).
         function palImageUrl(name) {
+            name = window.GuideData?.resolvePalImageName?.(PAL_DB, name) || name;
             return `https://palworld.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(name)}.png`;
         }
 
@@ -681,6 +576,10 @@
         function applyPalThumbs() {
             document.querySelectorAll('td[data-pal]').forEach(td => {
                 if (td.dataset.thumbApplied) return;
+                if (td.querySelector('.pal-db-thumb')) {
+                    td.dataset.thumbApplied = 'true';
+                    return;
+                }
                 const name = td.dataset.pal;
                 const img = document.createElement('img');
                 img.className = 'pal-thumb';
@@ -739,12 +638,12 @@
                 chip.addEventListener('mouseenter', () => {
                     const name = getChipPalName(chip);
                     if (!name) return;
-                    const entry = PAL_DB[name];
+                    const entry = window.GuideData?.resolvePalEntry?.(PAL_DB, name);
                     const metaParts = [];
                     if (entry && entry.types.length) metaParts.push(entry.types.join(' / '));
                     if (entry && entry.tier) metaParts.push('Tier ' + entry.tier.toUpperCase());
                     const stagesHtml = entry ? palStageBadges(entry) : '';
-                    const loc = entry ? (entry.location || entry.note) : null;
+                    const loc = entry ? entry.location : null;
                     tooltip.innerHTML = `
                         <img class="chip-tooltip-img" src="${palImageUrl(name)}" alt="${name}" onerror="this.style.display='none'">
                         <div class="chip-tooltip-name">${name}</div>
@@ -779,10 +678,8 @@
         applyPalThumbs();
         applySynergyChipIcons();
         PAL_DB = buildPalDB();
-        if (window.GuideData?.applyGuidePalData && window.GuideData?.PALS) {
-            window.GuideData.applyGuidePalData(PAL_DB, window.GuideData.PALS);
-        }
         renderPalsTable();
+        enablePalDetailInteractions();
         enableChipTooltips();
 
         function toggleStageSection(headerEl) {

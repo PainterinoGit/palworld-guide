@@ -1116,6 +1116,16 @@
             margin-bottom: 0.75rem;
         }
 
+        .pal-meta-banner {
+            margin: -0.35rem 0 1rem;
+            padding: 0.7rem 0.85rem;
+            border-left: 3px solid var(--primary);
+            border-radius: 0 9px 9px 0;
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+        }
+
         .pal-stage-badge {
             display: inline-block;
             padding: 0.1rem 0.5rem;
@@ -1136,7 +1146,92 @@
         }
 
 .pals-master-table {
-            min-width: 1320px;
+            min-width: 1460px;
+        }
+
+        .pals-master-table .pal-name-cell {
+            min-width: 175px;
+            position: relative;
+        }
+
+        .pal-detail-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .pal-detail-trigger:focus-visible {
+            outline: 3px solid rgba(99, 102, 241, 0.45);
+            outline-offset: 3px;
+            border-radius: 5px;
+        }
+
+        .pal-db-thumb {
+            width: 32px;
+            height: 32px;
+            flex: 0 0 32px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+        }
+
+        .pal-detail-popover {
+            display: none;
+            grid-template-columns: 104px minmax(210px, 1fr);
+            gap: 0.75rem;
+            min-width: 330px;
+            margin-top: 0.7rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 10px;
+            background: var(--card-bg);
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.16);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.45;
+            text-align: left;
+            white-space: normal;
+        }
+
+        .pal-name-cell:hover .pal-detail-popover,
+        .pal-name-cell:focus-within .pal-detail-popover,
+        .pal-name-cell.is-open .pal-detail-popover {
+            display: grid;
+        }
+
+        .pal-detail-image {
+            width: 104px;
+            height: 104px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+        }
+
+        .pal-detail-copy p {
+            margin: 0 0 0.45rem;
+        }
+
+        .pal-detail-copy strong {
+            color: var(--text-primary);
+            font-size: 0.72rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .pal-detail-source {
+            margin-top: 0.55rem;
+            padding-top: 0.45rem;
+            border-top: 1px solid var(--card-border);
         }
 
         .pal-usage-reason {
@@ -1165,10 +1260,61 @@
             font-weight: 600;
         }
 
+        .pal-source-status {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.18rem;
+            min-width: 145px;
+            color: var(--text-primary);
+            font-size: 0.73rem;
+            line-height: 1.35;
+        }
+
+        .pal-source-status strong {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .pal-source-links {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .pal-source-links a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .pal-source-neutral {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
         .filter-chip[data-featured].active {
             background: #F59E0B;
             color: #1a1a1a;
             border-color: #F59E0B;
+        }
+
+        @media (max-width: 700px) {
+            .pal-meta-banner {
+                font-size: 0.76rem;
+            }
+
+            .pals-master-table {
+                min-width: 1180px;
+            }
+
+            .pal-detail-popover {
+                min-width: 290px;
+                grid-template-columns: 82px minmax(180px, 1fr);
+            }
+
+            .pal-detail-image {
+                width: 82px;
+                height: 82px;
+            }
         }
 
         .map-panel {
