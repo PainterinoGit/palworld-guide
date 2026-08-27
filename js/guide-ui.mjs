@@ -65,7 +65,7 @@ function renderLevelBand(bandId) {
   specialHost.innerHTML = specialTeams.length
     ? `<div class="level-special-heading"><span>SPEZIALTEAMS</span><small>Nur für konkrete Situationen wechseln</small></div>${specialTeams.map(team => renderTeamCard(team, team.kind)).join('')}`
     : '';
-  attachTeamSlotDetails(host);
+  attachTeamSlotDetails(host, specialHost);
   window.localStorage.setItem(STORAGE_KEY, band.id);
 }
 
@@ -73,15 +73,20 @@ function palImageUrl(name) {
   return `https://palworld.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(name)}.png`;
 }
 
-function attachTeamSlotDetails(host) {
+function attachTeamSlotDetails(host, specialHost) {
   const tooltip = document.getElementById('chipTooltip');
   if (!tooltip) return;
-  host.querySelectorAll('.team-slot[data-pal-id]').forEach(slot => {
+  const specialSlots = specialHost.querySelectorAll('.team-slot[data-pal-id]');
+  const slots = [...host.querySelectorAll('.team-slot[data-pal-id]'), ...specialSlots];
+  slots.forEach(slot => {
     const pal = getPalById(slot.dataset.palId);
     if (!pal) return;
-    const show = () => {
+    slot.setAttribute('aria-describedby', 'chipTooltip');
+    const show = event => {
       tooltip.innerHTML = `<img class="chip-tooltip-img" src="${palImageUrl(pal.name)}" alt="${pal.name}" onerror="this.style.display='none'"><div class="chip-tooltip-name">${pal.name}</div><div class="chip-tooltip-meta">${pal.types.join(' / ')} · ${pal.roles.join(' / ')}</div><div class="chip-tooltip-loc">📍 ${pal.location}</div><div class="chip-tooltip-loc">💡 ${pal.whyGood}</div><div class="chip-tooltip-loc">↔ Alternative: ${pal.alternatives.length ? pal.alternatives.join(', ') : 'keine nötig'}</div>`;
       tooltip.classList.add('visible');
+      tooltip.setAttribute('aria-hidden', 'false');
+      if (event) move(event);
     };
     const move = event => {
       const offset = 16;
@@ -93,11 +98,11 @@ function attachTeamSlotDetails(host) {
       tooltip.style.left = `${x}px`;
       tooltip.style.top = `${y}px`;
     };
-    slot.addEventListener('mouseenter', show);
+    slot.addEventListener('mouseenter', event => show(event));
     slot.addEventListener('mousemove', move);
-    slot.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+    slot.addEventListener('mouseleave', () => { tooltip.classList.remove('visible'); tooltip.setAttribute('aria-hidden', 'true'); });
     slot.addEventListener('focus', show);
-    slot.addEventListener('blur', () => tooltip.classList.remove('visible'));
+    slot.addEventListener('blur', () => { tooltip.classList.remove('visible'); tooltip.setAttribute('aria-hidden', 'true'); });
     const openDatabase = () => {
       const search = document.getElementById('palSearchInput');
       if (search) {

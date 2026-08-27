@@ -2093,9 +2093,9 @@
 .team-card-kicker { color:#a5b4fc; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
 .team-card h3 { margin:.35rem 0 .3rem; font-size:1rem; }
 .team-card-purpose { min-height:2.5em; margin:0 0 .8rem; color:var(--text-secondary); font-size:.85rem; }
-.team-card-slots { display:grid; gap:.45rem; }
+.team-card-slots { display:grid; gap:.6rem; }
 .team-card-slots-label { color:var(--text-secondary); font-size:.75rem; font-weight:700; }
-.team-slot { display:grid; grid-template-columns:minmax(96px, .75fr) minmax(0, 1.5fr); gap:.7rem; align-items:start; min-height:66px; padding:.7rem; border:1px solid rgba(148,163,184,.16); border-radius:10px; background:rgba(30,41,59,.58); cursor:help; transition:border-color .2s ease, background-color .2s ease; }
+.team-slot { display:grid; grid-template-columns:minmax(102px, .8fr) minmax(0, 1.2fr); gap:.8rem; align-items:start; min-height:66px; padding:.75rem; border:1px solid rgba(148,163,184,.16); border-radius:10px; background:rgba(30,41,59,.58); cursor:pointer; transition:border-color .2s ease, background-color .2s ease; }
 .team-slot:hover { border-color:rgba(165,180,252,.7); background:rgba(49,46,129,.32); }
 .team-slot:focus-visible { outline:2px solid #a5b4fc; outline-offset:2px; }
 .team-slot-pal { display:grid; min-width:0; gap:.3rem; }
@@ -2108,14 +2108,15 @@
 .team-slot-pal .pal-inline-icon { width:28px; height:28px; }
 .team-alternatives { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem .45rem; }
 .team-alternatives .pal-inline-icon { width:18px; height:18px; }
-.team-slot-copy { display:grid; min-width:0; gap:.28rem; color:var(--text-secondary); font-size:.72rem; line-height:1.4; }
+.team-slot-copy { display:grid; min-width:0; gap:.35rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
 .team-slot-copy strong { color:#dbe4ff; font-size:.72rem; }
 .team-slot-role { width:max-content; max-width:100%; padding:.2rem .45rem; border-radius:5px; color:#dbe4ff; background:rgba(129,140,248,.18); font-size:.64rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; }
 .team-slot-reason { min-width:0; }
 .team-slot-copy small { color:#94a3b8; font-size:.66rem; }
 .team-slot-variable { border-style:dashed; }
 .team-slot-question { display:grid; width:44px; height:44px; place-items:center; align-self:center; border-radius:50%; color:#c7d2fe; background:rgba(99,102,241,.24); font-weight:800; }
-.team-card-meta { margin-top:.8rem; color:var(--text-secondary); font-size:.72rem; line-height:1.45; }
+.team-card-reason { margin-bottom:1rem; line-height:1.5; }
+.team-card-meta { margin-top:.9rem; color:var(--text-secondary); font-size:.72rem; line-height:1.5; }
 .legacy-team-library { margin-top:1.5rem; border-top:1px solid var(--border-color); }
 .legacy-team-library summary { min-height:44px; padding:1rem .25rem; color:var(--text-secondary); cursor:pointer; font-size:.85rem; font-weight:700; list-style-position:inside; }
 .legacy-team-library summary:hover { color:var(--text-primary); }
