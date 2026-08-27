@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { BASE_PLANS, getBasePlan } from '../data/base-plans.mjs';
 globalThis.window = { GuideData: { META_SOURCES: [] } };
 const { renderBasePlan } = await import('../js/base-planner.mjs');
@@ -39,6 +40,8 @@ assert.match(allBuildingText, /Zerkleinerer|Crusher/i, 'Produktionslayout nennt 
 assert.match(allBuildingText, /Stromgenerator|Generator/i, 'Produktionslayout nennt Stromversorgung');
 assert.match(allBuildingText, /Öl-Extraktor|Crude Oil Extractor/i, 'Endgame-Layout nennt Ölversorgung');
 assert.match(allBuildingText, /Ancient Material Synthesizer/i, 'Endgame-Layout nennt Material-Synthesizer');
+const plannerHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+assert.match(plannerHtml, /Worker-Food.*Salat.*2× Salat.*2× Tomate.*Kochtopf/i, 'Base Planner erklärt Salatproduktion');
 const renderedTwoBase = renderBasePlan(twoBasePlan);
 assert.match(renderedTwoBase, /class="base-worker-icon"/, 'Worker-Pool zeigt Pal-Icons');
 assert.match(renderedTwoBase, /switchTab\('pals'\)/, 'Worker-Pool verlinkt Pals in die Datenbank');
