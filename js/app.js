@@ -299,8 +299,8 @@
 
         function showResourceTooltip(resource, event) {
             const tooltip = document.getElementById('resourceDetailTooltip');
-            const image = resource.image && RESOURCE_IMAGES[resource.image]
-                ? `<img src="${RESOURCE_IMAGES[resource.image]}" alt="${resource.name} Fundort" class="resource-tooltip-image">`
+            const image = resource.image && window.RESOURCE_IMAGES?.[resource.image]
+                ? `<img src="${window.RESOURCE_IMAGES[resource.image]}" alt="${resource.name} Fundort" class="resource-tooltip-image">`
                 : '';
             tooltip.innerHTML = `
                 ${image}
@@ -321,7 +321,7 @@
 
         function bindResourceDetails() {
             document.querySelectorAll('[data-resource-id]').forEach(element => {
-                const resource = RESOURCE_CATALOG.find(item => item.id === element.dataset.resourceId);
+                const resource = window.RESOURCE_CATALOG?.find(item => item.id === element.dataset.resourceId);
                 if (!resource || element.dataset.resourceBound) return;
                 element.dataset.resourceBound = 'true';
                 element.addEventListener('mouseenter', event => showResourceTooltip(resource, event));
@@ -335,7 +335,7 @@
         function renderResourceCatalog() {
             const body = document.getElementById('resourceCatalog');
             if (!body) return;
-            body.innerHTML = RESOURCE_CATALOG.map(resource => `
+            body.innerHTML = (window.RESOURCE_CATALOG || []).map(resource => `
                 <tr data-resource-id="${resource.id}" tabindex="0">
                     <th scope="row"><strong>${resource.name}</strong><small>${resource.category}</small></th>
                     <td>${resource.category}</td>

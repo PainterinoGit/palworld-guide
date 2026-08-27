@@ -23,8 +23,10 @@ const RESOURCE_CATALOG = [
     { id: 'hexolite', name: 'Hexolith', category: 'DLC-Mineral', early: 'Feybreak-Küste ab höherem Level', durable: 'Hexolith-Mining-Site bzw. 2–3 Node-Spots', locations: 'Feybreak', coords: '(-1067, -1428) · (-1331, -1288)', rarity: 'Sehr selten', note: 'Außerhalb der Basiskarte; für späte Feybreak-Strukturen.', image: null },
     { id: 'chromite', name: 'Chromit', category: 'DLC-Mineral', early: 'Feybreak-Schrott-/Abbaugebiete', durable: 'Cluster rund um Feybreak-Basen', locations: 'Feybreak, nahe Hexolith-Spots', coords: 'Außerhalb der Basiskarte', rarity: 'Sehr selten', note: 'Späte DLC-Ressource; im Guide zunächst als Gebietsinfo geführt.', image: null },
 ];
+window.RESOURCE_CATALOG = RESOURCE_CATALOG;
+window.RESOURCE_IMAGES = RESOURCE_IMAGES;
 
-        // Resource-hotspot locations (Hexolite/Öl/Kohle/Erz clusters), separate from BASES.
+// Resource-hotspot locations (Hexolite/Öl/Kohle/Erz clusters), separate from BASES.
         // Coordinates cross-checked against the real map image; Hexolite entries lie outside
         // the -1000/1000 range (Feybreak-DLC area) and are listed but not plotted.
         const RESOURCES = [
