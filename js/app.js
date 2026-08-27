@@ -169,10 +169,36 @@
             const details = window.GuideData?.getPalDetails?.(entry, palsGoalFilter) || {};
             const location = details.location || entry.location || 'Fundort nicht dokumentiert';
             const point = captureMapPreview(location);
-            tooltip.innerHTML = `<div class="pal-capture-map" role="img" aria-label="Ungefähre Fangregion für ${escapeHtml(entry.name)}"><span class="pal-capture-dot" style="left:${point.left}%;top:${point.top}%"></span></div><div class="pal-capture-copy"><strong>${escapeHtml(entry.name)}</strong><span>📍 ${escapeHtml(location)}</span><small>Ungefähre Fangregion – für exakte Spawns die Fundortdaten öffnen.</small></div>`;
+            const workSkills = Object.entries(entry.workSuitability || {})
+                .sort(([, levelA], [, levelB]) => levelB - levelA)
+                .map(([skill, level]) => `<span class="pal-work-skill">${WORK_SUIT_EMOJI[skill] || '🔧'} ${escapeHtml(skill)} ${escapeHtml(level)}</span>`)
+                .join('');
+            tooltip.innerHTML = `<div class="pal-capture-map" role="img" aria-label="Ungefähre Fangregion für ${escapeHtml(entry.name)}"><span class="pal-capture-dot" style="left:${point.left}%;top:${point.top}%"></span></div><div class="pal-capture-copy"><strong>${escapeHtml(entry.name)}</strong><span>🧬 ${escapeHtml(entry.types?.join(' / ') || 'Typ unbekannt')} · Tier ${escapeHtml(entry.tier?.toUpperCase() || '—')}</span><span>📍 ${escapeHtml(location)}</span><div class="pal-work-skills"><b>Arbeitseignungen</b>${workSkills || '<span class="pal-work-skill">Keine Angaben</span>'}</div><div class="pal-partner-skill"><b>Partnerfähigkeit</b><span>${escapeHtml(entry.partnerSkill || 'Keine Angabe')}</span></div><small>Ungefähre Fangregion – für exakte Spawns die Fundortdaten öffnen.</small></div>`;
             tooltip.classList.add('visible');
             tooltip.setAttribute('aria-hidden', 'false');
             positionPalCaptureTooltip(trigger);
+        }
+
+        function enableBaseWorkerTooltips() {
+            const host = document.getElementById('basePlanHost');
+            if (!host || host.dataset.workerTooltipsEnabled) return;
+            host.dataset.workerTooltipsEnabled = 'true';
+            host.addEventListener('mouseover', event => {
+                const trigger = event.target.closest('.base-worker-pal[data-pal-name]');
+                if (!trigger || trigger.contains(event.relatedTarget)) return;
+                const entry = Object.values(PAL_DB).find(item => item.name === trigger.dataset.palName);
+                if (entry) showPalCaptureTooltip(entry, trigger);
+            });
+            host.addEventListener('mouseout', event => {
+                const trigger = event.target.closest('.base-worker-pal[data-pal-name]');
+                if (trigger && !trigger.contains(event.relatedTarget)) hidePalCaptureTooltip();
+            });
+            host.addEventListener('focusin', event => {
+                const trigger = event.target.closest('.base-worker-pal[data-pal-name]');
+                const entry = trigger && Object.values(PAL_DB).find(item => item.name === trigger.dataset.palName);
+                if (entry) showPalCaptureTooltip(entry, trigger);
+            });
+            host.addEventListener('focusout', () => hidePalCaptureTooltip());
         }
 
         function hidePalCaptureTooltip() {
@@ -702,6 +728,7 @@
         renderJobTierlist();
         enablePalDetailInteractions();
         enableChipTooltips();
+        enableBaseWorkerTooltips();
 
         function toggleStageSection(headerEl) {
             const grid = headerEl.parentElement.querySelector('.pals-grid');

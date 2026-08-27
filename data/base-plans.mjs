@@ -28,6 +28,41 @@ const BASE_PLANS = {
   }
 };
 
+const ACTIVE_TASK_UPDATES = {
+  'Eine Base: kompakter Allrounder': [
+    ['Watering', '1× Shaolong · Watering 8 — Monitoring: nur Watering aktiv; bei den Plantagen lassen'],
+    ['Gathering', '1× Dandilord · Gathering 5 — Monitoring: nur Gathering aktiv; bei Plantagen und Sammelbereich lassen'],
+  ],
+  'Zwei Basen: Produktion + Zucht': [
+    ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
+    ['Breeding- & Ranchbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich der Plantagen zuweisen']],
+  ],
+  'Drei Basen: spezialisiert und wartungsarm': [
+    ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
+    ['Ressourcenbase', ['Planting-Reserve', '1× Dandilord · Gathering 5 — Monitoring: nur Gathering aktiv; bei Ressourcenplantagen lassen']],
+    ['Breeding- & Ranchbase', ['Watering-Reserve', '1× Shaolong · Watering 8 — Monitoring: nur Watering aktiv; bei den Plantagen lassen']],
+    ['Breeding- & Ranchbase', ['Handiwork-Reserve', '1× Solenne · Gathering 4 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
+  ],
+};
+
+Object.entries(ACTIVE_TASK_UPDATES).forEach(([planTitle, updates]) => {
+  const plan = Object.values(BASE_PLANS).find(item => item.title === planTitle);
+  if (!plan) return;
+  updates.forEach(update => {
+    const [baseName, replacement] = Array.isArray(update[1]) ? update : [null, update];
+    const base = baseName ? plan.bases.find(item => item.name === baseName) : plan.bases[0];
+    if (!base) return;
+    if (Array.isArray(replacement)) {
+      const [needle, worker] = replacement;
+      const index = base.workers.findIndex(item => item.includes(needle));
+      if (index >= 0) base.workers[index] = worker;
+      else base.workers.push(worker);
+    } else {
+      base.workers.push(replacement);
+    }
+  });
+});
+
 export { BASE_PLANS };
 export function getBasePlan(baseCount) {
   const count = Math.min(3, Math.max(1, Number(baseCount) || 1));

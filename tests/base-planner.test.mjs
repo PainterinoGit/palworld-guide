@@ -32,6 +32,12 @@ assert.match(breeding.note, /Kuchenproduktion/i, 'Breedingbase erklärt den Prod
 const threeBasePlan = getBasePlan(3);
 assert.ok(threeBasePlan.bases.every(base => base.workers.length === 20), 'jede Base im 3-Basen-Layout plant 20 Worker-Slots');
 assert.ok(threeBasePlan.bases.every(base => base.workers.every(worker => /Monitoring:/i.test(worker))), '3-Basen-Layout erklärt die Monitoring-Einstellung je Worker');
+for (const plan of Object.values(BASE_PLANS)) {
+  for (const base of plan.bases) {
+    assert.ok(base.workers.some(worker => /Watering/i.test(worker) && !/Reserve|Watering aus/i.test(worker)), `${base.name}: aktiver Watering-Worker fehlt`);
+    assert.ok(base.workers.some(worker => /Gathering/i.test(worker) && !/Reserve|Gathering aus/i.test(worker)), `${base.name}: aktiver Gathering-Worker fehlt`);
+  }
+}
 const allBuildingText = Object.values(BASE_PLANS).flatMap(plan => plan.bases.map(base => base.buildings)).join(' ');
 for (const building of ['Palbox', 'Futterbox', 'Betten', 'Heiße Quelle', 'Monitoring Stand', 'Lager', 'Klinik', 'Mühle', 'Breeding Farm|Ancient Hatchery']) {
   assert.match(allBuildingText, new RegExp(building, 'i'), `Gebäude & Layout nennt ${building}`);
@@ -46,5 +52,11 @@ const renderedTwoBase = renderBasePlan(twoBasePlan);
 assert.match(renderedTwoBase, /class="base-worker-icon"/, 'Worker-Pool zeigt Pal-Icons');
 assert.match(renderedTwoBase, /switchTab\('pals'\)/, 'Worker-Pool verlinkt Pals in die Datenbank');
 assert.match(renderedTwoBase, /⛏️|⚡|🔥|🛠️|🌱|💧|📦/, 'Worker-Pool zeigt Skill-Emojis');
+assert.match(renderedTwoBase, /data-pal-name=/, 'Worker-Pool markiert Pals für Hoverdetails');
+const appSource = readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
+const styleSource = readFileSync(new URL('../css/style.css', import.meta.url), 'utf8');
+assert.match(appSource, /enableBaseWorkerTooltips/, 'Base-Worker erhalten Hover-Interaktionen');
+assert.match(appSource, /workSuitability/, 'Pal-Hoverdetails enthalten Arbeitseignungen');
+assert.match(styleSource, /\.pal-work-skills/, 'Pal-Hoverkarte zeigt Arbeitsfähigkeiten kompakt');
 
 console.log('base planner data contract: ok');

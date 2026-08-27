@@ -41,7 +41,7 @@ function renderWorker(worker) {
   const status = reserve ? '🔁 Reserve' : disabled ? '⛔ aus' : '✅ aktiv';
   const palVisual = palName ? `<img class="base-worker-icon" src="${palIconUrl(palName)}" alt="" aria-hidden="true" onerror="this.style.display='none'">` : '';
   const palLabel = palName
-    ? `<a class="base-worker-pal" href="#pals" onclick="switchTab('pals'); const input=document.getElementById('palSearchInput'); if(input){input.value='${escapeHtml(palName)}'; filterPalsTable();} return false;">${palVisual}${escapeHtml(palName)}</a>`
+    ? `<a class="base-worker-pal" data-pal-name="${escapeHtml(palName)}" href="#pals" onclick="switchTab('pals'); const input=document.getElementById('palSearchInput'); if(input){input.value='${escapeHtml(palName)}'; filterPalsTable();} return false;">${palVisual}${escapeHtml(palName)}</a>`
     : `<span class="base-worker-pal">${escapeHtml(worker.split(' · ')[0])}</span>`;
   return `<li class="base-worker"><span class="base-worker-quantity">${escapeHtml(worker.match(/^\d+(?:–\d+)?×/)?.[0] || '')}</span>${palLabel}<span class="base-worker-meta">${emoji} ${escapeHtml(skill)} · ${status}${location ? ` · 📍 ${escapeHtml(location)}` : ''}</span></li>`;
 }

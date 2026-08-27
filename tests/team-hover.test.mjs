@@ -14,8 +14,8 @@ assert.match(app, /pal-capture-map/);
 assert.match(app, /captureMapPreview/);
 assert.doesNotMatch(css, /\.pals-master-table\s*\{\s*min-width:\s*1460px/);
 assert.match(css, /\.pal-capture-map/);
-assert.match(css, /\.pal-capture-tooltip\s*\{[^}]*width:min\(760px/i);
-assert.match(css, /\.pal-capture-map\s*\{[^}]*min-height:360px/i);
+assert.match(css, /\.pal-capture-tooltip\s*\{[^}]*width:min\(980px/i);
+assert.match(css, /\.pal-capture-map\s*\{[^}]*min-height:420px/i);
 assert.doesNotMatch(html, /<th>Quellenstatus<\/th>/i);
 assert.doesNotMatch(app, /<td>\$\{palSourceStatusHtml\(e\)\}<\/td>/);
 

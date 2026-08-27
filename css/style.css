@@ -1199,15 +1199,20 @@
             white-space: normal;
         }
 
-        .pal-capture-tooltip { display:none; position:fixed; z-index:1100; width:min(760px, calc(100vw - 24px)); padding:1rem; border:1px solid rgba(129,140,248,.75); border-radius:14px; background:var(--card-bg); box-shadow:0 18px 42px rgba(2,6,23,.45); pointer-events:none; }
-        .pal-capture-tooltip.visible { display:grid; grid-template-columns:480px minmax(0,1fr); gap:1rem; }
-        .pal-capture-map { position:relative; min-height:360px; overflow:hidden; border:1px solid rgba(165,180,252,.3); border-radius:9px; background:linear-gradient(rgba(15,23,42,.15),rgba(15,23,42,.35)),url('../assets/images/map.jpg') center/cover; }
+        .pal-capture-tooltip { display:none; position:fixed; z-index:1100; width:min(980px, calc(100vw - 24px)); padding:1rem; border:1px solid rgba(129,140,248,.75); border-radius:14px; background:var(--card-bg); box-shadow:0 18px 42px rgba(2,6,23,.45); pointer-events:none; }
+        .pal-capture-tooltip.visible { display:grid; grid-template-columns:minmax(420px, 520px) minmax(0,1fr); gap:1rem; }
+        .pal-capture-map { position:relative; min-height:420px; overflow:hidden; border:1px solid rgba(165,180,252,.3); border-radius:9px; background:linear-gradient(rgba(15,23,42,.15),rgba(15,23,42,.35)),url('../assets/images/map.jpg') center/cover; }
         .pal-capture-map::after { content:'Fangregion'; position:absolute; left:.4rem; bottom:.35rem; padding:.15rem .3rem; border-radius:4px; color:#e0e7ff; background:rgba(15,23,42,.78); font-size:.58rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
         .pal-capture-dot { position:absolute; z-index:1; width:13px; height:13px; transform:translate(-50%,-50%); border:2px solid #fff; border-radius:50%; background:#f43f5e; box-shadow:0 0 0 5px rgba(244,63,94,.25),0 2px 8px rgba(0,0,0,.45); }
         .pal-capture-copy { display:grid; align-content:start; gap:.45rem; min-width:0; color:var(--text-secondary); font-size:.75rem; line-height:1.45; }
         .pal-capture-copy strong { color:var(--text-primary); font-size:.95rem; }
         .pal-capture-copy span { color:#c7d2fe; }
         .pal-capture-copy small { color:#94a3b8; font-size:.65rem; }
+        .pal-capture-copy b { color:var(--text-primary); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; }
+        .pal-work-skills { display:flex; flex-wrap:wrap; gap:.28rem; align-items:center; }
+        .pal-work-skills b { flex-basis:100%; }
+        .pal-work-skill { padding:.2rem .4rem; border:1px solid rgba(129,140,248,.28); border-radius:999px; color:#c7d2fe; background:rgba(30,41,59,.72); font-size:.68rem; }
+        .pal-partner-skill { display:grid; gap:.18rem; }
         @media (max-width: 720px) { .pal-capture-tooltip.visible { grid-template-columns:1fr; } .pal-capture-map { min-height:300px; } }
 
         .pal-name-cell:hover .pal-detail-popover,
