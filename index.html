@@ -94,6 +94,12 @@
             </p>
             <p class="pal-meta-banner"><strong>Patch 1.0+</strong> · geprüft am 2026-08-27 · Quellenstatus und Detailansicht sind pro Pal verlinkt.</p>
 
+            <div class="pal-panel-tabs" role="tablist" aria-label="Pal-Datenbank Ansichten">
+                <button class="filter-chip active" data-pal-panel="rosterPanel" role="tab" aria-selected="true" onclick="switchPalPanel('rosterPanel', this)">📚 Vollständiger Roster</button>
+                <button class="filter-chip" data-pal-panel="jobTierlistPanel" role="tab" aria-selected="false" onclick="switchPalPanel('jobTierlistPanel', this)">🏆 Job-Tierlist</button>
+            </div>
+
+            <div id="rosterPanel" class="pal-panel active">
             <div class="pals-filter-bar">
                 <input type="text" id="palSearchInput" class="pals-search" aria-label="Pal-Suche" placeholder="🔍 Pal suchen…" oninput="filterPalsTable()">
                 <select id="palTypeFilter" class="pals-select" aria-label="Pal-Typ filtern" onchange="filterPalsTable()">
@@ -127,6 +133,27 @@
                     <thead><tr><th>Pal</th><th>Typ</th><th>Tier / Einordnung</th><th>Phase</th><th>Partner-Skill</th><th>Arbeits-Eignung</th><th>Warum / beste Nutzung</th><th>Fundort</th><th>Quellenstatus</th></tr></thead>
                     <tbody id="palsTableBody"></tbody>
                 </table>
+            </div>
+            </div>
+
+            <div id="jobTierlistPanel" class="pal-panel" role="tabpanel">
+                <div class="job-tierlist-header">
+                    <div>
+                        <p class="section-eyebrow">PATCH 1.0+ · META-PRAXIS</p>
+                        <h2>Die besten Pals je Job</h2>
+                        <p>Bewertet werden nicht nur Arbeitslevel, sondern auch Laufgeschwindigkeit, Platzbedarf, Zuverlässigkeit und Community-Erfahrung.</p>
+                    </div>
+                    <label class="job-tier-select">Job auswählen
+                        <select id="jobTierSelect" onchange="renderJobTierlist()"></select>
+                    </label>
+                </div>
+                <p id="jobTierlistSummary" class="job-tierlist-summary"></p>
+                <div class="hb-table-wrap">
+                    <table class="hb-table job-tierlist-table">
+                        <thead><tr><th>#</th><th>Pal</th><th>Tier</th><th>Meta-Score</th><th>Arbeitslevel</th><th>Tempo</th><th>Platz</th><th>Community</th><th>Warum?</th></tr></thead>
+                        <tbody id="jobTierlistBody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -674,6 +701,7 @@
 
     <script src="data/bases.js"></script>
     <script src="data/resources.js"></script>
+    <script src="data/job-tierlist.js"></script>
     <script src="data/pals-roster.js"></script>
     <script type="module" src="js/bootstrap.mjs"></script>
 </body>

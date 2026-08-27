@@ -5,13 +5,26 @@
 
         function buildPalDB() {
             const guideData = window.GuideData;
-            if (!guideData?.buildPalDatabase) return {};
             const roster = typeof FULL_PAL_ROSTER !== 'undefined' ? FULL_PAL_ROSTER : [];
-            return guideData.buildPalDatabase(
-                Array.isArray(roster) ? roster : [],
-                guideData.PALS || [],
-                guideData.META_SOURCES || []
-            );
+            if (guideData?.buildPalDatabase) {
+                const database = guideData.buildPalDatabase(roster, guideData.PALS || [], guideData.META_SOURCES || []);
+                if (Object.keys(database).length) return database;
+            }
+            return buildFallbackPalDB(roster);
+        }
+
+        function buildFallbackPalDB(roster) {
+            return Object.fromEntries((Array.isArray(roster) ? roster : []).filter(pal => pal?.name).map(pal => [pal.name, {
+                id: pal.id || pal.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                name: pal.name,
+                aliases: [], image: pal.name,
+                types: Array.isArray(pal.types) ? pal.types : [],
+                tier: pal.tier || null, stages: pal.stage ? [pal.stage] : [],
+                partnerSkill: pal.partnerSkill || null,
+                workSuitability: pal.workSuitability || {}, location: pal.location || null,
+                roles: [], contexts: {}, alternatives: [], upgradeFromIds: [], upgradeToIds: [],
+                active: false, featured: false, sourceStatus: null,
+            }]));
         }
 
         function palRoleSummary(entry) {
@@ -196,6 +209,38 @@
                 </tr>`;
             }).join('');
             applyPalThumbs();
+        }
+
+        function switchPalPanel(panelId, btnEl) {
+            document.querySelectorAll('[data-pal-panel]').forEach(button => button.classList.toggle('active', button === btnEl));
+            document.querySelectorAll('.pal-panel').forEach(panel => panel.classList.toggle('active', panel.id === panelId));
+            if (panelId === 'jobTierlistPanel') renderJobTierlist();
+        }
+
+        function renderJobTierlist() {
+            const select = document.getElementById('jobTierSelect');
+            const body = document.getElementById('jobTierlistBody');
+            const summary = document.getElementById('jobTierlistSummary');
+            const list = window.JOB_TIERLIST || [];
+            if (!select || !body || !list.length) return;
+            if (!select.options.length) {
+                select.innerHTML = list.map(item => `<option value="${item.job}">${item.icon} ${item.job}</option>`).join('');
+            }
+            const job = list.find(item => item.job === select.value) || list[0];
+            select.value = job.job;
+            if (summary) summary.textContent = `${job.icon} ${job.job}: Meta-Score kombiniert Arbeitslevel mit Tempo, Platzbedarf und Community-Praxis.`;
+            body.innerHTML = job.entries.map((entry, index) => `
+                <tr>
+                    <td class="job-rank">${index + 1}</td>
+                    <th scope="row"><strong>${entry.pal}</strong><small>${entry.tier}-Tier</small></th>
+                    <td><span class="job-tier-badge tier-${entry.tier.toLowerCase()}">${entry.tier}</span></td>
+                    <td><strong>${entry.metaScore}</strong><small>/ 100 Meta-Score</small></td>
+                    <td>${entry.workLevel}</td>
+                    <td>${entry.speed}/5</td>
+                    <td>${entry.size}/5</td>
+                    <td>${entry.community}/5</td>
+                    <td class="job-why">${entry.why}</td>
+                </tr>`).join('');
         }
 
         function enablePalDetailInteractions() {
@@ -602,6 +647,7 @@
         applySynergyChipIcons();
         PAL_DB = buildPalDB();
         renderPalsTable();
+        renderJobTierlist();
         enablePalDetailInteractions();
         enableChipTooltips();
 

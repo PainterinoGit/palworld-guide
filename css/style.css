@@ -1573,7 +1573,29 @@
             .resource-database { padding: 1rem; }
             .resource-database-header { align-items: flex-start; flex-direction: column; gap: .8rem; }
             .resource-source-link { white-space: normal; }
+            .job-tierlist-header { align-items: flex-start; flex-direction: column; }
+            .job-tier-select { width: 100%; }
         }
+
+        .pal-panel-tabs { display: flex; flex-wrap: wrap; gap: .55rem; margin: 1.25rem 0 1rem; padding-bottom: .85rem; border-bottom: 1px solid var(--border); }
+        .pal-panel { display: none; }
+        .pal-panel.active { display: block; }
+        .pal-panel-tabs .filter-chip { margin: 0; }
+        .job-tierlist-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.25rem; margin: .5rem 0 .75rem; }
+        .job-tierlist-header h2 { margin: .1rem 0 .45rem; }
+        .job-tierlist-header p:not(.section-eyebrow) { max-width: 720px; margin: 0; color: var(--text-secondary); line-height: 1.5; }
+        .job-tier-select { display: grid; gap: .35rem; min-width: 190px; color: var(--text-secondary); font-size: .75rem; font-weight: 700; }
+        .job-tier-select select { padding: .7rem .8rem; border: 1px solid var(--border); border-radius: 9px; color: var(--text-primary); background: var(--card-bg); }
+        .job-tierlist-summary { margin: 0 0 .8rem; padding: .65rem .8rem; border-left: 3px solid #818cf8; border-radius: 0 8px 8px 0; color: var(--text-secondary); background: rgba(99, 102, 241, .08); font-size: .8rem; }
+        .job-tierlist-table { min-width: 980px; }
+        .job-tierlist-table th, .job-tierlist-table td { vertical-align: top; }
+        .job-tierlist-table tbody th strong, .job-tierlist-table tbody th small, .job-tierlist-table td strong, .job-tierlist-table td small { display: block; }
+        .job-tierlist-table tbody th small, .job-tierlist-table td small { margin-top: .18rem; color: var(--text-tertiary); font-size: .68rem; font-weight: 500; }
+        .job-rank { width: 2rem; color: #a5b4fc !important; font-size: 1.05rem !important; font-weight: 800 !important; }
+        .job-tier-badge { display: inline-block; min-width: 1.7rem; padding: .25rem .45rem; border-radius: 6px; text-align: center; font-weight: 800; }
+        .job-tier-badge.tier-s { color: #fecaca; background: rgba(239, 68, 68, .2); }
+        .job-tier-badge.tier-a { color: #fed7aa; background: rgba(249, 115, 22, .2); }
+        .job-why { min-width: 300px; color: var(--text-secondary); }
 
         /* ===== Handbook Tab ===== */
         .subnav {
