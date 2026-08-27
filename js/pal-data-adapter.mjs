@@ -6,6 +6,7 @@ const GOAL_CONTEXTS = {
   mount: 'roaming',
   upgrade: 'progression',
 };
+const CAPTURE_ROLES = new Set(['capture', 'fang', 'catch', 'capture-support', 'support', 'damage', 'utility']);
 
 const unique = values => [...new Set(values.filter(Boolean))];
 
@@ -120,13 +121,17 @@ function resolveTargetNames(values, targetNames) {
   return asArray(values).map(value => targetNames.get(String(value).toLowerCase()) || value);
 }
 
+function resolveExistingTargetIds(values, targetNames) {
+  return asArray(values).filter(value => targetNames.has(String(value).toLowerCase()));
+}
+
 function applyCurrentMeta(entry, pal, targetNames, sourceCatalog) {
   validateActiveMeta(pal);
   const contexts = Object.fromEntries(CONTEXT_KEYS.map(key => [key, { ...pal[key], roles: [...pal[key].roles] }]));
   const roles = unique(CONTEXT_KEYS.flatMap(key => contexts[key].roles));
   const alternativeIds = asArray(pal.alternatives);
-  const upgradeFromIds = asArray(pal.upgradeFrom);
-  const upgradeToIds = asArray(pal.upgradeTo);
+  const upgradeFromIds = resolveExistingTargetIds(pal.upgradeFrom, targetNames);
+  const upgradeToIds = resolveExistingTargetIds(pal.upgradeTo, targetNames);
 
   return {
     ...entry,
@@ -210,10 +215,10 @@ export function matchesPalGoal(entry, goal) {
     );
   }
   if (goal === 'fang') {
-    return Boolean(entry.contexts?.combat?.roles?.some(role => ['counter', 'support'].includes(role)));
+    return Boolean(entry.contexts?.combat?.roles?.some(role => CAPTURE_ROLES.has(role)));
   }
   if (goal === 'upgrade') {
-    return Boolean(entry.active && (entry.upgradeFromIds?.length || entry.upgradeToIds?.length || entry.contexts?.progression));
+    return Boolean(entry.active && (entry.upgradeFromIds?.length || entry.upgradeToIds?.length));
   }
   const contextKey = GOAL_CONTEXTS[goal];
   return Boolean(contextKey && entry.contexts?.[contextKey]?.roles?.length);

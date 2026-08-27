@@ -131,6 +131,10 @@ assert.equal(matchesPalGoal(alpha, 'worker'), true, 'Workerfilter muss Base-Roll
 assert.equal(matchesPalGoal(alpha, 'mount'), true, 'Mountfilter muss Roaming-Rollen verwenden');
 assert.equal(matchesPalGoal(beta, 'combat'), true, 'Support-Pals müssen im Kampffilter bleiben');
 assert.equal(matchesPalGoal(beta, 'worker'), true, 'Arbeitsrollen müssen im Workerfilter bleiben');
+assert.equal(matchesPalGoal(alpha, 'fang'), true, 'Fangfilter muss vorhandene Combat-Schadensrollen als Fangsemantik nutzen');
+assert.equal(matchesPalGoal(beta, 'fang'), true, 'Fangfilter muss vorhandene Combat-Supportrollen als Fangsemantik nutzen');
+assert.equal(matchesPalGoal(beta, 'upgrade'), false, 'Upgradefilter darf Progressionsdaten ohne Upgrade-Beziehung nicht akzeptieren');
+assert.equal(matchesPalGoal(alpha, 'upgrade'), true, 'Upgradefilter muss echte Upgrade-Beziehungen akzeptieren');
 
 assert.equal(alpha.sourceStatus.patchScope, 'Patch 1.0+');
 assert.equal(alpha.sourceStatus.checkedAt, '2026-08-27');
@@ -170,6 +174,14 @@ assert.equal(neutralDatabase.Neutral.active, false);
 assert.equal(neutralDatabase.Neutral.featured, false);
 assert.equal(neutralDatabase.Neutral.note, undefined, 'neutrale Referenz darf keinen alten Empfehlungstext aktivieren');
 assert.deepEqual(neutralDatabase.Neutral.roles, [], 'neutrale Roster-Rollen dürfen keine aktuellen Filterrollen vortäuschen');
+
+const orphanUpgradeDatabase = buildPalDatabase(
+  roster,
+  [{ ...currentBeta, upgradeFrom: ['missing-pal'], upgradeTo: [] }],
+  sourceCatalog,
+);
+assert.deepEqual(orphanUpgradeDatabase.Beta.upgradeFromIds, [], 'unaufgelöste Upgrade-IDs dürfen keine Beziehung vortäuschen');
+assert.equal(matchesPalGoal(orphanUpgradeDatabase.Beta, 'upgrade'), false, 'unaufgelöste Upgrade-IDs dürfen nicht als Upgrade gelten');
 
 assert.throws(
   () => buildPalDatabase(roster, [{ ...currentAlpha, whyGood: '' }], sourceCatalog),

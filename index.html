@@ -1858,11 +1858,11 @@
             <p class="pal-meta-banner"><strong>Patch 1.0+</strong> · geprüft am 2026-08-27 · Quellenstatus und Detailansicht sind pro Pal verlinkt.</p>
 
             <div class="pals-filter-bar">
-                <input type="text" id="palSearchInput" class="pals-search" placeholder="🔍 Pal suchen…" oninput="filterPalsTable()">
-                <select id="palTypeFilter" class="pals-select" onchange="filterPalsTable()">
+                <input type="text" id="palSearchInput" class="pals-search" aria-label="Pal-Suche" placeholder="🔍 Pal suchen…" oninput="filterPalsTable()">
+                <select id="palTypeFilter" class="pals-select" aria-label="Pal-Typ filtern" onchange="filterPalsTable()">
                     <option value="all">Alle Typen</option>
                 </select>
-                <select id="palSortSelect" class="pals-select" onchange="filterPalsTable()">
+                <select id="palSortSelect" class="pals-select" aria-label="Pals sortieren" onchange="filterPalsTable()">
                     <option value="name">Sortieren: Name (A–Z)</option>
                     <option value="tier">Sortieren: Tier (S→C)</option>
                 </select>

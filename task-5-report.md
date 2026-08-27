@@ -24,3 +24,11 @@ Implementiert. Die Pal-Datenbank baut sich jetzt aus dem vollständigen neutrale
 ## Bedenken
 
 `python -m http.server` liefert `.mjs` als `text/plain` und blockiert Module bei strikter MIME-Prüfung. Die Laufzeitprüfung wurde deshalb mit einem temporären MIME-korrekten Node-Server wiederholt. Die Browser-Automation über CDP konnte in dieser Umgebung wegen eines CDP/Chrome-for-Testing-Starts nicht verwendet werden; der direkte Headless-Chrome-Test war erfolgreich.
+
+## Task-5-Review-Follow-up
+
+- `index.html`: Die Pal-Suche sowie Typ- und Sortier-Select besitzen jetzt eindeutige `aria-label`s. Der Viewport erlaubt weiterhin Mobile-Zoom; `maximum-scale=1` und `user-scalable=no` sind nicht gesetzt.
+- `js/pal-data-adapter.mjs`: Der Fangen-Filter nutzt die vorhandene Combat-Semantik (`capture`/`fang`/`catch` sowie `support`, `damage`, `utility`) und ist nicht auf eine nicht vorhandene `counter`-Rolle verengt.
+- Der Upgrade-Filter berücksichtigt ausschließlich auflösbare `upgradeFrom`-/`upgradeTo`-Beziehungen. Ein bloßes Progressionsobjekt oder eine unbekannte Ziel-ID reicht nicht mehr.
+- `tests/pal-data-adapter.test.mjs` und `tests/task-5-review.test.mjs` decken die vier Review-Punkte ab.
+- Nach der Korrektur: 8/8 Node-Tests, alle aufgeführten Syntaxchecks und `git diff --check` erfolgreich.
