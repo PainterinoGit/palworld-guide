@@ -237,7 +237,6 @@
                     <td><div class="suit-chips">${suitHtml}</div>${roleNote}</td>
                     <td class="pal-usage-reason">${usageReason}</td>
                     <td>${escapeHtml(e.location || '—')}</td>
-                    <td>${palSourceStatusHtml(e)}</td>
                 </tr>`;
             }).join('');
             applyPalThumbs();
