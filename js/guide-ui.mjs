@@ -8,13 +8,29 @@ const STORAGE_KEY = 'palworld-level-band';
 const GUIDE_STORAGE_KEY = 'palworld-guide-step';
 const GUIDE_DONE_KEY = 'palworld-guide-done';
 
+export function getChecklistItemKey(stepId, checklistId) {
+  return `${stepId}:${checklistId}`;
+}
+
+export function isGuideStepComplete(step, doneChecklist) {
+  return step.checklist.every(item => doneChecklist.has(getChecklistItemKey(step.id, item.id)));
+}
+
 function readDoneSteps() {
-  try { return new Set(JSON.parse(window.localStorage.getItem(GUIDE_DONE_KEY) || '[]')); }
-  catch { return new Set(); }
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(GUIDE_DONE_KEY) || '[]');
+    return new Set(stored.flatMap(value => {
+      const step = GUIDE_STEPS.find(candidate => candidate.id === value);
+      return step ? step.checklist.map(item => getChecklistItemKey(step.id, item.id)) : [value];
+    }).filter(value => typeof value === 'string'));
+  } catch {
+    return new Set();
+  }
 }
 
 function writeDoneSteps(done) {
-  window.localStorage.setItem(GUIDE_DONE_KEY, JSON.stringify([...done]));
+  window.localStorage.setItem(GUIDE_DONE_KEY, JSON.stringify([...done].sort()));
 }
 
 function renderLevelTimeline(activeId) {
@@ -121,34 +137,40 @@ export function initGuideSteps() {
   const render = () => {
     const step = GUIDE_STEPS.find(item => item.id === activeId) || GUIDE_STEPS[0];
     const done = readDoneSteps();
-    roadmap.innerHTML = GUIDE_STEPS.map((step, index) => `<div class="guide-roadmap-item${step.id === activeId ? ' is-active' : ''}${done.has(step.id) ? ' is-done' : ''}">
+    roadmap.innerHTML = GUIDE_STEPS.map((step, index) => {
+      const complete = isGuideStepComplete(step, done);
+      const completedCount = step.checklist.filter(item => done.has(getChecklistItemKey(step.id, item.id))).length;
+      return `<div class="guide-roadmap-item${step.id === activeId ? ' is-active' : ''}${complete ? ' is-done' : ''}">
       <button class="guide-roadmap-step" type="button" data-guide-step="${step.id}" aria-pressed="${step.id === activeId}">
-        <span class="guide-roadmap-number">${done.has(step.id) ? '✓' : index + 1}</span>
-        <span><strong>${step.levelBandId}</strong><small>${step.goal}</small></span>
+        <span class="guide-roadmap-number">${complete ? '✓' : index + 1}</span>
+        <span><strong>${step.levelBandId}</strong><small>${step.goal} · ${completedCount}/${step.checklist.length} erledigt</small></span>
       </button>
-      <label class="guide-roadmap-check"><input type="checkbox" data-guide-done="${step.id}"${done.has(step.id) ? ' checked' : ''}> erledigt</label>
-    </div>`).join('');
+    </div>`;
+    }).join('');
     roadmap.querySelectorAll('[data-guide-step]').forEach(button => button.addEventListener('click', () => {
       activeId = button.dataset.guideStep;
       window.localStorage.setItem(GUIDE_STORAGE_KEY, activeId);
       render();
     }));
-    roadmap.querySelectorAll('[data-guide-done]').forEach(input => input.addEventListener('change', () => {
-      const nextDone = readDoneSteps();
-      input.checked ? nextDone.add(input.dataset.guideDone) : nextDone.delete(input.dataset.guideDone);
-      writeDoneSteps(nextDone);
-      render();
-    }));
     host.innerHTML = renderGuideStep(step);
+    host.querySelectorAll('[data-guide-checklist]').forEach(input => {
+      input.checked = done.has(input.dataset.guideChecklist);
+      input.addEventListener('change', () => {
+        const nextDone = readDoneSteps();
+        input.checked ? nextDone.add(input.dataset.guideChecklist) : nextDone.delete(input.dataset.guideChecklist);
+        writeDoneSteps(nextDone);
+        render();
+      });
+    });
     window.localStorage.setItem(GUIDE_STORAGE_KEY, step.id);
   };
   render();
 }
 
-if (document.readyState === 'loading') {
+if (typeof document !== 'undefined' && document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initLevelTeams, { once: true });
   document.addEventListener('DOMContentLoaded', initGuideSteps, { once: true });
-} else {
+} else if (typeof document !== 'undefined') {
   initLevelTeams();
   initGuideSteps();
 }
