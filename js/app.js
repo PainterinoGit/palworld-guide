@@ -1,20 +1,5 @@
 // Palworld Guide — application logic (rendering, tabs, interactions)
 
-        function buildPalSuitabilityMap() {
-            const map = {};
-            Object.entries(SKILL_TIERS).forEach(([skillId, data]) => {
-                data.rows.forEach(r => {
-                    const name = r[0];
-                    if (!map[name]) map[name] = {};
-                    if (!map[name][skillId] || map[name][skillId] < r[1]) {
-                        map[name][skillId] = r[1];
-                    }
-                });
-            });
-            return map;
-        }
-        const PAL_SUITABILITY = buildPalSuitabilityMap();
-
         const PAL_STAGE_LABEL = { early: 'Early', mid: 'Mid', late: 'Late' };
         const PAL_STAGE_BADGE_COLOR = { early: '#3B82F6', mid: '#F97316', late: '#8B5CF6' };
 
@@ -46,8 +31,7 @@
         let palsFeaturedOnly = false;
         let palFilterOptionsPopulated = false;
 
-        // Label -> Emoji fuer die Arbeits-Eignungs-Chips in der Pals-Tabelle (Labels matchen die
-        // Skill-Namen aus SKILL_TIERS/FULL_PAL_ROSTER exakt, damit sort-by-skill konsistent bleibt).
+        // Labels für die Arbeits-Eignungs-Chips stammen aus der normalisierten Datenbank.
         const WORK_SUIT_EMOJI = {
             'Handiwork': '🔨', 'Mining': '⛏️', 'Gathering': '🌿', 'Transporting': '📦',
             'Kindling': '🔥', 'Watering': '💧', 'Cooling': '❄️', 'Electricity Generation': '⚡',
@@ -236,39 +220,6 @@
             });
         }
 
-        function renderSkillTable(skillId) {
-            const data = SKILL_TIERS[skillId];
-            const host = document.getElementById('skillTableHost');
-            const rowsHtml = data.rows.map((r, i) => {
-                const known = PAL_SUITABILITY[r[0]] || { [skillId]: r[1] };
-                const suitHtml = Object.entries(known)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([sk, lvl]) => `<span class="suit-chip${sk === skillId ? ' suit-current' : ''}">${SKILL_EMOJI[sk] || '⭐'} ${lvl}</span>`)
-                    .join('');
-                return `
-                <tr>
-                    <td class="hb-name">#${i + 1}</td>
-                    <td class="hb-name"><div class="hb-name-cell"><img class="pal-thumb" src="${palIconUrl(r[0], 28)}" alt="${r[0]}" onerror="this.style.display='none'">${TAG_ICON[r[2]]} ${r[0]}</div></td>
-                    <td><div class="suit-chips">${suitHtml}</div></td>
-                    <td>${r[3] || '—'}</td>
-                </tr>`;
-            }).join('');
-            host.innerHTML = `
-                <div class="hb-table-wrap">
-                    <table class="hb-table">
-                        <thead><tr><th>Rang</th><th>Pal</th><th>Eignung (alle bekannten)</th><th>Hinweis</th></tr></thead>
-                        <tbody>${rowsHtml}</tbody>
-                    </table>
-                </div>
-                <p class="suit-caveat">ℹ️ Zeigt alle Eignungen, in denen dieses Pal irgendwo in unseren Top-15-Listen auftaucht (aktueller Skill hervorgehoben). Pals können zusätzlich niedrigere Eignungen haben, die hier nicht erfasst sind.</p>`;
-        }
-
-        function switchSkillPanel(skillId, btnEl) {
-            document.querySelectorAll('#skillSubnav .subnav-btn').forEach(b => b.classList.remove('active'));
-            btnEl.classList.add('active');
-            renderSkillTable(skillId);
-        }
-
         function setTeamsTheme(theme, btnEl) {
             document.querySelectorAll('#teamsThemeTable .theme-cell').forEach(c => c.classList.remove('active'));
             if (btnEl) btnEl.classList.add('active');
@@ -277,110 +228,6 @@
             if (panel) panel.style.display = 'block';
         }
 
-
-        function getNextTower(selected) {
-            if (selected.boss) return selected;
-            const idx = QUESTS.indexOf(selected);
-            return QUESTS.slice(idx + 1).find(q => q.boss) || null;
-        }
-
-        function loadWegweiserState() {
-            const fallback = { doneIds: ['tutorial', 'turm1', 'turm2'], selectedId: 'turm3' };
-            try {
-                const raw = localStorage.getItem('palworld-wegweiser-state');
-                if (!raw) return fallback;
-                const parsed = JSON.parse(raw);
-                if (!parsed || !Array.isArray(parsed.doneIds)) return fallback;
-                return parsed;
-            } catch (e) {
-                return fallback;
-            }
-        }
-
-        function saveWegweiserState(state) {
-            try {
-                localStorage.setItem('palworld-wegweiser-state', JSON.stringify(state));
-            } catch (e) { /* private mode / storage unavailable – state just won't persist */ }
-        }
-
-        let wgState = loadWegweiserState();
-
-        function renderWegweiser() {
-            const track = document.getElementById('questTrack');
-            track.innerHTML = QUESTS.map(q => {
-                const isDone = wgState.doneIds.includes(q.id);
-                const isSelected = wgState.selectedId === q.id;
-                const icon = isDone ? '✓' : (isSelected ? '●' : '○');
-                const cls = ['quest-phase', isDone ? 'done' : '', isSelected ? 'selected current' : ''].filter(Boolean).join(' ');
-                return `<div class="${cls}" onclick="selectQuest('${q.id}')">
-                    <span class="qp-icon" title="Als erledigt markieren" onclick="event.stopPropagation(); toggleQuestDone('${q.id}')">${icon}</span>
-                    <span class="qp-body qp-label">${q.title}${q.sub ? `<br><small>${q.sub}</small>` : ''}</span>
-                </div>`;
-            }).join('');
-
-            const active = QUESTS.find(q => q.id === wgState.selectedId) || QUESTS[0];
-            const nextTower = getNextTower(active);
-            const chips = arr => arr.map(p => `<span class="synergy-chip">${p}</span>`).join('');
-
-            const towerHtml = nextTower && nextTower.boss
-                ? `<div class="wg-boss-name">${nextTower.boss.name}</div>
-                   <div class="wg-boss-meta">Lvl ${nextTower.boss.level} · ${nextTower.boss.type}</div>
-                   <div class="wg-boss-weak">Schwach gegen: <strong>${nextTower.boss.weak}</strong></div>`
-                : `<p class="wg-card-note">Kein weiterer Turm mehr offen – Postgame-Content.</p>`;
-
-            document.getElementById('questDetailHost').innerHTML = `
-                <p class="qd-jump-hint">💡 Symbol links = abhaken. Name anklicken = zu dieser Quest springen.</p>
-                <div class="wg-dashboard">
-                    <div class="wg-card">
-                        <div class="wg-card-title">⚔️ Kampf-Team</div>
-                        <div class="synergy-pals">${chips(active.combatTeam)}</div>
-                        <p class="wg-card-note">${active.combatNote}</p>
-                        <button class="wg-jump-btn" onclick="switchTab('teams', 'kampf-synergie')">→ Team-Synergien ansehen</button>
-                    </div>
-                    <div class="wg-card">
-                        <div class="wg-card-title">🏭 Base-Team</div>
-                        <div class="synergy-pals">${chips(active.baseTeam)}</div>
-                        <p class="wg-card-note">${active.baseNote}</p>
-                        <button class="wg-jump-btn" onclick="switchTab('teams', 'base-stage')">→ Base Worker ansehen</button>
-                    </div>
-                    <div class="wg-card">
-                        <div class="wg-card-title">📋 Nächste Schritte</div>
-                        <ul class="wg-steps">${active.nextSteps.map(s => `<li>${s}</li>`).join('')}</ul>
-                    </div>
-                    <div class="wg-card">
-                        <div class="wg-card-title">🗼 Nächster Turm</div>
-                        ${towerHtml}
-                    </div>
-                </div>`;
-            applySynergyChipIcons();
-            enableChipTooltips();
-        }
-
-        function selectQuest(id) {
-            wgState.selectedId = id;
-            saveWegweiserState(wgState);
-            renderWegweiser();
-        }
-
-        function toggleQuestDone(id) {
-            const i = wgState.doneIds.indexOf(id);
-            if (i >= 0) {
-                wgState.doneIds.splice(i, 1);
-            } else {
-                wgState.doneIds.push(id);
-                const idx = QUESTS.findIndex(q => q.id === id);
-                const next = QUESTS[idx + 1];
-                if (next) wgState.selectedId = next.id;
-            }
-            saveWegweiserState(wgState);
-            renderWegweiser();
-        }
-
-        function resetWegweiser() {
-            wgState = { doneIds: [], selectedId: QUESTS[0].id };
-            saveWegweiserState(wgState);
-            renderWegweiser();
-        }
 
         let currentLocationLayer = 'base';
         let currentFilter = 'all';
@@ -673,7 +520,6 @@
 
         renderPhotoPins();
         renderLocationList('all');
-        renderWegweiser();
         applyPalVisuals();
         applyPalThumbs();
         applySynergyChipIcons();

@@ -198,3 +198,9 @@ Die vom Nutzer gelieferten Videos wurden am 27.08.2026 über `yt-dlp` geprüft. 
 | [Top 10 Overpowered Pals](https://www.youtube.com/watch?v=dmDCXW1-j14) | Vilestride | allgemeine Overpowered-Picks | EN verfügbar |
 
 Die Videoaussagen bestätigen die Rollenlogik der schriftlichen Quellen, ersetzen aber keine Spieldaten. Aussagen wie „beste“, „unendlich“ oder konkrete Schadenswerte werden nur als Praxiserfahrung markiert, bis sie durch Patchdaten, Work-Suitability oder reproduzierbare Tests gestützt sind.
+
+## Finale Migration in Task 6
+
+Die Abschlussprüfung am 27.08.2026 hat die alte statische Team-/Base-Bibliothek, die unquellengestützten Endgame-/Booster-/Community-Builds, die Mount-/Transport-Tierlisten, konkrete alte Zuchtketten sowie die Patch-1.0-Rangleiter aus der aktiven HTML-Oberfläche entfernt. `data/skills.js` und `data/quests.js` wurden gelöscht, weil sie über `app.js` beziehungsweise den alten Wegweiser konkurrierende Empfehlungspfade bereitstellten.
+
+`data/pals-roster.js` bleibt als neutrale Referenz für Suche, Icons und Basisdaten erhalten. Aktive Featured-Pals, Gründe, Alternativen, Wechselhinweise und Quellenstatus kommen ausschließlich aus `data/pals.mjs` und werden über den Adapter validiert. Die vollständige Retain/Replace/Remove-Matrix steht in `docs/pal-meta-1.0-migration.md`.
