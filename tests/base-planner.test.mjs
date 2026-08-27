@@ -18,11 +18,16 @@ const production = twoBasePlan.bases[0];
 const breeding = twoBasePlan.bases[1];
 assert.equal(production.workers.length, 12, 'Produktionsbase plant alle 12 Worker-Slots');
 assert.equal(breeding.workers.length, 12, 'Breedingbase plant alle 12 Worker-Slots');
+assert.ok(production.workers.every(worker => /Monitoring:/i.test(worker)), 'Produktionsbase erklärt die Monitoring-Einstellung je Worker');
+assert.ok(breeding.workers.every(worker => /Monitoring:/i.test(worker)), 'Breedingbase erklärt die Monitoring-Einstellung je Worker');
 assert.match(production.workers.join(' · '), /Reserve/i, 'Produktionsbase kennzeichnet Reserve-Worker');
 assert.match(breeding.workers.join(' · '), /Ranch-Reserve/i, 'Breedingbase kennzeichnet Ranch-Reserve');
 assert.match(production.buildings, /2× Beerenplantage.*2× Salatplantage/i, 'Produktionsbase nennt konkrete Futterplantagen');
 assert.match(breeding.buildings, /2× Weizenplantage.*1× Beerenplantage/i, 'Breedingbase nennt konkrete Kuchenplantagen');
 assert.match(breeding.workers.join(' · '), /2× Chikipi.*2× Mozzarina.*2× Beegarde/i, 'Breedingbase nennt Ranch-Pals mit Mengen');
 assert.match(breeding.note, /Kuchenproduktion/i, 'Breedingbase erklärt den Produktionszweck');
+const threeBasePlan = getBasePlan(3);
+assert.ok(threeBasePlan.bases.every(base => base.workers.length === 15), 'jede Base im 3-Basen-Layout plant 15 Worker-Slots');
+assert.ok(threeBasePlan.bases.every(base => base.workers.every(worker => /Monitoring:/i.test(worker))), '3-Basen-Layout erklärt die Monitoring-Einstellung je Worker');
 
 console.log('base planner data contract: ok');
