@@ -32,12 +32,16 @@ const ACTIVE_TASK_UPDATES = {
   'Eine Base: kompakter Allrounder': [
     ['Watering', '1× Shaolong · Watering 8 — Monitoring: nur Watering aktiv; bei den Plantagen lassen'],
     ['Gathering', '1× Dandilord · Gathering 5 — Monitoring: nur Gathering aktiv; bei Plantagen und Sammelbereich lassen'],
+    ['Medicine Production', '1× Silvance · Medicine Production 8 — Monitoring: nur Medicine Production aktiv; Clinic zuweisen'],
+    ['Braloha', '1× Braloha · Breeding-Support — Monitoring: direkt den Breeding Farms zuweisen; kein anderer Job aktiv'],
   ],
   'Zwei Basen: Produktion + Zucht': [
     ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
     ['Breeding- & Ranchbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich der Plantagen zuweisen']],
     ['Breeding- & Ranchbase', ['Vixy · Ranch-Reserve', '1× Orserk · Electricity — Monitoring: nur Electricity aktiv; Strombereich zuweisen']],
     ['Breeding- & Ranchbase', ['Cremis · Ranch-Reserve', '1× Braloha · Farming/Ranch — Monitoring: nur Farming/Ranch aktiv; allen Breeding Farms zuweisen']],
+    ['Breeding- & Ranchbase', ['Dandilord · Planting', '1× Dandilord · Planting / Gathering 8/5 — Monitoring: nur Planting und Gathering aktiv; Weizen- und Beerenplantagen zuweisen']],
+    ['Breeding- & Ranchbase', ['Lyleen · Gathering', '1× Silvance · Medicine Production 8 — Monitoring: nur Medicine Production aktiv; Clinic zuweisen']],
   ],
   'Drei Basen: spezialisiert und wartungsarm': [
     ['Produktionsbase', ['Planting-Reserve', '1× Lyleen · Gathering 2 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
@@ -46,6 +50,9 @@ const ACTIVE_TASK_UPDATES = {
     ['Breeding- & Ranchbase', ['Handiwork-Reserve', '1× Solenne · Gathering 4 — Monitoring: nur Gathering aktiv; Sammelbereich priorisieren']],
     ['Breeding- & Ranchbase', ['Orserk · Electricity-Reserve', '1× Orserk · Electricity — Monitoring: nur Electricity aktiv; Strombereich zuweisen']],
     ['Breeding- & Ranchbase', ['Lyleen · Planting-Reserve', '1× Braloha · Farming/Ranch — Monitoring: nur Farming/Ranch aktiv; allen Breeding Farms zuweisen']],
+    ['Produktionsbase', ['Cremis · Food-Reserve', '1× Silvance · Medicine Production 8 — Monitoring: nur Medicine Production aktiv; Clinic zuweisen']],
+    ['Ressourcenbase', ['Tanzee · Lumbering-Reserve', '1× Silvance · Medicine Production 8 — Monitoring: nur Medicine Production aktiv; Clinic zuweisen']],
+    ['Breeding- & Ranchbase', ['Vixy · Ranch-Reserve', '1× Silvance · Medicine Production 8 — Monitoring: nur Medicine Production aktiv; Clinic zuweisen']],
   ],
 };
 
@@ -66,6 +73,22 @@ Object.entries(ACTIVE_TASK_UPDATES).forEach(([planTitle, updates]) => {
     }
   });
 });
+
+const FLEX_WORKER = '1× Flex-Slot · variabel — Monitoring: aus; bei einem konkreten Engpass mit einem passenden Pal besetzen';
+const FLEX_PATTERNS = [
+  /(?:Vixy|Cremis|Cattiva|Lifmunk|Tanzee).*Reserve|Backup/i,
+  /Reserve II/i,
+];
+
+Object.values(BASE_PLANS).forEach(plan => plan.bases.forEach(base => {
+  base.workers = base.workers.map(worker => FLEX_PATTERNS.some(pattern => pattern.test(worker)) ? FLEX_WORKER : worker);
+  base.workers = base.workers.map(worker => worker.includes('Braloha')
+    ? '1× Braloha · Breeding-Support — Monitoring: direkt den Breeding Farms zuweisen; kein anderer Job aktiv'
+    : worker);
+}));
+
+const twoBaseBreeding = BASE_PLANS[2].bases.find(base => base.name === 'Breeding- & Ranchbase');
+if (twoBaseBreeding) twoBaseBreeding.note = '12 Worker-Slots: Ranch-Pals, Braloha und der Clinic-Kern dauerhaft aktiv lassen. Flex-Slots nur bei einem konkreten Engpass besetzen. Kuchenproduktion: Weizen → Mehl plus Beeren.';
 
 export { BASE_PLANS };
 export function getBasePlan(baseCount) {

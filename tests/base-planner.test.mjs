@@ -37,12 +37,15 @@ for (const plan of Object.values(BASE_PLANS)) {
     assert.ok(base.workers.some(worker => /Watering/i.test(worker) && !/Reserve|Watering aus/i.test(worker)), `${base.name}: aktiver Watering-Worker fehlt`);
     assert.ok(base.workers.some(worker => /Gathering/i.test(worker) && !/Reserve|Gathering aus/i.test(worker)), `${base.name}: aktiver Gathering-Worker fehlt`);
     assert.ok(base.workers.some(worker => /Electricity/i.test(worker) && !/Reserve|Electricity aus/i.test(worker)), `${base.name}: aktiver Electricity-Worker fehlt`);
+    assert.ok(base.workers.some(worker => /Medicine Production/i.test(worker) && !/Reserve|Medicine Production aus/i.test(worker)), `${base.name}: aktiver Clinic-Worker fehlt`);
+    assert.doesNotMatch(base.workers.join(' · '), /(?:Vixy|Cremis|Cattiva|Lifmunk|Tanzee).*Reserve/i, `${base.name}: schwacher Reserve-Pal bleibt nicht fest eingeplant`);
   }
 }
 for (const plan of [getBasePlan(2), getBasePlan(3)]) {
   const breedingBase = plan.bases.find(base => /Breeding/i.test(base.name));
-  assert.match(breedingBase.workers.join(' · '), /Braloha.*Monitoring: nur Farming\/Ranch aktiv.*Breeding Farm/i, `${plan.baseCount}-Basen-Breedingbase nennt Braloha als aktiven Zucht-Worker`);
+  assert.match(breedingBase.workers.join(' · '), /Braloha.*Breeding-Support.*kein anderer Job aktiv/i, `${plan.baseCount}-Basen-Breedingbase nennt Braloha als separaten Zucht-Support`);
 }
+assert.match(getBasePlan(3).bases.flatMap(base => base.workers).join(' · '), /Flex-Slot/i, '3-Basen-Layout hält variable Slots offen');
 const allBuildingText = Object.values(BASE_PLANS).flatMap(plan => plan.bases.map(base => base.buildings)).join(' ');
 for (const building of ['Palbox', 'Futterbox', 'Betten', 'Heiße Quelle', 'Monitoring Stand', 'Lager', 'Klinik', 'Mühle', 'Breeding Farm|Ancient Hatchery']) {
   assert.match(allBuildingText, new RegExp(building, 'i'), `Gebäude & Layout nennt ${building}`);
