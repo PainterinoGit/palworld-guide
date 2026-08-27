@@ -39,3 +39,22 @@ Die weitergehende CLI-Interaktion ist als Bedenken offen: Nach dem Klick auf „
 - Der neutrale Roster enthält weiterhin historische Tierwerte als Referenzspalten. Sie werden nicht als aktuelle Empfehlung verwendet; die Migration dokumentiert diese Grenze.
 - Allgemeine Handbuch-Mechaniktexte bleiben bestehen. Eine separate Quellenprüfung dieser nicht empfehlungsbezogenen Mechanik ist ein eigener Folgepunkt.
 - Es gab keine Subagenten und kein Deployment.
+
+## Finale Blocker-Fixes
+
+Nach dem Whole-Branch-Review wurden die verbliebenen Integrationsfehler behoben:
+
+- `#teams`, `#pals`, `#locations` und `#handbook` sind wieder gleichrangige Tab-Container. Die fehlenden Schließungen für Teams sowie die verschachtelten Handbuch-Unterpanels wurden ergänzt.
+- `data/pals-roster.js` wird vor `js/bootstrap.mjs` geladen. Der neutrale Vollroster enthält 288 Einträge; `buildPalDatabase()` lädt damit wieder 288 Datensätze und überlagert aktive Meta-Pals weiterhin mit `active`/`featured`.
+- `tests/final-fix-regression.test.mjs` prüft Tab-Container-Nesting, alle `switchTab()`-Ziele, die Reihenfolge der Roster-Einbindung und die erwartete Vollroster-Größe inklusive Meta-Priorität.
+
+## Finale Verifikation
+
+Erfolgreich ausgeführt:
+
+- Alle 10 Node-Tests unter `tests/*.test.mjs`, einschließlich `final-fix-regression.test.mjs`
+- `node --check` für alle JavaScript-/ES-Modul-Dateien einschließlich `data/pals-roster.js`
+- `git diff --check` (nur die bestehende LF/CRLF-Normalisierungswarnung)
+- Temporärer MIME-korrekter lokaler Server: `index.html` antwortet mit `200 text/html`; `.js` und `.mjs` antworten mit `200 text/javascript; charset=utf-8`
+
+Die interaktive Browser-QA war in dieser Umgebung blockiert: `agent-browser open` lieferte reproduzierbar `CDP response channel closed`, auch bei `https://example.com`. Der direkte Chrome-Headless-Fallback meldete einmal `GPU process isn't usable` und hing im alternativen Modus bis zum 30-Sekunden-Timeout. Es wurde kein Deployment ausgeführt.
