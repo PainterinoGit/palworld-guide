@@ -130,24 +130,56 @@
         }
 
         function palDetailsHtml(entry, goal) {
-            const details = window.GuideData?.getPalDetails?.(entry, goal);
-            if (!details) return '';
-            const alternatives = details.alternatives?.length ? details.alternatives.join(', ') : 'Keine Alternative hinterlegt.';
-            const reason = details.reason || 'Neutrale Referenz – keine aktuelle Meta-Empfehlung hinterlegt.';
-            const bestFor = details.bestFor || 'Keine aktuelle beste Nutzung hinterlegt.';
-            const switchWhen = details.switchWhen || 'Kein aktueller Wechselhinweis hinterlegt.';
-            return `
-                <div class="pal-detail-popover" id="pal-detail-${escapeHtml(entry.id)}" role="region" aria-label="Details zu ${escapeHtml(entry.name)}">
-                    <img class="pal-detail-image" src="${escapeHtml(palImageUrl(details.image))}" alt="${escapeHtml(entry.name)}" loading="lazy" onerror="this.style.display='none'">
-                    <div class="pal-detail-copy">
-                        <strong>Fundort</strong><p>${escapeHtml(details.location)}</p>
-                        <strong>Einsatzgrund</strong><p>${escapeHtml(reason)}</p>
-                        <strong>Beste Nutzung</strong><p>${escapeHtml(bestFor)}</p>
-                        <strong>Alternativen</strong><p>${escapeHtml(alternatives)}</p>
-                        <strong>Wechselhinweis</strong><p>${escapeHtml(switchWhen)}</p>
-                        <div class="pal-detail-source">${palSourceStatusHtml(entry)}</div>
-                    </div>
-                </div>`;
+            return '';
+        }
+
+        function captureMapPreview(location = '') {
+            const text = String(location).toLowerCase();
+            const zones = [
+                [/windswept|plateau|starting|grass|rayne/, 55, 53],
+                [/desert|dunes|sand/, 69, 39],
+                [/volcan|obsidian/, 31, 67],
+                [/snow|frost|astral|glacial/, 51, 20],
+                [/sakurajima|island|coast|sea/, 75, 67],
+                [/feybreak|world tree|sky island/, 84, 30],
+            ];
+            const match = zones.find(([pattern]) => pattern.test(text));
+            if (match) return { left: match[1], top: match[2], approximate: true };
+            let hash = 0;
+            for (const char of text) hash = (hash * 31 + char.charCodeAt(0)) % 997;
+            return { left: 25 + hash % 55, top: 22 + (hash * 7) % 52, approximate: true };
+        }
+
+        function positionPalCaptureTooltip(trigger) {
+            const tooltip = document.getElementById('palCaptureTooltip');
+            if (!tooltip?.classList.contains('visible')) return;
+            const rect = tooltip.getBoundingClientRect();
+            const triggerRect = trigger?.getBoundingClientRect();
+            const offset = 14;
+            let x = triggerRect ? triggerRect.right + offset : 24;
+            let y = triggerRect ? triggerRect.top : 24;
+            if (x + rect.width > window.innerWidth - 8) x = (triggerRect?.left || window.innerWidth) - rect.width - offset;
+            if (y + rect.height > window.innerHeight - 8) y = window.innerHeight - rect.height - 8;
+            tooltip.style.left = `${Math.max(8, x)}px`;
+            tooltip.style.top = `${Math.max(8, y)}px`;
+        }
+
+        function showPalCaptureTooltip(entry, trigger) {
+            const tooltip = document.getElementById('palCaptureTooltip');
+            const details = window.GuideData?.getPalDetails?.(entry, palsGoalFilter) || {};
+            const location = details.location || entry.location || 'Fundort nicht dokumentiert';
+            const point = captureMapPreview(location);
+            tooltip.innerHTML = `<div class="pal-capture-map" role="img" aria-label="Ungefähre Fangregion für ${escapeHtml(entry.name)}"><span class="pal-capture-dot" style="left:${point.left}%;top:${point.top}%"></span></div><div class="pal-capture-copy"><strong>${escapeHtml(entry.name)}</strong><span>📍 ${escapeHtml(location)}</span><small>Ungefähre Fangregion – für exakte Spawns die Fundortdaten öffnen.</small></div>`;
+            tooltip.classList.add('visible');
+            tooltip.setAttribute('aria-hidden', 'false');
+            positionPalCaptureTooltip(trigger);
+        }
+
+        function hidePalCaptureTooltip() {
+            const tooltip = document.getElementById('palCaptureTooltip');
+            if (!tooltip) return;
+            tooltip.classList.remove('visible');
+            tooltip.setAttribute('aria-hidden', 'true');
         }
 
         function renderPalsTable() {
@@ -191,7 +223,7 @@
                 const detailId = `pal-detail-${e.id}`;
                 return `
                 <tr>
-                    <td class="hb-name pal-name-cell" data-pal="${escapeHtml(e.name)}">
+                    <td class="hb-name pal-name-cell" data-pal="${escapeHtml(e.name)}" data-pal-id="${escapeHtml(e.id)}">
                         <button class="pal-detail-trigger" type="button" aria-expanded="false" aria-controls="${escapeHtml(detailId)}">
                             <img class="pal-db-thumb" src="${escapeHtml(palIconUrl(imageName, 32))}" alt="" loading="lazy" onerror="this.style.display='none'">
                             <span>${featuredMark}${escapeHtml(e.name)}</span>
@@ -252,8 +284,28 @@
                 if (!trigger) return;
                 const cell = trigger.closest('.pal-name-cell');
                 const isOpen = cell.classList.toggle('is-open');
+                const entry = Object.values(PAL_DB).find(item => item.id === cell.dataset.palId);
                 trigger.setAttribute('aria-expanded', String(isOpen));
+                if (entry && isOpen) showPalCaptureTooltip(entry, trigger); else hidePalCaptureTooltip();
             });
+            body.addEventListener('mouseover', event => {
+                const trigger = event.target.closest('.pal-detail-trigger');
+                if (!trigger || trigger.contains(event.relatedTarget)) return;
+                const cell = trigger.closest('.pal-name-cell');
+                const entry = Object.values(PAL_DB).find(item => item.id === cell?.dataset.palId);
+                if (entry) showPalCaptureTooltip(entry, trigger);
+            });
+            body.addEventListener('mouseout', event => {
+                const trigger = event.target.closest('.pal-detail-trigger');
+                if (trigger && !trigger.contains(event.relatedTarget) && !trigger.closest('.pal-name-cell')?.classList.contains('is-open')) hidePalCaptureTooltip();
+            });
+            body.addEventListener('focusin', event => {
+                const trigger = event.target.closest('.pal-detail-trigger');
+                const cell = trigger?.closest('.pal-name-cell');
+                const entry = Object.values(PAL_DB).find(item => item.id === cell?.dataset.palId);
+                if (entry) showPalCaptureTooltip(entry, trigger);
+            });
+            body.addEventListener('focusout', () => { if (!body.querySelector('.pal-name-cell.is-open')) hidePalCaptureTooltip(); });
             body.addEventListener('keydown', event => {
                 if (event.key !== 'Escape') return;
                 const cell = event.target.closest('.pal-name-cell');
@@ -261,6 +313,7 @@
                 if (!trigger) return;
                 cell.classList.remove('is-open');
                 trigger.setAttribute('aria-expanded', 'false');
+                hidePalCaptureTooltip();
                 trigger.focus();
             });
         }
