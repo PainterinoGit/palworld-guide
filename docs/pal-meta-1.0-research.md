@@ -16,6 +16,22 @@ Die 1.0-Änderung hebt die Work-Suitability-Obergrenze auf 10 und bringt neue Le
 
 ## Quellen und Gewichtung
 
+### Zentraler Quellen-/Versionsvertrag
+
+Der verbindliche Metastand ist **Patch 1.0+**, geprüft am **2026-08-27**. Das bedeutet: Die Quellen dürfen aktuelle 1.0+-Rollen und Empfehlungen stützen, behaupten aber nicht automatisch, dass jede Aussage exklusiv aus Patch 1.0.3 stammt. Eine konkrete Patchbehauptung braucht zusätzlich die passende Patchquelle.
+
+Der maschinenlesbare Katalog liegt in `data/meta-sources.mjs`. Jede aktive Quelle besitzt dort eine stabile ID, URL, Quellentyp, `checkedAt`, Scope, Vertrauensstufe und eine kurze eigene Nutzenaussage. Erlaubte Quellentypen sind `official`, `data`, `editorial` und `video`; der Integritätsvertrag wird mit `node tests/source-integrity.test.mjs` geprüft.
+
+Die Vertrauensstufen werden so verwendet:
+
+- `official`: Patch- und Mechanikfakten aus offizieller Dokumentation beziehungsweise dem offiziellen Releasekontext.
+- `structured-data`: strukturierte Werte wie Raw-Stats und Work-Suitability, nicht automatisch eine vollständige Kampfwertung.
+- `single-editorial`: vorsichtige redaktionelle Empfehlung, die mit Daten oder weiteren Quellen abgeglichen werden muss.
+- `community-cross-check`: unabhängiger Praxisabgleich aus Videos; Videos ersetzen keine Patch- oder Spieldaten.
+- `cautious-community`: einzelner Praxisimpuls mit begrenzter Aussagekraft.
+
+Für aktive Empfehlungen werden nur die im Katalog registrierten Quellen-IDs verwendet. Transkripte bleiben außerhalb des Repositories; im Katalog und in dieser Recherche stehen nur URLs und kurze eigene Zusammenfassungen.
+
 ### Primär-/Datengrundlage
 
 - [Palworld v1.0 Official Release Changelog (SteamDB-Spiegel)](https://steamdb.info/patchnotes/24088745/): 1.0-Kontext, 72 neue Pals, neu ausbalancierte Werte und größere Systemänderungen.
