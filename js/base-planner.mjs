@@ -66,10 +66,12 @@ function renderBreedingRoutes() {
   </section>`).join('');
 }
 
-function initBasePlanner() {
+export function initBasePlanner() {
   const host = document.getElementById('basePlanHost');
   const controls = document.getElementById('basePlanControls');
   if (!host || !controls) return;
+  if (controls.dataset.basePlannerInitialized) return;
+  controls.dataset.basePlannerInitialized = 'true';
   controls.innerHTML = Object.values(BASE_PLANS).map(plan => `<button class="base-plan-control${plan.baseCount === 2 ? ' active' : ''}" type="button" data-base-count="${plan.baseCount}" aria-pressed="${plan.baseCount === 2}">${plan.baseCount} ${plan.baseCount === 1 ? 'Base' : 'Basen'}</button>`).join('');
   const update = count => {
     const plan = getBasePlan(count);

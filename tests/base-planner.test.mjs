@@ -1,8 +1,17 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { BASE_PLANS, getBasePlan } from '../data/base-plans.mjs';
+const read = file => readFileSync(new URL(file, import.meta.url), 'utf8');
+const app = read('../js/app.js');
+const planner = read('../js/base-planner.mjs');
 globalThis.window = { GuideData: { META_SOURCES: [] } };
 const { renderBasePlan } = await import('../js/base-planner.mjs');
+
+assert.match(app, /basePlanHost/);
+assert.match(app, /teams/);
+assert.match(planner, /function initBasePlanner/);
+assert.match(planner, /basePlanControls/);
+assert.match(app, /if \(tabName === 'teams'\)[\s\S]*initBasePlanner/);
 
 assert.deepEqual(Object.keys(BASE_PLANS).sort(), ['1', '2', '3'], 'es gibt Empfehlungen für 1–3 Basen');
 for (const count of [1, 2, 3]) {

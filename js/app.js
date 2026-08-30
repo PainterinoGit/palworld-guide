@@ -808,8 +808,11 @@
                 event.target.classList.add('active');
             }
 
-            if (tabName === 'teams' && theme) {
-                const cell = document.querySelector(`#teamsThemeTable [data-theme="${theme}"]`);
-                setTeamsTheme(theme, cell);
+            if (tabName === 'teams') {
+                window.initBasePlanner?.();
+                if (theme) {
+                    const cell = document.querySelector(`#teamsThemeTable [data-theme="${theme}"]`);
+                    setTeamsTheme(theme, cell);
+                }
             }
         }
