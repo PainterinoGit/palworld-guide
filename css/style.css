@@ -236,6 +236,7 @@
         .breeding-status { padding: 0.22rem 0.48rem; border-radius: 999px; background: rgba(99, 102, 241, 0.14); color: var(--text-primary); font-size: 0.72rem; font-weight: 800; white-space: nowrap; }
         .breeding-status-incomplete { background: rgba(245, 158, 11, 0.18); }
         .breeding-status-special-case { background: rgba(139, 92, 246, 0.18); }
+        .breeding-status-calculated { background: rgba(34, 211, 238, 0.14); color: #a5f3fc; }
         .breeding-sources { margin-top: 0.6rem; color: var(--text-tertiary); font-size: 0.76rem; }
         .breeding-sources a { color: var(--primary); }
         .breeding-qualification { margin-top: 0.55rem; padding: 0.55rem 0.65rem; border-left: 3px solid #f59e0b; border-radius: 6px; background: rgba(245, 158, 11, 0.1); color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; }

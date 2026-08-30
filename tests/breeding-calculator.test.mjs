@@ -67,6 +67,16 @@ test('includes the reviewed route and roster relationships with honest lookup st
   }
 });
 
+test('indexes the complete calculated parent set for a target', async () => {
+  const { BREEDING_INDEX } = await import('../js/breeding-data.mjs');
+  const anubis = getBreedingRelationshipsForChild(BREEDING_INDEX, 'Anubis');
+
+  assert.ok(anubis.length > 2);
+  assert.ok(anubis.some(({ parents }) => parents.includes('Jormuntide Ignis')));
+  assert.ok(anubis.some(({ status }) => status === 'calculated'));
+  assert.ok(anubis.every(({ parents }) => parents.length === 2));
+});
+
 test('keeps Shadowbeak well-formed and separates roster provenance from calculator provenance', () => {
   const shadowbeak = BREEDING_COMBINATIONS.find(({ child }) => child === 'Shadowbeak');
   assert.deepEqual(Object.keys(shadowbeak).sort(), ['child', 'id', 'note', 'parents', 'phase', 'sources', 'status']);

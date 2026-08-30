@@ -88,7 +88,7 @@ function sourceLinks(sourceIds, sourceCatalog) {
 }
 
 function statusLabel(status) {
-  return ({ verified: 'Verifiziert', incomplete: 'Unvollständig', 'special-case': 'Sonderfall' })[status] ?? 'Unbekannter Status';
+  return ({ verified: 'Verifiziert', calculated: 'Berechnet', incomplete: 'Unvollständig', 'special-case': 'Sonderfall' })[status] ?? 'Unbekannter Status';
 }
 
 function renderBreedingEmptyState(kind) {
