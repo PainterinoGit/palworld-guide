@@ -56,9 +56,27 @@ function palIconUrl(name, size = 40) {
   return `https://palworld.wiki.gg/images/thumb/${encodeURIComponent(file)}/${size}px-${encodeURIComponent(file)}`;
 }
 
-function iconMarkup(name) {
+function iconMarkup(name, roster = []) {
   const label = escapeHtml(name);
-  return `<span class="breeding-pal-icon" aria-hidden="true"><img src="${palIconUrl(name)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="breeding-pal-fallback" hidden>${label.charAt(0) || '?'}</span></span>`;
+  const imageName = getPalByName(roster, name)?.image || name;
+  return `<span class="breeding-pal-icon" aria-hidden="true"><img src="${palIconUrl(imageName)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="breeding-pal-fallback" hidden>${label.charAt(0) || '?'}</span></span>`;
+}
+
+function renderBreedingCell(childName, index, roster) {
+  const relationships = getBreedingRelationshipsForChild(index, childName);
+  if (!relationships.length) return '<span class="pal-breeding-empty" aria-label="Keine bekannte Zuchtkombination">—</span>';
+
+  const buttons = relationships.slice(0, 2).map((relationship) => {
+    const parentNames = relationship.parents.join(' + ');
+    const qualifiedNames = `${parentNames} (${statusLabel(relationship.status)})`;
+    const targetAction = escapeHtml(JSON.stringify(childName));
+    const statusHint = relationship.status === 'verified' ? ''
+      : `<span class="pal-breeding-status-hint" title="${escapeHtml(statusLabel(relationship.status))}" aria-label="${escapeHtml(statusLabel(relationship.status))}">${relationship.status === 'special-case' ? 'S' : '?'}</span>`;
+    return `<button class="pal-breeding-pair" type="button" title="${escapeHtml(qualifiedNames)}" aria-label="Zuchtziel ${escapeHtml(childName)}: Eltern ${escapeHtml(parentNames)} (${escapeHtml(statusLabel(relationship.status))})" onclick="openBreedingTarget(${targetAction})">${relationship.parents.map((parent) => iconMarkup(parent, roster)).join('<span class="pal-breeding-plus" aria-hidden="true">+</span>')}${statusHint}</button>`;
+  }).join('');
+  const remaining = relationships.length - 2;
+  const more = remaining > 0 ? `<span class="pal-breeding-more" aria-label="${remaining} weitere Elternkombinationen">+${remaining}</span>` : '';
+  return `<div class="pal-breeding" aria-label="Bekannte Elternkombinationen für ${escapeHtml(childName)}">${buttons}${more}</div>`;
 }
 
 function sourceLinks(sourceIds, sourceCatalog) {
@@ -193,4 +211,5 @@ export {
   createBreedingCalculator,
   filterBreedingRelationships,
   getPalByName,
+  renderBreedingCell,
 };

@@ -6,7 +6,7 @@ import { BASE_PLANS } from '../data/base-plans.mjs';
 import { BREEDING_ROUTES } from '../data/breeding.mjs';
 import { PATCH_NOTES } from '../data/patchnotes.mjs';
 import { BREEDING_INDEX } from './breeding-data.mjs';
-import { createBreedingCalculator } from './breeding-calculator.mjs';
+import { createBreedingCalculator, renderBreedingCell } from './breeding-calculator.mjs';
 import {
   applyGuidePalData,
   buildPalDatabase,
@@ -36,6 +36,8 @@ window.GuideData = {
 };
 
 let breedingCalculator;
+window.BREEDING_INDEX = BREEDING_INDEX;
+window.renderBreedingCell = renderBreedingCell;
 
 window.initBreedingCalculator = () => {
   if (breedingCalculator) return breedingCalculator;
