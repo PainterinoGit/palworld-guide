@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const ui = readFileSync(new URL('../js/guide-ui.mjs', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+assert.match(ui, /renderCompactTeamProgress/);
+assert.match(ui, /teamProgressHost/);
+assert.match(ui, /Start/);
+assert.match(ui, /Midgame/);
+assert.match(ui, /Endgame/);
+assert.match(ui, /swaps/);
+assert.match(html, /id="teamProgressHost"/);

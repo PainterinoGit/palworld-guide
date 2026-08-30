@@ -1,12 +1,20 @@
-import { LEVEL_BANDS, TEAMS } from '../data/teams.mjs';
+import { TEAMS } from '../data/teams.mjs';
 import { getPalById } from '../data/pals.mjs';
 import { GUIDE_STEPS } from '../data/guide.mjs';
-import { renderTeamCard } from './team-renderer.mjs';
+import { renderTeamSlot } from './team-renderer.mjs';
 import { renderGuideStep } from './guide-renderer.mjs';
+import { buildTeamPhaseView } from './team-progression.mjs';
 
-const STORAGE_KEY = 'palworld-level-band';
 const GUIDE_STORAGE_KEY = 'palworld-guide-step';
 const GUIDE_DONE_KEY = 'palworld-guide-done';
+const COMPACT_PHASE_LABELS = ['Start', 'Midgame', 'Endgame'];
+
+const escapeHtml = value => String(value ?? '')
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
 
 export function getChecklistItemKey(stepId, checklistId) {
   return `${stepId}:${checklistId}`;
@@ -33,40 +41,21 @@ function writeDoneSteps(done) {
   window.localStorage.setItem(GUIDE_DONE_KEY, JSON.stringify([...done].sort()));
 }
 
-function renderLevelTimeline(activeId) {
-  const host = document.getElementById('levelBandTimeline');
+export function renderCompactTeamProgress({ phases, host }) {
   if (!host) return;
-  host.innerHTML = LEVEL_BANDS.map((band, index) => `<button class="level-band-node${band.id === activeId ? ' is-active' : ''}" type="button" data-level-band="${band.id}" aria-pressed="${band.id === activeId}">
-    <span class="level-band-node-line" aria-hidden="true"><span>${index + 1}</span></span>
-    <span class="level-band-node-copy"><strong>${band.label}</strong><small>${band.summary}</small></span>
-  </button>`).join('');
-  host.querySelectorAll('[data-level-band]').forEach(button => button.addEventListener('click', () => renderLevelBand(button.dataset.levelBand)));
-}
-
-function getInitialBandId() {
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-  return LEVEL_BANDS.some(band => band.id === saved) ? saved : LEVEL_BANDS[0].id;
-}
-
-function renderLevelBand(bandId) {
-  const band = LEVEL_BANDS.find(item => item.id === bandId) || LEVEL_BANDS[0];
-  const host = document.getElementById('levelTeamHost');
-  const specialHost = document.getElementById('levelSpecialHost');
-  const summary = document.getElementById('levelBandSummary');
-  if (!host || !summary || !specialHost) return;
-
-  renderLevelTimeline(band.id);
-  summary.innerHTML = `<strong>${band.label}</strong><span>${band.summary}</span>`;
-  host.innerHTML = TEAMS
-    .filter(team => team.levelBandId === band.id && ['combat', 'roaming', 'base'].includes(team.kind))
-    .map(team => renderTeamCard(team, team.kind))
-    .join('');
-  const specialTeams = TEAMS.filter(team => team.levelBandId === band.id && team.kind === 'special');
-  specialHost.innerHTML = specialTeams.length
-    ? `<div class="level-special-heading"><span>SPEZIALTEAMS</span><small>Nur für konkrete Situationen wechseln</small></div>${specialTeams.map(team => renderTeamCard(team, team.kind)).join('')}`
-    : '';
-  attachTeamSlotDetails(host, specialHost);
-  window.localStorage.setItem(STORAGE_KEY, band.id);
+  host.innerHTML = phases.filter(phase => COMPACT_PHASE_LABELS.includes(phase.label)).map(phase => {
+    const combat = phase.combat;
+    const swaps = phase.swaps.slice(0, 2);
+    return `<article class="team-card compact-team-phase" data-team-phase="${escapeHtml(phase.id)}">
+      <div class="team-card-kicker">KAMPFTEAM · ${escapeHtml(phase.label)}</div>
+      <h3>${escapeHtml(combat.title)}</h3>
+      <p class="team-card-reason">${escapeHtml(combat.combinationReason)}</p>
+      <div class="team-card-slots"><div class="team-card-slots-label">Team-Slots · ${combat.slots.length}</div>${combat.slots.map(slot => renderTeamSlot(slot, 'combat')).join('')}</div>
+      <p class="team-card-meta"><strong>Wann wechseln?</strong> ${escapeHtml(phase.switchWhen)}</p>
+      ${swaps.length ? `<div class="team-card-meta"><strong>Swap-Optionen:</strong><ul>${swaps.map(swap => `<li><strong>${escapeHtml(swap.title)}</strong> — ${escapeHtml(swap.switchWhen)}</li>`).join('')}</ul></div>` : ''}
+    </article>`;
+  }).join('');
+  attachTeamSlotDetails(host, host);
 }
 
 function palImageUrl(name) {
@@ -77,7 +66,7 @@ function attachTeamSlotDetails(host, specialHost) {
   const tooltip = document.getElementById('chipTooltip');
   if (!tooltip) return;
   const specialSlots = specialHost.querySelectorAll('.team-slot[data-pal-id]');
-  const slots = [...host.querySelectorAll('.team-slot[data-pal-id]'), ...specialSlots];
+  const slots = [...new Set([...host.querySelectorAll('.team-slot[data-pal-id]'), ...specialSlots])];
   slots.forEach(slot => {
     const pal = getPalById(slot.dataset.palId);
     if (!pal) return;
@@ -129,8 +118,9 @@ function attachTeamSlotDetails(host, specialHost) {
 }
 
 export function initLevelTeams() {
-  if (!document.getElementById('levelBandTimeline')) return;
-  renderLevelBand(getInitialBandId());
+  const host = document.getElementById('teamProgressHost');
+  if (!host) return;
+  renderCompactTeamProgress({ phases: buildTeamPhaseView(TEAMS), host });
 }
 
 export function initGuideSteps() {
