@@ -65,6 +65,11 @@ for (const [index, id] of tabIds.entries()) {
 assert.match(app, /function switchTab\s*\(tabName/);
 assert.match(app, /document\.getElementById\(tabName\)\.classList\.add\('active'\)/);
 assert.doesNotMatch(app, /\bSTAGE_LABEL\b/, 'die Standortansicht darf keine nicht definierte Label-Konstante verwenden');
+assert.match(html, /switchTab\('teams'\).*Teams &amp; Basen/s);
+assert.doesNotMatch(html, /switchTab\('base-planner'\)/);
+assert.match(html, /id="teams"[\s\S]*id="basePlanControls"/);
+assert.match(html, /id="teams"[\s\S]*id="basePlanHost"/);
+assert.doesNotMatch(html, /<div id="base-planner" class="tab-content">/);
 
 const rosterScript = '<script src="data/pals-roster.js"></script>';
 const bootstrapScript = '<script type="module" src="js/bootstrap.mjs"></script>';

@@ -39,26 +39,11 @@
     <div class="container">
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('wegweiser')">🧭 Wegweiser</button>
-            <button class="tab-btn" onclick="switchTab('teams')">👥 Teams &amp; Base-Worker</button>
+            <button class="tab-btn" onclick="switchTab('teams')">👥 Teams &amp; Basen</button>
             <button class="tab-btn" onclick="switchTab('pals')">🐾 Pals</button>
             <button class="tab-btn" onclick="switchTab('locations')">🗺️ Map</button>
             <button class="tab-btn" onclick="switchTab('handbook')">📖 Handbuch</button>
-            <button class="tab-btn" onclick="switchTab('base-planner')">🏠 Base-Planer</button>
             <button class="tab-btn" onclick="switchTab('patchnotes')">🧾 Patchnotes</button>
-        </div>
-
-        <!-- TAB: BASE PLANNER -->
-        <div id="base-planner" class="tab-content">
-            <section class="base-planner-hero" aria-labelledby="basePlannerTitle">
-                <div><p class="section-eyebrow">PATCH 1.0+ · META-SETUPS</p><h2 id="basePlannerTitle">Wie viele Basen brauchst du wirklich?</h2><p>Wähle deine Anzahl an Basen. Du bekommst eine klare Rollenverteilung, passende Worker und ein Layout, das nicht an jeder Aufgabe gleichzeitig hängen bleibt.</p></div>
-                <div id="basePlanControls" class="base-plan-controls" role="group" aria-label="Anzahl der Basen"></div>
-            </section>
-            <div id="basePlanHost" aria-live="polite"></div>
-            <div class="base-plan-legend" aria-label="Legende für Worker-Anweisungen">
-                <strong>Legende:</strong> ⛏️ Mining · ⚡ Strom · 🔥 Feuer/Öfen · 🛠️ Handwerk · 🌱 Pflanzen · 💧 Bewässerung · 📦 Transport · 🥚 Ranch · 🧪 Medizin · ❄️ Kühlung · 🌲 Holz · ✅ aktiv · ⛔ aus · 🔁 Reserve · 📍 Zielbereich
-            </div>
-            <div class="callout callout-info base-plan-food-note"><strong>🍲 Worker-Food:</strong> Salat aus 2× Salat + 2× Tomate am Kochtopf oder an der elektrischen Küche produzieren; in der Produktionsbase kochen und in den Futtertrog legen. Die Zuchtbase nutzt ihre Plantagen primär für Kuchen.</div>
-            <div class="callout callout-info base-plan-disclaimer"><strong>Meta-Hinweis:</strong> „Beste“ Worker hängen auch von Laufwegen, Food-Kosten und Verfügbarkeit ab. Die Werte zeigen natürliche 1.0+-Spitzenwerte; Kondensation und Handbooks kommen obendrauf.</div>
         </div>
 
         <!-- TAB: WEGWEISER (Questfortschritt & nächste Schritte) -->
@@ -101,6 +86,16 @@
                 <div id="levelSpecialHost" class="level-special-grid" aria-live="polite"></div>
                 <div class="callout callout-tip team-meta-update"><strong>Raid-Praxis:</strong> Für einen weniger grind-intensiven Ansatz funktionieren defensive <strong>Bastigor</strong>-Pals mit <strong>Sveus</strong>-Schilden und Healing Grenades gegen mehrere Raids. Das ist kein universeller Ersatz für Boss-Counter: Bellanoir Libero kann die Armee trotz Defensive schnell ausschalten.</div>
             </section>
+            <section class="base-planner-hero" aria-labelledby="basePlannerTitle">
+                <div><p class="section-eyebrow">PATCH 1.0+ · META-SETUPS</p><h2 id="basePlannerTitle">Wie viele Basen brauchst du wirklich?</h2><p>Wähle deine Anzahl an Basen. Du bekommst eine klare Rollenverteilung, passende Worker und ein Layout, das nicht an jeder Aufgabe gleichzeitig hängen bleibt.</p></div>
+                <div id="basePlanControls" class="base-plan-controls" role="group" aria-label="Anzahl der Basen"></div>
+            </section>
+            <div id="basePlanHost" aria-live="polite"></div>
+            <div class="base-plan-legend" aria-label="Legende für Worker-Anweisungen">
+                <strong>Legende:</strong> ⛏️ Mining · ⚡ Strom · 🔥 Feuer/Öfen · 🛠️ Handwerk · 🌱 Pflanzen · 💧 Bewässerung · 📦 Transport · 🥚 Ranch · 🧪 Medizin · ❄️ Kühlung · 🌲 Holz · ✅ aktiv · ⛔ aus · 🔁 Reserve · 📍 Zielbereich
+            </div>
+            <div class="callout callout-info base-plan-food-note"><strong>🍲 Worker-Food:</strong> Salat aus 2× Salat + 2× Tomate am Kochtopf oder an der elektrischen Küche produzieren; in der Produktionsbase kochen und in den Futtertrog legen. Die Zuchtbase nutzt ihre Plantagen primär für Kuchen.</div>
+            <div class="callout callout-info base-plan-disclaimer"><strong>Meta-Hinweis:</strong> „Beste“ Worker hängen auch von Laufwegen, Food-Kosten und Verfügbarkeit ab. Die Werte zeigen natürliche 1.0+-Spitzenwerte; Kondensation und Handbooks kommen obendrauf.</div>
         </div>
         <!-- TAB: PALS DATABASE -->
         <div id="pals" class="tab-content">
@@ -832,10 +827,9 @@
             <nav class="footer-nav" aria-label="Footer-Navigation">
                 <span>Direkt zu</span>
                 <a href="#wegweiser" onclick="switchTab('wegweiser'); return false;">Wegweiser</a>
-                <a href="#teams" onclick="switchTab('teams'); return false;">Teams</a>
+                <a href="#teams" onclick="switchTab('teams'); return false;">Teams &amp; Basen</a>
                 <a href="#pals" onclick="switchTab('pals'); return false;">Pals</a>
                 <a href="#locations" onclick="switchTab('locations'); return false;">Map</a>
-                <a href="#base-planner" onclick="switchTab('base-planner'); return false;">Base-Planer</a>
             </nav>
             <div class="footer-github">
                 <a href="https://github.com/PainterinoGit/palworld-guide" target="_blank" rel="noopener">Auf GitHub ansehen <span aria-hidden="true">↗</span></a>
