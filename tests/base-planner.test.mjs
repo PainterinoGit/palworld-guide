@@ -5,13 +5,71 @@ const read = file => readFileSync(new URL(file, import.meta.url), 'utf8');
 const app = read('../js/app.js');
 const planner = read('../js/base-planner.mjs');
 globalThis.window = { GuideData: { META_SOURCES: [] } };
-const { renderBasePlan } = await import('../js/base-planner.mjs');
+const { initBasePlanner, renderBasePlan } = await import('../js/base-planner.mjs');
 
 assert.match(app, /basePlanHost/);
 assert.match(app, /teams/);
 assert.match(planner, /function initBasePlanner/);
 assert.match(planner, /basePlanControls/);
 assert.match(app, /if \(tabName === 'teams'\)[\s\S]*initBasePlanner/);
+
+function createPlannerDom() {
+  const listeners = new Map();
+  const buttons = [1, 2, 3].map(count => {
+    const classes = new Set();
+    const attributes = new Map();
+    return {
+      dataset: { baseCount: String(count) },
+      classList: {
+        contains: className => classes.has(className),
+        toggle: (className, enabled) => enabled ? classes.add(className) : classes.delete(className),
+      },
+      setAttribute: (name, value) => attributes.set(name, value),
+      getAttribute: name => attributes.get(name),
+    };
+  });
+  let controlsMarkupWrites = 0;
+  let controlsMarkup = '';
+  const controls = {
+    dataset: {},
+    get innerHTML() { return controlsMarkup; },
+    set innerHTML(value) { controlsMarkupWrites++; controlsMarkup = value; },
+    addEventListener(type, listener) {
+      listeners.set(type, [...(listeners.get(type) || []), listener]);
+    },
+    querySelectorAll: selector => selector === 'button' ? buttons : [],
+  };
+  const host = { innerHTML: '' };
+  globalThis.document = {
+    getElementById(id) {
+      return id === 'basePlanControls' ? controls : id === 'basePlanHost' ? host : null;
+    },
+  };
+  return {
+    buttons,
+    controls,
+    controlsMarkupWrites: () => controlsMarkupWrites,
+    host,
+    listenerCount: type => (listeners.get(type) || []).length,
+    selectBaseCount(count) {
+      const button = buttons.find(item => item.dataset.baseCount === String(count));
+      for (const listener of listeners.get('click') || []) listener({ target: { closest: () => button } });
+    },
+  };
+}
+
+const plannerDom = createPlannerDom();
+initBasePlanner();
+assert.equal(plannerDom.controlsMarkupWrites(), 1, 'initialisiert die Base-Plan-Controls einmal');
+assert.equal(plannerDom.listenerCount('click'), 1, 'registriert einen Auswahl-Listener');
+plannerDom.selectBaseCount(3);
+const selectedPlan = plannerDom.host.innerHTML;
+initBasePlanner();
+assert.equal(plannerDom.controlsMarkupWrites(), 1, 'dupliziert die Controls beim zweiten Aufruf nicht');
+assert.equal(plannerDom.listenerCount('click'), 1, 'dupliziert den Auswahl-Listener beim zweiten Aufruf nicht');
+assert.equal(plannerDom.buttons[2].classList.contains('active'), true, 'behält die gewählte Basenanzahl bei');
+assert.equal(plannerDom.buttons[2].getAttribute('aria-pressed'), 'true', 'behält den Auswahlstatus bei');
+assert.equal(plannerDom.host.innerHTML, selectedPlan, 'rendert den gewählten Plan beim zweiten Aufruf nicht neu');
 
 assert.deepEqual(Object.keys(BASE_PLANS).sort(), ['1', '2', '3'], 'es gibt Empfehlungen für 1–3 Basen');
 for (const count of [1, 2, 3]) {
