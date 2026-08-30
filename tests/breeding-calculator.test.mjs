@@ -96,6 +96,7 @@ test('filters breeding relationships by names, child element, phase, and status'
   assert.equal(filterBreedingRelationships(relationships, { search: 'zUlU', element: 'fire', phase: 'all', status: 'all' }, roster).length, 1);
   assert.equal(filterBreedingRelationships(relationships, { search: 'missing', phase: 'all', status: 'all' }, roster).length, 0);
   assert.equal(filterBreedingRelationships(relationships, { element: 'water', phase: 'mid', status: 'all' }, roster).length, 0);
+  assert.equal(filterBreedingRelationships(relationships, { element: 'all', phase: 'all', status: 'all' }, roster).length, 2);
   assert.equal(getPalByName(roster, 'target'), roster[0]);
   assert.equal(getPalByName(roster, 'missing'), null);
 });

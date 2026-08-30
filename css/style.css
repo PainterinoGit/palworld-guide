@@ -207,6 +207,46 @@
             display: block;
         }
 
+        .breeding-calculator {
+            display: grid;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.10), var(--card-bg) 38%);
+        }
+
+        .breeding-calculator-header h2 { margin: 0.15rem 0 0.4rem; }
+        .breeding-calculator-header p:not(.section-eyebrow) { margin: 0; max-width: 720px; color: var(--text-secondary); line-height: 1.5; }
+        .breeding-controls, .breeding-parent-pickers { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: end; }
+        .breeding-controls label, .breeding-parent-pickers label { display: grid; gap: 0.3rem; color: var(--text-secondary); font-size: 0.76rem; font-weight: 700; }
+        .breeding-controls .pals-search { min-width: 220px; }
+        .breeding-pair-arrow { padding: 0.55rem 0; color: var(--text-tertiary); font-weight: 800; }
+        .breeding-results-list { display: grid; gap: 0.65rem; }
+        .breeding-result, .breeding-empty-state { margin: 0; padding: 0.85rem; border: 1px solid var(--card-border); border-radius: 10px; background: var(--card-bg); }
+        .breeding-result-line, .breeding-result-pals, .breeding-pal, .breeding-sources { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+        .breeding-result-line { justify-content: space-between; gap: 0.75rem; }
+        .breeding-result p { margin: 0.55rem 0 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.45; }
+        .breeding-pal { color: var(--text-primary); font-size: 0.84rem; }
+        .breeding-pal-icon { display: inline-grid; place-items: center; width: 28px; height: 28px; overflow: hidden; border-radius: 50%; background: rgba(99, 102, 241, 0.16); }
+        .breeding-pal-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .breeding-pal-fallback { font-size: 0.75rem; font-weight: 800; }
+        .breeding-child { padding-left: 0.25rem; }
+        .breeding-result-plus, .breeding-result-arrow { color: var(--text-tertiary); font-weight: 800; }
+        .breeding-status { padding: 0.22rem 0.48rem; border-radius: 999px; background: rgba(99, 102, 241, 0.14); color: var(--text-primary); font-size: 0.72rem; font-weight: 800; white-space: nowrap; }
+        .breeding-status-incomplete { background: rgba(245, 158, 11, 0.18); }
+        .breeding-status-special-case { background: rgba(139, 92, 246, 0.18); }
+        .breeding-sources { margin-top: 0.6rem; color: var(--text-tertiary); font-size: 0.76rem; }
+        .breeding-sources a { color: var(--primary); }
+
+        @media (max-width: 700px) {
+            .breeding-calculator { padding: 1rem; }
+            .breeding-controls, .breeding-parent-pickers { display: grid; grid-template-columns: 1fr; align-items: stretch; }
+            .breeding-controls .pals-search, .breeding-controls .pals-select, .breeding-parent-pickers .pals-select { width: 100%; }
+            .breeding-pair-arrow { display: none; }
+            .breeding-result-line { align-items: flex-start; }
+        }
+
         /* Game Stages */
         .stage-section {
             margin-bottom: 2rem;

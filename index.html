@@ -40,6 +40,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('wegweiser')">🧭 Wegweiser</button>
             <button class="tab-btn" onclick="switchTab('teams')">👥 Teams &amp; Basen</button>
+            <button class="tab-btn" onclick="switchTab('breeding')">🥚 Zucht</button>
             <button class="tab-btn" onclick="switchTab('pals')">🐾 Pals</button>
             <button class="tab-btn" onclick="switchTab('locations')">🗺️ Map</button>
             <button class="tab-btn" onclick="switchTab('handbook')">📖 Handbuch</button>
@@ -94,6 +95,21 @@
                 </div>
                 <div class="callout callout-info base-plan-food-note"><strong>🍲 Worker-Food:</strong> Salat aus 2× Salat + 2× Tomate am Kochtopf oder an der elektrischen Küche produzieren; in der Produktionsbase kochen und in den Futtertrog legen. Die Zuchtbase nutzt ihre Plantagen primär für Kuchen.</div>
                 <div class="callout callout-info base-plan-disclaimer"><strong>Meta-Hinweis:</strong> „Beste“ Worker hängen auch von Laufwegen, Food-Kosten und Verfügbarkeit ab. Die Werte zeigen natürliche 1.0+-Spitzenwerte; Kondensation und Handbooks kommen obendrauf.</div>
+            </section>
+        </div>
+        <!-- TAB: BREEDING CALCULATOR -->
+        <div id="breeding" class="tab-content">
+            <section class="breeding-calculator" aria-labelledby="breedingCalculatorTitle">
+                <div class="breeding-calculator-header">
+                    <div>
+                        <p class="section-eyebrow">LOKALE KOMBINATIONEN</p>
+                        <h2 id="breedingCalculatorTitle">Zucht-Rechner</h2>
+                        <p>Suche nach einem Ziel-Pal oder kombiniere zwei Eltern. Sonderfälle und unvollständige Daten bleiben als solche markiert.</p>
+                    </div>
+                </div>
+                <div id="breedingTargetHost" aria-live="polite"></div>
+                <div id="breedingParentHost" aria-live="polite"></div>
+                <div id="breedingResultsHost" aria-live="polite"></div>
             </section>
         </div>
         <!-- TAB: PALS DATABASE -->

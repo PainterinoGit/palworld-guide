@@ -815,4 +815,8 @@
                     setTeamsTheme(theme, cell);
                 }
             }
+
+            if (tabName === 'breeding') {
+                window.initBreedingCalculator?.();
+            }
         }
