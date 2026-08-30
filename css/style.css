@@ -1212,7 +1212,7 @@
         .pal-work-skills { display:flex; flex-wrap:wrap; gap:.28rem; align-items:center; }
         .pal-work-skills b { flex-basis:100%; }
         .pal-work-skill { padding:.2rem .4rem; border:1px solid rgba(129,140,248,.28); border-radius:999px; color:#c7d2fe; background:rgba(30,41,59,.72); font-size:.68rem; }
-        .pal-partner-skill { display:grid; gap:.18rem; }
+        .pal-detail-popover .pal-partner-skill { display:grid; gap:.18rem; }
         @media (max-width: 720px) { .pal-capture-tooltip.visible { grid-template-columns:1fr; } .pal-capture-map { min-height:300px; } }
 
         .pal-name-cell:hover .pal-detail-popover,

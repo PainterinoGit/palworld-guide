@@ -18,5 +18,7 @@ assert.match(css, /\.pal-capture-tooltip\s*\{[^}]*width:min\(980px/i);
 assert.match(css, /\.pal-capture-map\s*\{[^}]*min-height:420px/i);
 assert.doesNotMatch(html, /<th>Quellenstatus<\/th>/i);
 assert.doesNotMatch(app, /<td>\$\{palSourceStatusHtml\(e\)\}<\/td>/);
+assert.match(css, /\.pal-detail-popover\s+\.pal-partner-skill\s*\{[^}]*display\s*:\s*grid/i, 'Popover-Partner-Skill darf separat als Grid formatiert werden');
+assert.doesNotMatch(css, /(?<!\.pal-detail-popover\s)\.pal-partner-skill\s*\{[^}]*display\s*:\s*grid/i, 'Tabellenzelle darf nicht durch display:grid aus dem Table-Layout fallen');
 
 console.log('team hover contract: ok');
