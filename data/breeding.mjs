@@ -26,6 +26,25 @@ const BREEDING_ROUTES = [
     ]
   },
   {
+    id: 'current-utility-combos', phase: '1.0 · Aktuelle Utility-Kombos', title: 'Aktuelle 1.0-Kombos nach Engpass',
+    steps: [
+      { order: 1, parents: 'Polapup + Jolthog oder Penking + Cinnamoth', result: 'Beegarde', kind: 'Kuchenversorgung', priority: 'P1', reason: 'Honey ist der wiederkehrende Flaschenhals für jede größere Breeding-Session.', access: 'Eine passende Elternpaarung aus dem eigenen Palbox-Bestand wählen und im aktuellen Calculator bestätigen.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 2, parents: 'Leafan + Lamball oder Pupperai + Bakemi', result: 'Yakumo', kind: 'Passive-/Capture-Projekt', priority: 'P1', reason: 'Yakumo vorbereitet gezielte Passive für spätere Captures und ergänzt die Dog-Coin-Route.', access: 'Nur mit den gewünschten Passives auf die Trägerlinie gehen; die genaue Partner-Skill-Wirkung im Spielstand testen.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 3, parents: 'Bushi + Bushi Noct oder Grizzbolt + Solmora', result: 'Suzaku', kind: 'Kindling-Spezialist', priority: 'P2', reason: 'Sinnvoll, wenn Öfen und Kuchenproduktion der Produktionsengpass sind.', access: 'Nur vor Anubis oder einem Endgame-Kampfprojekt priorisieren, wenn Kindling tatsächlich bremst.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 4, parents: 'Grizzbolt + Flambelle oder Rooby + Bushi Noct', result: 'Azurobe', kind: 'Watering-Spezialist', priority: 'P2', reason: 'Gezielte Watering-Linie für Plantagen und Mühlen, wenn die Basis dort Zeit verliert.', access: 'Bei stabilem Watering nicht aus Komfortgründen züchten; vorher die Laufwege der Base prüfen.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 5, parents: 'Vanwyrm + Wumpo oder Penking + Blazamut', result: 'Palumba', kind: 'Reise-Utility', priority: 'P3', reason: 'Ein praktisches Boden-Mount für wiederkehrende Routen, aber nach Produktion und Kernkampf.', access: 'Nur starten, wenn die Route tatsächlich Zeit kostet und kein vorhandenes Mount genügt.', sources: ['palworld-gg-breeding-calculator'] }
+    ]
+  },
+  {
+    id: 'current-world-tree-combos', phase: '1.0 · World Tree', title: 'World-Tree-Ziele und Sonderfälle',
+    steps: [
+      { order: 1, parents: 'Eidrolon-Eltern nach Calculator', result: 'Eidrolon', kind: 'World-Tree-Mount', priority: 'P2', reason: 'Skaliert mit Dragon-/Dark-Teams und öffnet weitere Endgame-Routen.', access: 'Erst nach World-Tree-Zugang und gesicherten Eltern; kein früher Pflichtschritt.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 2, parents: 'Eltern nach aktuellem Calculator', result: 'Aegidron', kind: 'Spezialprojekt', priority: 'P3', reason: 'Reduziert Explosionsschaden und schützt vor Betäubung – besonders für definierte Raid-Mechaniken.', access: 'Zuchtziel nur wählen, wenn diese Schutzwirkung gebraucht wird; sonst Fang-/Raid-Route bevorzugen.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 3, parents: 'Zwei Pals derselben Art', result: 'Self-only-Pals', kind: 'Sonderfall', priority: 'P2', reason: 'Einige Spitzenpals haben keine nutzbare Fremdpaarung und können nur artgleich vermehrt werden.', access: 'Männliches und weibliches Exemplar zuerst fangen; darunter fallen u.a. Bastigor, Jetragon, Shadowbeak und Xenolord.', sources: ['palworld-gg-breeding-calculator'] },
+      { order: 4, parents: 'Weibliche Katress + männlicher Wixen / männliche Katress + weibliche Wixen', result: 'Katress Ignis / Wixen Noct', kind: 'Geschlechtsabhängige Sonderkombi', priority: 'P3', reason: 'Die beiden Paarungen liefern je nach Geschlecht unterschiedliche Varianten.', access: 'Geschlecht vor dem Einsetzen prüfen und die gewünschte Variante im Calculator bestätigen.', sources: ['palworld-gg-breeding-calculator'] }
+    ]
+  },
+  {
     id: 'endgame-mounts', phase: 'Late Game · Kampf & Mounts', title: 'Nur die wichtigsten Endgame-Projekte',
     steps: [
       { order: 1, parents: 'Frostallion + Helzephyr', result: 'Frostallion Noct', kind: 'Legendärer Variant-Pal', priority: 'P2', reason: 'Endgame-Dark-Mount und Kampfprojekt mit hohem Elternaufwand.', access: 'Beide seltenen Eltern zuerst sichern; optional, nicht für den normalen Fortschritt nötig.', sources: CALC },
