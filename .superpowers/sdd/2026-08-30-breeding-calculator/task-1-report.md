@@ -81,3 +81,31 @@ git diff --check
 Output: focused suite 3 passed, full suite 23 passed, 0 failed; syntax checks passed; diff check clean.
 
 Fix-round commit: `7a9756d91cbcdc3301268e511c87da85dcfb0169`
+
+## Fix round 2 evidence
+
+- Corrected the Shadowbeak self-only record argument order so it has exactly the required fields, with `status: 'special-case'`, `phase: 'late'`, a self-only note, and calculator provenance.
+- Restored separate provenance constants: roster-derived records use registered `palmods-work-suitability`; calculator-derived records use `palworld-gg-breeding-calculator`.
+- Added regression assertions for Shadowbeak’s field shape and values, and for non-calculator roster provenance.
+
+Fix-round red command:
+
+```text
+node --test tests/breeding-calculator.test.mjs
+```
+
+Output: failed on Shadowbeak’s malformed field ordering (`phase` contained the note) before the production correction.
+
+Fix-round green commands:
+
+```text
+node --test tests/breeding-calculator.test.mjs
+node --test tests/*.test.mjs
+node --check data/breeding-combinations.mjs
+node --check js/breeding-data.mjs
+git diff --check
+```
+
+Output: focused suite 4 passed, full suite 24 passed, 0 failed; syntax checks passed; diff check clean.
+
+Fix-round 2 commit: pending

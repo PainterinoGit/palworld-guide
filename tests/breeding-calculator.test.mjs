@@ -61,3 +61,18 @@ test('includes the reviewed route and roster relationships with honest lookup st
     for (const source of combination.sources) assert.ok(validSourceIds.has(source), `unknown source: ${source}`);
   }
 });
+
+test('keeps Shadowbeak well-formed and separates roster provenance from calculator provenance', () => {
+  const shadowbeak = BREEDING_COMBINATIONS.find(({ child }) => child === 'Shadowbeak');
+  assert.deepEqual(Object.keys(shadowbeak).sort(), ['child', 'id', 'note', 'parents', 'phase', 'sources', 'status']);
+  assert.deepEqual(shadowbeak.parents, ['Shadowbeak', 'Shadowbeak']);
+  assert.equal(shadowbeak.status, 'special-case');
+  assert.equal(shadowbeak.phase, 'late');
+  assert.match(shadowbeak.note, /self-only|artgleiche/i);
+  assert.ok(Array.isArray(shadowbeak.sources) && shadowbeak.sources.length > 0);
+  assert.deepEqual(shadowbeak.sources, ['palworld-gg-breeding-calculator']);
+
+  const rosterDerived = BREEDING_COMBINATIONS.find(({ child }) => child === 'Silvance');
+  assert.ok(rosterDerived.sources.includes('palmods-work-suitability'));
+  assert.doesNotMatch(rosterDerived.sources.join('|'), /palworld-gg-breeding-calculator/);
+});

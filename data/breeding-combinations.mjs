@@ -1,5 +1,5 @@
 const CALCULATOR_SOURCE = ['palworld-gg-breeding-calculator'];
-const ROSTER_SOURCE = CALCULATOR_SOURCE;
+const ROSTER_SOURCE = ['palmods-work-suitability'];
 
 const relationship = (id, child, parents, status, phase, note, sources = ROSTER_SOURCE) => ({
   id,
@@ -32,7 +32,7 @@ const BREEDING_COMBINATIONS = [
   relationship('aegidron-eidrolon-ignis-braloha', 'Aegidron', ['Eidrolon Ignis', 'Braloha'], 'incomplete', 'late', '1% Mutationschance; Philanthropist-Trait erforderlich, nicht garantiert.', ['palmods-work-suitability']),
   relationship('self-only-bastigor', 'Bastigor', ['Bastigor', 'Bastigor'], 'special-case', 'late', 'Nur artgleiche Vermehrung.', CALCULATOR_SOURCE),
   relationship('self-only-jetragon', 'Jetragon', ['Jetragon', 'Jetragon'], 'special-case', 'late', 'Die Route nennt Jetragon als Self-only-Pal.', CALCULATOR_SOURCE),
-  relationship('self-only-shadowbeak', 'Shadowbeak', ['Shadowbeak', 'Shadowbeak'], 'special-case', 'Die Route nennt Shadowbeak als Self-only-Pal.', CALCULATOR_SOURCE),
+  relationship('self-only-shadowbeak', 'Shadowbeak', ['Shadowbeak', 'Shadowbeak'], 'special-case', 'late', 'Die Route nennt Shadowbeak als Self-only-Pal.', CALCULATOR_SOURCE),
   relationship('self-only-silvance', 'Silvance', ['Silvance', 'Silvance'], 'special-case', 'Der Roster nennt die einzigartige Zuchtkombination.', ROSTER_SOURCE),
   relationship('self-only-dandilord', 'Dandilord', ['Dandilord', 'Dandilord'], 'special-case', 'Der Roster nennt Zucht zweier Dandilord.', ROSTER_SOURCE),
   relationship('self-only-hartalis', 'Hartalis', ['Hartalis', 'Hartalis'], 'special-case', 'Der Roster nennt Zucht zweier Hartalis.', ROSTER_SOURCE),
