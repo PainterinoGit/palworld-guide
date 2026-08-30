@@ -16,7 +16,10 @@ const REQUIRED_WRITTEN_SOURCE_URLS = new Set([
   'https://www.pcgamer.com/games/survival-crafting/palworld-best-pals/',
   'https://palcompass.com/guides/best-pals',
   'https://pindrop.gg/palworld/guides/best-combat-pals',
-  'https://www.palmods.gg/blog/palworld-1-0-early-breeding-route'
+  'https://www.palmods.gg/blog/palworld-1-0-early-breeding-route',
+  'https://www.palmods.gg/blog/palworld-1-0-best-base-pals',
+  'https://genshinlab.com/palworld/best-craft-base-work-pals/',
+  'https://mobalytics.gg/gamebase/guides/palworld-best-base-pals-early-game'
 ]);
 const REQUIRED_VIDEO_URLS = new Set([
   'https://www.youtube.com/watch?v=amZY6qiPAdQ',
@@ -49,10 +52,10 @@ const writtenSourceUrls = new Set([
 assert.match(META_VERSION, /Patch 1\.0\+/i);
 assert.match(META_VERSION, /2026-08-28/);
 assert.ok(Array.isArray(META_SOURCES));
-assert.equal(META_SOURCES.length, 25);
+assert.equal(META_SOURCES.length, 28);
 assert.equal(urlsByType('official').size, 2);
-assert.equal(urlsByType('data').size, 2);
-assert.equal(urlsByType('editorial').size, 4);
+assert.equal(urlsByType('data').size, 3);
+assert.equal(urlsByType('editorial').size, 6);
 assert.equal(urlsByType('video').size, 16);
 assert.equal(urlsByType('calculator').size, 1);
 assert.deepEqual(writtenSourceUrls, REQUIRED_WRITTEN_SOURCE_URLS);

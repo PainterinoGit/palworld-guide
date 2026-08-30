@@ -294,7 +294,8 @@
             const job = list.find(item => item.job === select.value) || list[0];
             select.value = job.job;
             if (summary) summary.textContent = `${job.icon} ${job.job}: Meta-Score kombiniert Arbeitslevel mit Tempo, Platzbedarf und Community-Praxis.`;
-            body.innerHTML = job.entries.map((entry, index) => `
+            const rankedEntries = [...job.entries].sort((a, b) => b.metaScore - a.metaScore || a.pal.localeCompare(b.pal, 'de'));
+            body.innerHTML = rankedEntries.map((entry, index) => `
                 <tr>
                     <td class="job-rank">${index + 1}</td>
                     <th scope="row"><strong>${entry.pal}</strong><small>${entry.tier}-Tier</small></th>

@@ -78,6 +78,36 @@ export const META_SOURCES = [
     summary: 'Gleicht praktische Auswahl nach Arbeit, Verfügbarkeit und Partner-Skill ab.'
   },
   {
+    id: 'palmods-base-1-0',
+    title: 'PalMods: Best Base Pals in Palworld 1.0',
+    url: 'https://www.palmods.gg/blog/palworld-1-0-best-base-pals',
+    type: 'editorial',
+    checkedAt: '2026-08-30',
+    scope: 'Patch 1.0+; Work-Suitability, Progression und praktische Alternativen',
+    confidence: 'community-cross-check',
+    summary: 'Vergleicht natürliche Arbeitslevel, Progressionsstufen, Task-Prioritäten und praktische Base-Alternativen.'
+  },
+  {
+    id: 'genshinlab-base-1-0-3',
+    title: 'GenshinLab: Best Craft & Base Work Pals 1.0.3',
+    url: 'https://genshinlab.com/palworld/best-craft-base-work-pals/',
+    type: 'data',
+    checkedAt: '2026-08-30',
+    scope: 'Patch 1.0+ (1.0.3-Abgleich); Early/Mid/Late und natürliche Work-Suitability-Level',
+    confidence: 'structured-data',
+    summary: 'Liefert einen aktuellen Vergleich der Arbeitslevel je Job und nach Spielphase.'
+  },
+  {
+    id: 'mobalytics-early-base-1-0',
+    title: 'Mobalytics: Best Early Game Base Pals 1.0',
+    url: 'https://mobalytics.gg/gamebase/guides/palworld-best-base-pals-early-game',
+    type: 'editorial',
+    checkedAt: '2026-08-30',
+    scope: 'Patch 1.0+; frühe Zugänglichkeit und flexible Mehrfachrollen',
+    confidence: 'single-editorial',
+    summary: 'Ergänzt frühe, erreichbare Alternativen und bewertet Mehrfachrollen statt nur Maximallevel.'
+  },
+  {
     id: 'pal-compass-role-rankings',
     title: 'Pal Compass: role-based 1.0 rankings',
     url: 'https://palcompass.com/guides/best-pals',
