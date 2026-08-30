@@ -70,6 +70,7 @@ assert.doesNotMatch(html, /switchTab\('base-planner'\)/);
 assert.match(html, /id="teams"[\s\S]*id="basePlanControls"/);
 assert.match(html, /id="teams"[\s\S]*id="basePlanHost"/);
 assert.doesNotMatch(html, /<div id="base-planner" class="tab-content">/);
+assert.doesNotMatch(html, /Base[- ]Worker["']?-Tab/i, 'keine entfernte Base-Worker-Tab-Navigation im Handbuch');
 
 const rosterScript = '<script src="data/pals-roster.js"></script>';
 const bootstrapScript = '<script type="module" src="js/bootstrap.mjs"></script>';

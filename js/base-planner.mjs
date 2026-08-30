@@ -75,7 +75,7 @@ export function initBasePlanner() {
   controls.innerHTML = Object.values(BASE_PLANS).map(plan => `<button class="base-plan-control${plan.baseCount === 2 ? ' active' : ''}" type="button" data-base-count="${plan.baseCount}" aria-pressed="${plan.baseCount === 2}">${plan.baseCount} ${plan.baseCount === 1 ? 'Base' : 'Basen'}</button>`).join('');
   const update = count => {
     const plan = getBasePlan(count);
-    host.innerHTML = `<div class="base-plan-summary"><div><span class="base-plan-kicker">PATCH 1.0+ · META-PRAXIS</span><h2>${escapeHtml(plan.title)}</h2><p>${escapeHtml(plan.summary)}</p></div><span class="base-count-badge">${plan.baseCount} ${plan.baseCount === 1 ? 'Base' : 'Basen'}</span></div>${renderBasePlan(plan)}`;
+    host.innerHTML = `<div class="base-plan-summary"><div><span class="base-plan-kicker">PATCH 1.0+ · META-PRAXIS</span><h3>${escapeHtml(plan.title)}</h3><p>${escapeHtml(plan.summary)}</p></div><span class="base-count-badge">${plan.baseCount} ${plan.baseCount === 1 ? 'Base' : 'Basen'}</span></div>${renderBasePlan(plan)}`;
     controls.querySelectorAll('button').forEach(button => { const active = Number(button.dataset.baseCount) === plan.baseCount; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
   };
   controls.addEventListener('click', event => { const button = event.target.closest('[data-base-count]'); if (button) update(button.dataset.baseCount); });
