@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
-import { buildTeamPhaseView } from '../js/team-progression.mjs';
+import { buildTeamPhaseView, TEAM_PHASES } from '../js/team-progression.mjs';
 import { TEAMS } from '../data/teams.mjs';
+
+assert.deepEqual(TEAM_PHASES, [
+  { id: 'start', label: 'Start', levelBandIds: ['1-10', '10-20'] },
+  { id: 'midgame', label: 'Midgame', levelBandIds: ['20-30', '30-40'] },
+  { id: 'endgame', label: 'Endgame', levelBandIds: ['40-50', '50-plus'] },
+]);
 
 const input = structuredClone(TEAMS);
 const phases = buildTeamPhaseView(input);
@@ -28,3 +34,15 @@ for (const phase of phases) {
 }
 
 assert.deepEqual(input, TEAMS);
+
+const syntheticStartTeams = [
+  { id: 'combat-10-20', levelBandId: '10-20', kind: 'combat', slots: Array(5), switchWhen: 'later' },
+  { id: 'special-first', levelBandId: '1-10', kind: 'special' },
+  { id: 'special-second', levelBandId: '10-20', kind: 'special' },
+  { id: 'special-third', levelBandId: '1-10', kind: 'special' },
+  { id: 'combat-1-10', levelBandId: '1-10', kind: 'combat', slots: Array(5), switchWhen: 'first' },
+];
+const syntheticStart = buildTeamPhaseView(syntheticStartTeams)[0];
+
+assert.equal(syntheticStart.combat.id, 'combat-1-10');
+assert.deepEqual(syntheticStart.swaps.map(team => team.id), ['special-first', 'special-second']);
