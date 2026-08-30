@@ -2215,6 +2215,10 @@
 .level-band-summary { display:flex; gap:.65rem; align-items:baseline; margin:1rem 0; color:var(--text-secondary); }
 .level-band-summary strong { color:var(--text-primary); }
 .level-team-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1rem; }
+.team-progress { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1rem; }
+.team-progress .team-card { min-width:0; }
+.team-progress .team-card-slots { min-width:0; }
+.team-progress .team-alternatives { overflow-wrap:anywhere; }
 .level-special-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1rem; margin-top:1rem; }
 .level-special-heading { grid-column:1/-1; display:flex; align-items:baseline; gap:.6rem; color:#fbbf24; font-size:.72rem; font-weight:800; letter-spacing:.1em; }
 .level-special-heading small { color:var(--text-secondary); font-size:.75rem; font-weight:500; letter-spacing:0; }
@@ -2288,12 +2292,14 @@
 .level-band-node:hover .level-band-node-line span, .level-band-node.is-active .level-band-node-line span { border-color:#8b5cf6; color:#fff; background:#4f46e5; box-shadow:0 0 0 4px rgba(79,70,229,.18); }
 .level-band-node.is-active .level-band-node-copy strong { color:#c7d2fe; }
 .level-band-node:focus-visible, .guide-roadmap-step:focus-visible, .guide-roadmap-check:has(input:focus-visible) { outline:2px solid var(--color-accent); outline-offset:3px; }
-@media (max-width: 900px) { .level-team-grid, .level-special-grid { grid-template-columns:1fr; } }
+@media (max-width: 900px) { .level-team-grid, .team-progress, .level-special-grid { grid-template-columns:1fr; } }
 @media (max-width: 700px) { .level-band-timeline { grid-template-columns:repeat(6, 140px); padding-bottom:.35rem; } .level-band-node-copy { text-align:left; } .level-band-node-line { justify-content:flex-start; } .level-band-node::after { left:31px; width:calc(100% - 31px); } }
 @media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } .guide-roadmap-item { grid-template-columns:1fr; gap:.1rem; } .guide-roadmap-check { padding-left:3.35rem; } }
 @media (max-width: 560px) { .team-slot { grid-template-columns:1fr; } .team-slot-pal { grid-template-columns:minmax(0, 1fr) auto; align-items:center; } .team-slot-type { justify-self:end; } }
 
 /* Base planner + breeding routes */
+.base-planner-section { margin-top:1.5rem; }
+.secondary-section-heading { margin:0 0 .75rem; color:var(--text-primary); font-size:1.1rem; }
 .base-planner-hero { display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; margin-bottom:1rem; padding:1.25rem; border:1px solid rgba(99,102,241,.3); border-radius:16px; background:linear-gradient(125deg,rgba(30,41,59,.9),rgba(49,46,129,.25)); }
 .base-planner-hero h2 { margin:.2rem 0 .45rem; font-size:clamp(1.25rem,2.4vw,1.7rem); }
 .base-planner-hero p:not(.section-eyebrow) { max-width:680px; margin:0; color:var(--text-secondary); line-height:1.55; }
