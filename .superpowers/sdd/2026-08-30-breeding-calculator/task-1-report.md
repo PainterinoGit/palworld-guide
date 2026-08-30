@@ -50,3 +50,34 @@ Output: 22 tests passed, 0 failed; both modules parsed successfully; whitespace 
 ## Commit hash
 
 Implementation commit: `7db429b4070efca20fe1a5612146655346f00524`
+
+## Fix round 1 evidence
+
+Review findings addressed:
+
+- Added self-only route records for Jetragon and Shadowbeak, roster-derived self-only records for Silvance, Dandilord, and Hartalis, the explicit Cryolinx Terra + Dazemu pair, and an incomplete unknown-parent Loomen record.
+- Replaced the incorrect concrete Loupmoon Cryst + Frostplume pair with an incomplete unknown-parent record; no concrete pair lookup is created.
+- Removed the unregistered `pals-breeding-route` source ID and constrained relationship sources to existing active metadata IDs.
+- Strengthened tests for reversed parent lookup and exact duplicate suppression.
+
+Fix-round red command:
+
+```text
+node --test tests/breeding-calculator.test.mjs
+```
+
+Output: failed as expected on the missing Jetragon self-only relationship, then exposed the unregistered source ID during the same red cycle.
+
+Fix-round green commands:
+
+```text
+node --test tests/breeding-calculator.test.mjs
+node --test tests/*.test.mjs
+node --check data/breeding-combinations.mjs
+node --check js/breeding-data.mjs
+git diff --check
+```
+
+Output: focused suite 3 passed, full suite 23 passed, 0 failed; syntax checks passed; diff check clean.
+
+Fix-round commit: pending

@@ -1,5 +1,5 @@
 const CALCULATOR_SOURCE = ['palworld-gg-breeding-calculator'];
-const ROSTER_SOURCE = ['pals-roster'];
+const ROSTER_SOURCE = CALCULATOR_SOURCE;
 
 const relationship = (id, child, parents, status, phase, note, sources = ROSTER_SOURCE) => ({
   id,
@@ -12,8 +12,8 @@ const relationship = (id, child, parents, status, phase, note, sources = ROSTER_
 });
 
 const BREEDING_COMBINATIONS = [
-  relationship('jormuntide-ignis-blazehowl-jormuntide', 'Jormuntide Ignis', ['Blazehowl', 'Jormuntide'], 'verified', 'early-mid', 'Konkrete Route aus dem Guide.', ['palworld-gg-breeding-calculator', 'pals-breeding-route']),
-  relationship('anubis-moldron-jormuntide-ignis', 'Anubis', ['Moldron', 'Jormuntide Ignis'], 'verified', 'early-mid', 'Konkrete Route aus dem Guide.', ['palworld-gg-breeding-calculator', 'pals-breeding-route']),
+  relationship('jormuntide-ignis-blazehowl-jormuntide', 'Jormuntide Ignis', ['Blazehowl', 'Jormuntide'], 'verified', 'early-mid', 'Konkrete Route aus dem Guide.', ['palworld-gg-breeding-calculator']),
+  relationship('anubis-moldron-jormuntide-ignis', 'Anubis', ['Moldron', 'Jormuntide Ignis'], 'verified', 'early-mid', 'Konkrete Route aus dem Guide.', ['palworld-gg-breeding-calculator']),
   relationship('braloha-croajiro-noct-tetroise-primo', 'Braloha', ['Croajiro Noct', 'Tetroise Primo'], 'verified', 'support', 'Verkürzt die Zeit bis neue Eier entstehen.', ['palmods-early-breeding-route', 'palmods-work-suitability']),
   relationship('beegarde-polapup-jolthog', 'Beegarde', ['Jolthog', 'Polapup'], 'verified', 'mid', 'Eine der bekannten Honig-Kombinationen.', CALCULATOR_SOURCE),
   relationship('beegarde-penking-cinnamoth', 'Beegarde', ['Cinnamoth', 'Penking'], 'verified', 'mid', 'Eine der bekannten Honig-Kombinationen.', CALCULATOR_SOURCE),
@@ -31,6 +31,11 @@ const BREEDING_COMBINATIONS = [
   relationship('eidrolon-ignis-eidrolon-suzaku', 'Eidrolon Ignis', ['Eidrolon', 'Suzaku'], 'verified', 'late', 'World-Tree-Variante.', ROSTER_SOURCE),
   relationship('aegidron-eidrolon-ignis-braloha', 'Aegidron', ['Eidrolon Ignis', 'Braloha'], 'incomplete', 'late', '1% Mutationschance; Philanthropist-Trait erforderlich, nicht garantiert.', ['palmods-work-suitability']),
   relationship('self-only-bastigor', 'Bastigor', ['Bastigor', 'Bastigor'], 'special-case', 'late', 'Nur artgleiche Vermehrung.', CALCULATOR_SOURCE),
+  relationship('self-only-jetragon', 'Jetragon', ['Jetragon', 'Jetragon'], 'special-case', 'late', 'Die Route nennt Jetragon als Self-only-Pal.', CALCULATOR_SOURCE),
+  relationship('self-only-shadowbeak', 'Shadowbeak', ['Shadowbeak', 'Shadowbeak'], 'special-case', 'Die Route nennt Shadowbeak als Self-only-Pal.', CALCULATOR_SOURCE),
+  relationship('self-only-silvance', 'Silvance', ['Silvance', 'Silvance'], 'special-case', 'Der Roster nennt die einzigartige Zuchtkombination.', ROSTER_SOURCE),
+  relationship('self-only-dandilord', 'Dandilord', ['Dandilord', 'Dandilord'], 'special-case', 'Der Roster nennt Zucht zweier Dandilord.', ROSTER_SOURCE),
+  relationship('self-only-hartalis', 'Hartalis', ['Hartalis', 'Hartalis'], 'special-case', 'Der Roster nennt Zucht zweier Hartalis.', ROSTER_SOURCE),
   relationship('self-only-selyne', 'Selyne', ['Selyne', 'Selyne'], 'special-case', 'late', 'Nur artgleiche Vermehrung.', ROSTER_SOURCE),
   relationship('self-only-bellanoir-libero', 'Bellanoir Libero', ['Bellanoir Libero', 'Bellanoir Libero'], 'special-case', 'late', 'Nur artgleiche Vermehrung.', ROSTER_SOURCE),
   relationship('self-only-xenolord', 'Xenolord', ['Xenolord', 'Xenolord'], 'special-case', 'late', 'Nur artgleiche Vermehrung.', ROSTER_SOURCE),
@@ -61,6 +66,7 @@ const BREEDING_COMBINATIONS = [
   relationship('jormuntide-cinnamoth-cryolinx', 'Jormuntide', ['Cinnamoth', 'Cryolinx'], 'verified', 'late', 'Konkrete Eltern im Roster genannt.'),
   relationship('suzaku-aqua-jormuntide-suzaku', 'Suzaku Aqua', ['Jormuntide', 'Suzaku'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('moldron-cryst-moldron-reptyro-cryst', 'Moldron Cryst', ['Moldron', 'Reptyro Cryst'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
+  relationship('cryolinx-terra-cryolinx-dazemu', 'Cryolinx Terra', ['Cryolinx', 'Dazemu'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('blazehowl-noct-blazehowl-felbat', 'Blazehowl Noct', ['Blazehowl', 'Felbat'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('woolipop-terra-kikit-woolipop', 'Woolipop Terra', ['Kikit', 'Woolipop'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('gloopie-primo-gloopie-valentail', 'Gloopie Primo', ['Gloopie', 'Valentail'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
@@ -99,7 +105,8 @@ const BREEDING_COMBINATIONS = [
   relationship('knocklem-ignis-knocklem-ragnahawk', 'Knocklem Ignis', ['Knocklem', 'Ragnahawk'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('snock-terra-snock-turtacle-terra', 'Snock Terra', ['Snock', 'Turtacle Terra'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
   relationship('dualith-noct-dualith-sootseer', 'Dualith Noct', ['Dualith', 'Sootseer'], 'verified', 'late', 'Elementar-Variante aus dem Roster.'),
-  relationship('loupmoon-cryst-loupmoon-frostplume', 'Loupmoon Cryst', ['Frostplume', 'Loupmoon'], 'incomplete', 'late', 'Roster bestätigt Zucht, nennt aber keine konkrete Elternpaarung.'),
+  relationship('loomen-unknown', 'Loomen', ['Unbekannter Eltern-Pal', 'Unbekannter Eltern-Pal'], 'incomplete', 'late', 'Roster bestätigt Zucht, nennt aber keine konkrete Elternpaarung.'),
+  relationship('loupmoon-cryst-unknown', 'Loupmoon Cryst', ['Unbekannter Eltern-Pal', 'Unbekannter Eltern-Pal'], 'incomplete', 'late', 'Roster bestätigt Zucht, nennt aber keine konkrete Elternpaarung.'),
   relationship('ophydia-unknown', 'Ophydia', ['Unbekannter Eltern-Pal', 'Unbekannter Eltern-Pal'], 'incomplete', 'late', 'Roster bestätigt Zucht, konkrete Eltern fehlen.'),
   relationship('roujay-unknown', 'Roujay', ['Unbekannter Eltern-Pal', 'Unbekannter Eltern-Pal'], 'incomplete', 'late', 'Roster bestätigt Zucht, konkrete Eltern fehlen.'),
 ];
