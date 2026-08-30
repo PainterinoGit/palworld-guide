@@ -2292,7 +2292,7 @@
 .level-band-node:hover .level-band-node-line span, .level-band-node.is-active .level-band-node-line span { border-color:#8b5cf6; color:#fff; background:#4f46e5; box-shadow:0 0 0 4px rgba(79,70,229,.18); }
 .level-band-node.is-active .level-band-node-copy strong { color:#c7d2fe; }
 .level-band-node:focus-visible, .guide-roadmap-step:focus-visible, .guide-roadmap-check:has(input:focus-visible) { outline:2px solid var(--color-accent); outline-offset:3px; }
-@media (max-width: 900px) { .level-team-grid, .team-progress, .level-special-grid { grid-template-columns:1fr; } }
+@media (max-width: 900px) { .level-team-grid, .level-special-grid { grid-template-columns:1fr; } .team-progress { grid-template-columns:1fr; } }
 @media (max-width: 700px) { .level-band-timeline { grid-template-columns:repeat(6, 140px); padding-bottom:.35rem; } .level-band-node-copy { text-align:left; } .level-band-node-line { justify-content:flex-start; } .level-band-node::after { left:31px; width:calc(100% - 31px); } }
 @media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } .guide-roadmap-item { grid-template-columns:1fr; gap:.1rem; } .guide-roadmap-check { padding-left:3.35rem; } }
 @media (max-width: 560px) { .team-slot { grid-template-columns:1fr; } .team-slot-pal { grid-template-columns:minmax(0, 1fr) auto; align-items:center; } .team-slot-type { justify-self:end; } }
