@@ -6,6 +6,26 @@ export const META_VERSION = 'Patch 1.0+ · geprüft am 2026-08-28';
 
 export const META_SOURCES = [
   {
+    id: 'video-pal-professor-passive-tierlist',
+    title: 'The Pal Professor – Combat Passive Skills Tierlist v1.0.3',
+    url: 'https://www.youtube.com/watch?v=63tyyVDwp28',
+    type: 'video',
+    checkedAt: '2026-08-30',
+    scope: 'Patch 1.0+; konkret geprüft in 1.0.3 für Endgame-Raids und Hardmode-Tower',
+    confidence: 'community-cross-check',
+    summary: 'Ordnet Combat-Passives nach Rolle, Endgame-Nutzen und Boss-Spezialisierung ein.'
+  },
+  {
+    id: 'video-pal-professor-ultra-raid',
+    title: 'The Pal Professor – Complete Ultra Raid Guide v1.0.3',
+    url: 'https://www.youtube.com/watch?v=ts_yaU3Okg0',
+    type: 'video',
+    checkedAt: '2026-08-30',
+    scope: 'Patch 1.0+; konkret geprüft in 1.0.3 für Ultra-/Master-/Hardmode-Raids',
+    confidence: 'community-cross-check',
+    summary: 'Testet eine defensive, weniger grind-intensive Raid-Armee und ihre Grenzen.'
+  },
+  {
     id: 'official-v1-release-changelog',
     title: 'Palworld v1.0 Official Release Changelog',
     url: 'https://steamdb.info/patchnotes/24088745/',

@@ -679,6 +679,23 @@
             });
         }
 
+        function renderPatchNotes() {
+            const host = document.getElementById('patchnotesHost');
+            const notes = window.GuideData?.PATCH_NOTES || [];
+            if (!host) return;
+            host.innerHTML = notes.map(note => `
+                <article class="patchnote-entry">
+                    <div class="patchnote-entry-head">
+                        <div><span class="patchnote-version">v${escapeHtml(note.version)}</span><span class="patchnote-date">${escapeHtml(note.date)}</span></div>
+                        <h3>${escapeHtml(note.title)}</h3>
+                    </div>
+                    <p class="patchnote-summary">${escapeHtml(note.summary)}</p>
+                    <ul>${note.changes.map(change => `<li><strong>${escapeHtml(change.label)}:</strong> ${escapeHtml(change.text)}</li>`).join('')}</ul>
+                    <div class="patchnote-sources">Praxisabgleich: ${note.sourceIds.map(id => `<a href="${escapeHtml((window.GuideData.META_SOURCES || []).find(source => source.id === id)?.url || '#')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a>`).join(' · ')}</div>
+                </article>
+            `).join('');
+        }
+
         // Floating hover tooltip (image + type/tier/stage + Fundort) for any chip we can
         // resolve against PAL_DB — reuses the same name-cleaning as the icon injection above.
         function enableChipTooltips() {
@@ -727,6 +744,7 @@
         renderPhotoPins();
         renderLocationList('all');
         renderResourceCatalog();
+        renderPatchNotes();
         bindResourceDetails();
         applyPalVisuals();
         applyPalThumbs();

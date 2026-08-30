@@ -44,6 +44,7 @@
             <button class="tab-btn" onclick="switchTab('locations')">🗺️ Map</button>
             <button class="tab-btn" onclick="switchTab('handbook')">📖 Handbuch</button>
             <button class="tab-btn" onclick="switchTab('base-planner')">🏠 Base-Planer</button>
+            <button class="tab-btn" onclick="switchTab('patchnotes')">🧾 Patchnotes</button>
         </div>
 
         <!-- TAB: BASE PLANNER -->
@@ -80,6 +81,7 @@
                 <div id="guideRoadmapHost" class="guide-roadmap" aria-label="Guide-Roadmap"></div>
                 <div id="levelGuideHost" aria-live="polite"></div>
             </section>
+            <div class="callout callout-info guide-update-note"><strong>1.0.3-Update:</strong> Wasserbasen sind ab Level 23 realistischer, Jetragon-Technologien ab Level 70 erreichbar. Im Endgame lohnt sich zusätzlich ein getrennter World-Tree-Loop für Holy Water, Dog Coins und Relikte.</div>
 
         </div>
 
@@ -97,6 +99,7 @@
                 <div id="levelBandSummary" class="level-band-summary"></div>
                 <div id="levelTeamHost" class="level-team-grid" aria-live="polite"></div>
                 <div id="levelSpecialHost" class="level-special-grid" aria-live="polite"></div>
+                <div class="callout callout-tip team-meta-update"><strong>Raid-Praxis:</strong> Für einen weniger grind-intensiven Ansatz funktionieren defensive <strong>Bastigor</strong>-Pals mit <strong>Sveus</strong>-Schilden und Healing Grenades gegen mehrere Raids. Das ist kein universeller Ersatz für Boss-Counter: Bellanoir Libero kann die Armee trotz Defensive schnell ausschalten.</div>
             </section>
         </div>
         <!-- TAB: PALS DATABASE -->
@@ -107,7 +110,7 @@
                 Filterbar nach Typ, Spielphase und Nutzungskontext, sortierbar auch nach einzelner Fähigkeit.
                 Das ⭐-Badge markiert ausschließlich eine aktuelle, normalisierte Meta-Empfehlung; neutrale Roster-Einträge bleiben Referenzdaten.
             </p>
-            <p class="pal-meta-banner"><strong>Patch 1.0+</strong> · geprüft am 2026-08-27 · Quellenstatus und Detailansicht sind pro Pal verlinkt.</p>
+            <p class="pal-meta-banner"><strong>Patch 1.0.3 / 1.0+</strong> · geprüft am 2026-08-30 · Quellenstatus und Detailansicht sind pro Pal verlinkt.</p>
 
             <div class="pal-panel-tabs" role="tablist" aria-label="Pal-Datenbank Ansichten">
                 <button class="filter-chip active" data-pal-panel="rosterPanel" role="tab" aria-selected="true" onclick="switchPalPanel('rosterPanel', this)">📚 Vollständiger Roster</button>
@@ -240,11 +243,12 @@
                         </table>
                     </div>
                 </section>
+                <div class="callout callout-info resource-meta-update"><strong>World Tree Holy Water:</strong> Seit 1.0.3 ist es nicht mehr nur eine aktive Farm. Expeditionen, World-Tree-Fischen und große Fischteiche erzeugen es passiv; für Dog Coins bleibt der Dusty-Ravine-Mimog-Loop eine optionale Endgame-Spezialroute.</div>
             </div>
         </div>
 
         <!-- TAB: HANDBUCH (Mechaniken-Tiefenwissen) -->
-        <div id="handbook" class="tab-content">
+            <div id="handbook" class="tab-content">
             <h2 class="stage-title" style="margin-bottom: 0.5rem;">
                 <div class="stage-badge" style="background:#6366F1;">📖</div>
                 Handbuch – Pal-Mechaniken im Detail
@@ -255,7 +259,7 @@
                 Vorweg: <strong>ein echtes „Cloning" gibt es offiziell nicht</strong>.
             </p>
 
-                        <div class="subnav">
+                <div class="subnav">
                 <button class="subnav-btn active" data-panel="hb-basics" onclick="switchSubPanel('hb-basics', this)">🧬 Pal-Basics</button>
                 <button class="subnav-btn" data-panel="hb-breeding-all" onclick="switchSubPanel('hb-breeding-all', this)">🥚 Breeding</button>
                 <button class="subnav-btn" data-panel="hb-combat-mounts" onclick="switchSubPanel('hb-combat-mounts', this)">⚔️ Kampf & Mounts</button>
@@ -277,6 +281,17 @@
                         Angelegt zeigen sie HP/Attack/Defense-Talent von jedem Pal in Reichweite – auch von wilden.
                     </div>
                 </div>
+                <section class="hb-block passive-raid-guide" aria-labelledby="passiveRaidGuideTitle">
+                    <p class="section-eyebrow">PATCH 1.0.3 · ENDGAME</p>
+                    <h2 id="passiveRaidGuideTitle">Passives und Raid-Builds richtig einordnen</h2>
+                    <p class="hb-desc">Es gibt kein universelles Best-in-Slot-Passiv. Für Endgame-Raids zählen Bossmechanik, Element, Rolle und Überlebensfähigkeit gemeinsam.</p>
+                    <div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>Rolle</th><th>Priorität</th><th>Praxisregel</th></tr></thead><tbody>
+                        <tr><td class="hb-name">Booster / Spieler</td><td><strong>Serenity</strong>, Stronghold Strategist, Idiosyncratic</td><td>Cooldowntempo und Heilung sind für Barrier-Phasen oft wertvoller als ein kleiner Rohschaden-Bonus.</td></tr>
+                        <tr><td class="hb-name">Mount</td><td>Diamond Body, Immortality, Legend; situativ Swift/Dimensional Leap</td><td>Rückstoß- und Flinch-Schutz kann gleichzeitig Überleben und DPS erhöhen.</td></tr>
+                        <tr><td class="hb-name">Raid-Armee</td><td>Element-Passiv plus Defensive</td><td>Defensive Bastigor-Armeen mit Sveus und Healing Grenades sind eine Option, aber Bellanoir Libero bleibt ein Sonderfall.</td></tr>
+                    </tbody></table></div>
+                    <div class="callout callout-warn"><strong>Nicht blind übernehmen:</strong> Lucky ist laut Praxistest fehlerhaft; alte Empfehlungen wie Impatient, Runner oder Ferocious sind im Endgame häufig nur Übergangslösungen.</div>
+                </section>
 
                 <div class="hb-block">
                     <h3>📏 Welche Werte sind gut?</h3>
@@ -591,6 +606,43 @@
             
                 <div class="hb-section-divider"></div>
                 <div class="hb-block">
+                    <h3>⚡ Base-Management: „Work Hard“ &amp; Pal-Gesundheit</h3>
+                    <p class="hb-desc">
+                        Optimaler Durchsatz in der Basis durch das <strong>Work Hard-Setup</strong> am Überwachungsstand (Monitoring Stand) in Kombination mit <strong>Salat</strong> als Standardfutter und richtiger Notfall-Medizin.
+                    </p>
+                    <div class="stage-flow">
+                        <div class="stage-flow-item sf-early">
+                            <span class="sf-label">1 · Überwachungsstand</span>
+                            <p>Stelle am Überwachungsstand <strong>„Hart arbeiten“ (Work Hard)</strong> ein (+30% Arbeitsgeschwindigkeit). Das erhöht den Output, verbraucht aber mehr SAN.</p>
+                        </div>
+                        <div class="stage-flow-item sf-mid">
+                            <span class="sf-label">2 · Salat als Hauptfutter</span>
+                            <p>Verfüttere dauerhaft <strong>Salat (Salad)</strong> im Futtertrog (+11 SAN, verlässlich satt + <strong>+30% Tempo-Buff</strong> für 5 Min.). Fängt den SAN-Verlust effektiv ab.</p>
+                        </div>
+                        <div class="stage-flow-item sf-late">
+                            <span class="sf-label">3 · Heilung bei Ausfällen</span>
+                            <p>Lagere Medizin direkt an der Basis. Tritt trotz Salat eine Krankheit/Verletzung auf, verabreiche die passende Arznei per <strong>Füttern (`F`)</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="hb-table-wrap" style="margin-top:1rem;">
+                        <table class="hb-table">
+                            <thead><tr><th>Krankheit / Symptom</th><th>Spezifisches Heilmittel</th><th>Verabreichung</th></tr></thead>
+                            <tbody>
+                                <tr><td class="hb-name">Erkältung &amp; Verstauchung</td><td><strong>Minderwertige Medizin</strong> (Low-Grade)</td><td>Ins Inventar nehmen ➔ am Pal Taste <code>F</code> ➔ Füttern</td></tr>
+                                <tr><td class="hb-name">Magengeschwür &amp; Knochenbruch</td><td><strong>Medizin</strong> (Medical Supplies)</td><td>Ins Inventar nehmen ➔ am Pal Taste <code>F</code> ➔ Füttern</td></tr>
+                                <tr><td class="hb-name">Depressiv &amp; Geschwächt</td><td><strong>Hochwertige Medizin</strong> (High-Grade)</td><td>Ins Inventar nehmen ➔ am Pal Taste <code>F</code> ➔ Füttern</td></tr>
+                                <tr><td class="hb-name">Ohnmächtig / K.O. (HP 0)</td><td><strong>10 Minuten in Palbox legen</strong></td><td>Palbox Cooldown abwarten</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout callout-tip">
+                        <strong>Vorbeugung:</strong> Platziere zusätzlich <strong>Flauschige / Hochwertige Pal-Betten</strong> und 1–2 <strong>Heiße Quellen</strong>, um Ausfälle auf unter 5% zu drücken.
+                    </div>
+                </div>
+            
+                <div class="hb-section-divider"></div>
+                <div class="hb-block">
                     <h3>💰 Geld verdienen nach Spielphase</h3>
                     <div class="stage-flow">
                         <div class="stage-flow-item sf-early">
@@ -713,6 +765,19 @@
             </div>
             
 
+        </div>
+
+        <!-- TAB: PATCHNOTES -->
+        <div id="patchnotes" class="tab-content">
+            <section class="patchnotes-header" aria-labelledby="patchnotesTitle">
+                <div>
+                    <p class="section-eyebrow">VERSIONSVERLAUF · GUIDE-RELEVANT</p>
+                    <h2 id="patchnotesTitle">Patchnotes, die deine Route ändern</h2>
+                    <p>Kurze Zusammenfassung der Patches, die Progression, Farmrouten oder Endgame-Builds im Guide beeinflussen. Detailwissen bleibt in den jeweiligen Haupttabs.</p>
+                </div>
+                <span class="patchnotes-badge">Aktueller Stand: 1.0.3</span>
+            </section>
+            <div id="patchnotesHost" class="patchnotes-list" aria-live="polite"></div>
         </div>
     </div>
 

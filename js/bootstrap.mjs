@@ -4,6 +4,7 @@ import { LEVEL_BANDS, TEAMS } from '../data/teams.mjs';
 import { GUIDE_STEPS } from '../data/guide.mjs';
 import { BASE_PLANS } from '../data/base-plans.mjs';
 import { BREEDING_ROUTES } from '../data/breeding.mjs';
+import { PATCH_NOTES } from '../data/patchnotes.mjs';
 import {
   applyGuidePalData,
   buildPalDatabase,
@@ -29,6 +30,7 @@ window.GuideData = {
   resolvePalImageName,
   BASE_PLANS,
   BREEDING_ROUTES,
+  PATCH_NOTES,
 };
 
 const appScript = document.createElement('script');

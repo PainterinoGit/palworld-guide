@@ -55,9 +55,10 @@ export const GUIDE_STEPS = [
     immediatePalIds: ['eikthyrdeer', 'rushoar'],
     replaceLaterPalIds: ['anubis', 'jormuntide-ignis', 'lily'],
     locationIds: ['golden-hills'],
-    switchWhen: 'Wechseln, wenn der Midgame-Kern oder ein konkretes Gebietsziel verfügbar ist und die frühe Übergangsrolle keinen Engpass mehr löst.',
+    switchWhen: 'Wechseln, wenn der Midgame-Kern oder ein konkretes Gebietsziel verfügbar ist und die frühe Übergangsrolle keinen Engpass mehr löst. Das Aquatic Construction Kit ist seit 1.0.3 bereits ab Level 23 verfügbar.',
     checklistEntries: [
       ['mount-access', 'Erstes Mount und den passenden Sattel freischalten'],
+      ['aquatic-kit', 'Ab Level 23 das Aquatic Construction Kit prüfen, falls eine Wasserbase sinnvoll ist'],
       ['route', 'Eine wiederholbare Erz-, Holz- und Dungeonroute festlegen'],
       ['transition-slots', 'Kampf-, Roaming- und Base-Slots getrennt besetzen'],
     ],
@@ -108,9 +109,10 @@ export const GUIDE_STEPS = [
     immediatePalIds: ['jetragon', 'jormuntide-ignis', 'solenne', 'renjishi', 'dandilord', 'bastigor'],
     replaceLaterPalIds: ['shaolong', 'orserk', 'bellanoir-libero'],
     locationIds: ['mount-obsidian'],
-    switchWhen: 'Wechseln, wenn Endgame-Carries oder Raid-Support verfügbar sind und die konkrete Bossmechanik feststeht.',
+    switchWhen: 'Wechseln, wenn Endgame-Carries oder Raid-Support verfügbar sind und die konkrete Bossmechanik feststeht. Jetragon ist seit 1.0.3 über seine Level-70-Technologien früher erreichbar.',
     checklistEntries: [
       ['fast-route', 'Schnelle Reise- und Ressourcenroute für späte Regionen festlegen'],
+      ['oil-output', 'Öl-Extraktoren früh aufstellen: Baukosten und Produktionsgeschwindigkeit sind in 1.0.3 verbessert'],
       ['production-specialists', 'Produktionskern, Material und Kühlung getrennt hochziehen'],
       ['endgame-prep', 'Ausrüstung, Passives und Condensing nur für Kernrollen priorisieren'],
     ],
@@ -128,7 +130,8 @@ export const GUIDE_STEPS = [
     locationIds: ['world-tree'],
     switchWhen: 'Für jeden Raid anhand von Element, Resistenz, Schadenfenster, Cooldowns und Support-Uptime neu wechseln.',
     checklistEntries: [
-      ['world-tree-loop', 'World-Tree-Route und Endgame-Ressourcenlauf etablieren'],
+      ['world-tree-loop', 'World-Tree-Route für Holy Water, Dog Coins und Relikte etablieren'],
+      ['passive-holy-water', 'Expeditionen oder großen Fischteich als passive Holy-Water-Quelle einrichten'],
       ['raid-context', 'Raid-Team nur für den konkreten Boss und seine Mechanik einsetzen'],
       ['final-base', 'Endgame-Worker nach gemessener Uptime und Laufwegen optimieren'],
     ],
