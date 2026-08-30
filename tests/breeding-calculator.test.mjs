@@ -8,6 +8,11 @@ import {
 } from '../js/breeding-data.mjs';
 import { BREEDING_COMBINATIONS } from '../data/breeding-combinations.mjs';
 import { META_SOURCES } from '../data/meta-sources.mjs';
+import {
+  createBreedingCalculator,
+  filterBreedingRelationships,
+  getPalByName,
+} from '../js/breeding-calculator.mjs';
 
 test('normalizes parent pairs and preserves distinct child/status records', () => {
   const input = [
@@ -75,4 +80,58 @@ test('keeps Shadowbeak well-formed and separates roster provenance from calculat
   const rosterDerived = BREEDING_COMBINATIONS.find(({ child }) => child === 'Silvance');
   assert.ok(rosterDerived.sources.includes('palmods-work-suitability'));
   assert.doesNotMatch(rosterDerived.sources.join('|'), /palworld-gg-breeding-calculator/);
+});
+
+test('filters breeding relationships by names, child element, phase, and status', () => {
+  const relationships = [
+    { child: 'Target', parents: ['Alpha', 'Zulu'], status: 'verified', phase: 'mid' },
+    { child: 'Other', parents: ['Beta', 'Gamma'], status: 'special-case', phase: 'late' },
+  ];
+  const roster = [
+    { name: 'Target', types: ['Fire'] },
+    { name: 'Other', types: ['Water'] },
+  ];
+
+  assert.equal(filterBreedingRelationships(relationships, { search: 'target', phase: 'mid', status: 'verified' }, roster).length, 1);
+  assert.equal(filterBreedingRelationships(relationships, { search: 'zUlU', element: 'fire', phase: 'all', status: 'all' }, roster).length, 1);
+  assert.equal(filterBreedingRelationships(relationships, { search: 'missing', phase: 'all', status: 'all' }, roster).length, 0);
+  assert.equal(filterBreedingRelationships(relationships, { element: 'water', phase: 'mid', status: 'all' }, roster).length, 0);
+  assert.equal(getPalByName(roster, 'target'), roster[0]);
+  assert.equal(getPalByName(roster, 'missing'), null);
+});
+
+test('looks up selected parents in either order without replacing the target selection', () => {
+  const index = buildBreedingIndex([
+    { id: 'target', child: 'Target', parents: ['Alpha', 'Zulu'], status: 'verified', phase: 'mid', note: '', sources: [] },
+  ]);
+  const targetHost = { textContent: '' };
+  const parentHost = { textContent: '' };
+  const resultsHost = { textContent: '' };
+  const selectedTargets = [];
+  const calculator = createBreedingCalculator({
+    index,
+    roster: [{ name: 'Target', types: ['Fire'] }],
+    hosts: { targetHost, parentHost, resultsHost },
+    onTargetChange: name => selectedTargets.push(name),
+  });
+
+  assert.deepEqual(calculator.selectTarget('Target').map(({ child }) => child), ['Target']);
+  assert.deepEqual(calculator.selectParent(0, 'Zulu'), []);
+  assert.deepEqual(calculator.selectParent(1, 'Alpha').map(({ child }) => child), ['Target']);
+  assert.deepEqual(selectedTargets, ['Target']);
+  assert.match(targetHost.textContent, /Target/);
+  assert.match(parentHost.textContent, /Zulu.*Alpha/);
+  assert.match(resultsHost.textContent, /Target/);
+});
+
+test('returns empty results for empty target or parent selections', () => {
+  const calculator = createBreedingCalculator({
+    index: buildBreedingIndex([]),
+    roster: [],
+    hosts: {},
+  });
+
+  assert.deepEqual(calculator.selectTarget(''), []);
+  assert.deepEqual(calculator.selectParent(0, 'Alpha'), []);
+  assert.deepEqual(calculator.selectParent(1, ''), []);
 });
