@@ -11,6 +11,8 @@ assert.match(teamProgressDesktopRule, /grid-template-columns\s*:\s*repeat\(3\s*,
 
 const teamProgressMobileRule = css.match(/@media\s*\(max-width:\s*900px\)\s*\{[\s\S]*?\.team-progress\s*\{([^}]*)\}/)?.[1] ?? '';
 assert.match(teamProgressMobileRule, /grid-template-columns\s*:\s*1fr/);
+assert.match(css, /\.base-planner-hero\s+h3\s*\{/);
+assert.match(css, /\.base-plan-summary\s+h3\s*\{/);
 
 assert.match(
   html,
