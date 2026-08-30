@@ -40,6 +40,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('wegweiser')">🧭 Wegweiser</button>
             <button class="tab-btn" onclick="switchTab('teams')">👥 Teams &amp; Basen</button>
+            <button class="tab-btn" onclick="switchTab('breeding')">🥚 Zucht</button>
             <button class="tab-btn" onclick="switchTab('pals')">🐾 Pals</button>
             <button class="tab-btn" onclick="switchTab('locations')">🗺️ Map</button>
             <button class="tab-btn" onclick="switchTab('handbook')">📖 Handbuch</button>
@@ -96,6 +97,21 @@
                 <div class="callout callout-info base-plan-disclaimer"><strong>Meta-Hinweis:</strong> „Beste“ Worker hängen auch von Laufwegen, Food-Kosten und Verfügbarkeit ab. Die Werte zeigen natürliche 1.0+-Spitzenwerte; Kondensation und Handbooks kommen obendrauf.</div>
             </section>
         </div>
+        <!-- TAB: BREEDING CALCULATOR -->
+        <div id="breeding" class="tab-content">
+            <section class="breeding-calculator" aria-labelledby="breedingCalculatorTitle">
+                <div class="breeding-calculator-header">
+                    <div>
+                        <p class="section-eyebrow">LOKALE KOMBINATIONEN</p>
+                        <h2 id="breedingCalculatorTitle">Zucht-Rechner</h2>
+                        <p>Suche nach einem Ziel-Pal oder kombiniere zwei Eltern. Sonderfälle und unvollständige Daten bleiben als solche markiert.</p>
+                    </div>
+                </div>
+                <div id="breedingTargetHost" aria-live="polite"></div>
+                <div id="breedingParentHost" aria-live="polite"></div>
+                <div id="breedingResultsHost" aria-live="polite"></div>
+            </section>
+        </div>
         <!-- TAB: PALS DATABASE -->
         <div id="pals" class="tab-content">
             <p class="hb-intro">
@@ -142,7 +158,7 @@
 
             <div class="hb-table-wrap">
                 <table class="hb-table pals-master-table">
-                    <thead><tr><th>Pal</th><th>Typ</th><th>Tier / Einordnung</th><th>Phase</th><th>Partner-Skill</th><th>Arbeits-Eignung</th><th>Warum / beste Nutzung</th><th>Fundort</th></tr></thead>
+                    <thead><tr><th>Pal</th><th>Typ</th><th>Tier / Einordnung</th><th>Phase</th><th>Partner-Skill</th><th>Zucht</th><th>Arbeits-Eignung</th><th>Warum / beste Nutzung</th><th>Fundort</th></tr></thead>
                     <tbody id="palsTableBody"></tbody>
                 </table>
             </div>
@@ -555,6 +571,10 @@
                         <tr><td class="hb-name">Nach jedem Patch prüfen</td><td>Ein Test-Ei vor der Vollproduktion ausbrüten; 1.0 hat viele Combo-Werte gegenüber Early Access verändert.</td></tr>
                     </tbody></table></div>
                     <div class="callout callout-info"><strong>Empfohlene Reihenfolge:</strong> Kuchenbasis → Beegarde → Yakumo-Passive-Linie → Engpass-Worker wie Anubis/Suzaku/Azurobe → finales Kampf- oder World-Tree-Projekt.</div>
+                    <div class="breeding-handbook-action">
+                        <div><strong>Breeding-Rechner</strong><span>Prüfe Ziel-Pals und bekannte Elternpaare direkt in diesem Guide.</span></div>
+                        <button type="button" class="breeding-handbook-link" onclick="switchTab('breeding')">Zum lokalen Rechner</button>
+                    </div>
                 </div>
 
                 <div class="hb-block breeding-route-block">

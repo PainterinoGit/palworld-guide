@@ -251,6 +251,7 @@
                     ? suitEntries.map(([sk, lvl]) => `<span class="suit-chip${sortKey === 'skill:' + sk ? ' suit-current' : ''}">${WORK_SUIT_EMOJI[sk] || '⭐'} ${lvl}</span>`).join('')
                     : '—';
                 const partnerHtml = e.partnerSkill ? escapeHtml(e.partnerSkill) : '—';
+                const breedingHtml = window.renderBreedingCell?.(e.name, window.BREEDING_INDEX, Object.values(PAL_DB)) || '—';
                 const roleNote = e.roles.length ? `<div class="pal-role-note">${escapeHtml(palRoleSummary(e))}</div>` : '';
                 const usageReason = palUsageReason(e);
                 const imageName = window.GuideData?.resolvePalImageName?.(PAL_DB, e.name) || e.image || e.name;
@@ -268,12 +269,18 @@
                     <td>${tierHtml}</td>
                     <td>${palStageBadges(e)}</td>
                     <td class="pal-partner-skill">${partnerHtml}</td>
+                    <td class="pal-breeding-cell">${breedingHtml}</td>
                     <td><div class="suit-chips">${suitHtml}</div>${roleNote}</td>
                     <td class="pal-usage-reason">${usageReason}</td>
                     <td>${escapeHtml(e.location || '—')}</td>
                 </tr>`;
             }).join('');
             applyPalThumbs();
+        }
+
+        function openBreedingTarget(childName) {
+            switchTab('breeding');
+            window.initBreedingCalculator?.()?.selectTarget(childName);
         }
 
         function switchPalPanel(panelId, btnEl) {
@@ -814,5 +821,9 @@
                     const cell = document.querySelector(`#teamsThemeTable [data-theme="${theme}"]`);
                     setTeamsTheme(theme, cell);
                 }
+            }
+
+            if (tabName === 'breeding') {
+                window.initBreedingCalculator?.();
             }
         }
