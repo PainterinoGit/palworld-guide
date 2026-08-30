@@ -91,6 +91,37 @@ function statusLabel(status) {
   return ({ verified: 'Verifiziert', incomplete: 'Unvollständig', 'special-case': 'Sonderfall' })[status] ?? 'Unbekannter Status';
 }
 
+function renderBreedingEmptyState(kind) {
+  const messages = {
+    'no-target': 'Wähle ein Ziel oder zwei Elternteile, um bekannte Kombinationen zu sehen.',
+    'no-relationship': 'Keine bekannte Kombination für diese Auswahl und Filter.',
+  };
+  const message = messages[kind] ?? messages['no-relationship'];
+  return `<p class="breeding-empty-state breeding-empty-state-${escapeHtml(kind)}" data-breeding-state="${escapeHtml(kind)}">${message}</p>`;
+}
+
+function relationshipState(relationship) {
+  const parents = relationship.parents ?? [];
+  if (relationship.status === 'special-case' && parents.length === 2 && normalize(parents[0]) === normalize(parents[1])) {
+    return 'same-species';
+  }
+  return relationship.status === 'incomplete' ? 'incomplete' : null;
+}
+
+function renderRelationshipQualification(relationship) {
+  const state = relationshipState(relationship);
+  if (state === 'same-species') {
+    return '<p class="breeding-qualification" data-breeding-state="same-species"><strong>Artgleiche Zucht:</strong> Für diesen Sonderfall werden zwei Exemplare derselben Art benötigt; er bleibt ausdrücklich als Sonderfall ausgewiesen.</p>';
+  }
+  if (state === 'incomplete') {
+    return '<p class="breeding-qualification" data-breeding-state="incomplete"><strong>Unvollständige Daten:</strong> Diese Kombination ist nicht vollständig belegt und kein garantiertes Ergebnis.</p>';
+  }
+  if (relationship.status !== 'verified') {
+    return `<p class="breeding-qualification" data-breeding-state="${escapeHtml(relationship.status ?? 'unknown')}"><strong>${escapeHtml(statusLabel(relationship.status))}:</strong> Diese Kombination ist kein garantiertes Ergebnis.</p>`;
+  }
+  return '';
+}
+
 function optionMarkup(names, selected, placeholder) {
   return [`<option value="">${escapeHtml(placeholder)}</option>`, ...names.map((name) => `<option value="${escapeHtml(name)}"${name === selected ? ' selected' : ''}>${escapeHtml(name)}</option>`)].join('');
 }
@@ -157,15 +188,16 @@ function createBreedingCalculator({ index, roster = [], hosts = {}, onTargetChan
     const visibleRelationships = filterBreedingRelationships(activeRelationships, filters, roster);
     if (!isDomHost(resultsHost)) {
       const names = visibleRelationships.map(({ child, status }) => `${child} (${status})`);
-      writeHost(resultsHost, names.length ? names.join(', ') : 'Keine bekannte Kombination.');
+      const emptyKind = !selectedTarget && !selectedParents.every(Boolean) ? 'no-target' : 'no-relationship';
+      writeHost(resultsHost, names.length ? names.join(', ') : renderBreedingEmptyState(emptyKind));
       return visibleRelationships;
     }
     if (!selectedTarget && !selectedParents.every(Boolean)) {
-      resultsHost.innerHTML = '<p class="breeding-empty-state">Wähle ein Ziel oder zwei Elternteile, um bekannte Kombinationen zu sehen.</p>';
+      resultsHost.innerHTML = renderBreedingEmptyState('no-target');
       return visibleRelationships;
     }
     if (!visibleRelationships.length) {
-      resultsHost.innerHTML = '<p class="breeding-empty-state">Keine bekannte Kombination für diese Auswahl und Filter.</p>';
+      resultsHost.innerHTML = renderBreedingEmptyState('no-relationship');
       return visibleRelationships;
     }
     resultsHost.innerHTML = `<div class="breeding-results-list">${visibleRelationships.map((relationship) => {
@@ -174,6 +206,7 @@ function createBreedingCalculator({ index, roster = [], hosts = {}, onTargetChan
       return `<article class="breeding-result">
         <div class="breeding-result-line"><div class="breeding-result-pals">${parents}<span class="breeding-result-arrow" aria-hidden="true">→</span><span class="breeding-pal breeding-child">${iconMarkup(relationship.child)}<strong>${escapeHtml(relationship.child)}</strong></span></div><span class="breeding-status breeding-status-${escapeHtml(relationship.status)}">${escapeHtml(statusLabel(relationship.status))}</span></div>
         <p>${escapeHtml(relationship.note || 'Keine zusätzliche Notiz hinterlegt.')}</p>
+        ${renderRelationshipQualification(relationship)}
         ${sources ? `<div class="breeding-sources"><span>Quellen</span>${sources}</div>` : ''}
       </article>`;
     }).join('')}</div>`;
@@ -211,5 +244,6 @@ export {
   createBreedingCalculator,
   filterBreedingRelationships,
   getPalByName,
+  renderBreedingEmptyState,
   renderBreedingCell,
 };
