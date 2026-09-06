@@ -18,3 +18,9 @@ assert.match(
   html,
   /<section\s+class="base-planner-section"[\s\S]*id="basePlanHost"[\s\S]*base-plan-legend[\s\S]*base-plan-food-note[\s\S]*base-plan-disclaimer[\s\S]*<\/section>/
 );
+
+assert.match(html, /id="endgameTeamsHost"/);
+assert.match(html, /Die besten Endgame-Teams/);
+assert.match(html, /LEVEL 50–80/);
+assert.match(css, /\.endgame-teams-grid\s*\{/);
+

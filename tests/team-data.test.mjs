@@ -37,6 +37,16 @@ const expectedSpecialSources = {
     'video-italianspartacus-party-comps',
     'video-ragegaming-op-combat-builds',
   ],
+  'capture-farming': [
+    'video-pal-professor-passive-tierlist',
+    'pcgamer-best-pals',
+    'pal-compass-role-rankings',
+  ],
+  'water-fishing': [
+    'palmods-work-suitability',
+    'palworld-calc-1-0-tier-list',
+    'pcgamer-best-pals',
+  ],
 };
 const teamsByKind = [
   ['combat', COMBAT_TEAMS],

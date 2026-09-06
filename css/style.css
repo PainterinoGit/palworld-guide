@@ -2280,6 +2280,11 @@
 .team-progress .team-card { min-width:0; }
 .team-progress .team-card-slots { min-width:0; }
 .team-progress .team-alternatives { overflow-wrap:anywhere; }
+.endgame-teams-section { margin-top:2rem; }
+.endgame-teams-header { margin-bottom:1rem; }
+.endgame-teams-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1rem; }
+.endgame-team-card { border-color:rgba(129,140,248,.35); background:linear-gradient(135deg, rgba(30,41,59,.65), rgba(15,23,42,.6)); }
+.endgame-team-card .team-card-kicker { color:#818cf8; }
 .level-special-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1rem; margin-top:1rem; }
 .level-special-heading { grid-column:1/-1; display:flex; align-items:baseline; gap:.6rem; color:#fbbf24; font-size:.72rem; font-weight:800; letter-spacing:.1em; }
 .level-special-heading small { color:var(--text-secondary); font-size:.75rem; font-weight:500; letter-spacing:0; }
@@ -2353,7 +2358,7 @@
 .level-band-node:hover .level-band-node-line span, .level-band-node.is-active .level-band-node-line span { border-color:#8b5cf6; color:#fff; background:#4f46e5; box-shadow:0 0 0 4px rgba(79,70,229,.18); }
 .level-band-node.is-active .level-band-node-copy strong { color:#c7d2fe; }
 .level-band-node:focus-visible, .guide-roadmap-step:focus-visible, .guide-roadmap-check:has(input:focus-visible) { outline:2px solid var(--color-accent); outline-offset:3px; }
-@media (max-width: 900px) { .level-team-grid, .level-special-grid { grid-template-columns:1fr; } .team-progress { grid-template-columns:1fr; } }
+@media (max-width: 900px) { .level-team-grid, .level-special-grid, .endgame-teams-grid { grid-template-columns:1fr; } .team-progress { grid-template-columns:1fr; } }
 @media (max-width: 700px) { .level-band-timeline { grid-template-columns:repeat(6, 140px); padding-bottom:.35rem; } .level-band-node-copy { text-align:left; } .level-band-node-line { justify-content:flex-start; } .level-band-node::after { left:31px; width:calc(100% - 31px); } }
 @media (max-width: 560px) { .level-team-guide-header, .level-band-summary, .level-guide-panel-header { align-items:stretch; flex-direction:column; } .level-band-picker { min-width:0; } .guide-step-columns { grid-template-columns:1fr; gap:.7rem; } .guide-roadmap-item { grid-template-columns:1fr; gap:.1rem; } .guide-roadmap-check { padding-left:3.35rem; } }
 @media (max-width: 560px) { .team-slot { grid-template-columns:1fr; } .team-slot-pal { grid-template-columns:minmax(0, 1fr) auto; align-items:center; } .team-slot-type { justify-self:end; } }

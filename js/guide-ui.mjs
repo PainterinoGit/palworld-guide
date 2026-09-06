@@ -3,7 +3,7 @@ import { getPalById } from '../data/pals.mjs';
 import { GUIDE_STEPS } from '../data/guide.mjs';
 import { renderTeamSlot } from './team-renderer.mjs';
 import { renderGuideStep } from './guide-renderer.mjs';
-import { buildTeamPhaseView } from './team-progression.mjs';
+import { buildTeamPhaseView, getEndgameTeams } from './team-progression.mjs';
 
 const GUIDE_STORAGE_KEY = 'palworld-guide-step';
 const GUIDE_DONE_KEY = 'palworld-guide-done';
@@ -63,6 +63,7 @@ function palImageUrl(name) {
 }
 
 function attachTeamSlotDetails(host, specialHost) {
+  if (typeof document === 'undefined') return;
   const tooltip = document.getElementById('chipTooltip');
   if (!tooltip) return;
   const specialSlots = specialHost.querySelectorAll('.team-slot[data-pal-id]');
@@ -117,10 +118,35 @@ function attachTeamSlotDetails(host, specialHost) {
   });
 }
 
+export function renderEndgameTeams({ endgameTeams, host }) {
+  if (!host) return;
+  host.innerHTML = endgameTeams.map(entry => {
+    const t = entry.team;
+    return `<article class="team-card endgame-team-card" data-endgame-category="${escapeHtml(entry.category)}">
+      <div class="team-card-kicker">${escapeHtml(entry.icon)} ENDGAME · ${escapeHtml(entry.category.toUpperCase())}</div>
+      <h3>${escapeHtml(entry.title)}</h3>
+      <p class="team-card-subtitle" style="color:var(--text-secondary);font-size:0.88rem;margin:-0.25rem 0 0.5rem;">${escapeHtml(entry.subtitle)}</p>
+      <p class="team-card-reason">${escapeHtml(t.combinationReason)}</p>
+      <div class="team-card-slots">
+        <div class="team-card-slots-label">Team-Slots · ${t.slots.length}</div>
+        ${t.slots.map(slot => renderTeamSlot(slot, slot.role || 'combat')).join('')}
+      </div>
+      <p class="team-card-meta"><strong>Einsatz:</strong> ${escapeHtml(t.accessNote || t.useWhen || t.purpose)}</p>
+      <p class="team-card-meta"><strong>Wechsel:</strong> ${escapeHtml(t.switchWhen)}</p>
+    </article>`;
+  }).join('');
+  attachTeamSlotDetails(host, host);
+}
+
 export function initLevelTeams() {
   const host = document.getElementById('teamProgressHost');
-  if (!host) return;
-  renderCompactTeamProgress({ phases: buildTeamPhaseView(TEAMS), host });
+  if (host) {
+    renderCompactTeamProgress({ phases: buildTeamPhaseView(TEAMS), host });
+  }
+  const endgameHost = document.getElementById('endgameTeamsHost');
+  if (endgameHost) {
+    renderEndgameTeams({ endgameTeams: getEndgameTeams(TEAMS), host: endgameHost });
+  }
 }
 
 export function initGuideSteps() {

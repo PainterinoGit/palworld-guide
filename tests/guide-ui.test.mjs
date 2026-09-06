@@ -51,4 +51,16 @@ for (const card of phaseCards) {
 }
 assert.match(html, /id="teamProgressHost"/);
 
+const { renderEndgameTeams } = await import('../js/guide-ui.mjs');
+const endgameHost = { innerHTML: '', querySelectorAll: () => [] };
+const sampleEndgame = [
+  { category: 'combat', icon: '⚔️', title: 'Kämpfen', subtitle: 'Sub', team: phases[0].combat },
+  { category: 'roaming', icon: '🐎', title: 'Roamen', subtitle: 'Sub', team: phases[0].combat },
+  { category: 'fishing', icon: '🎣', title: 'Angeln', subtitle: 'Sub', team: phases[0].combat },
+  { category: 'catching', icon: '🎯', title: 'Fangen', subtitle: 'Sub', team: phases[0].combat },
+];
+renderEndgameTeams({ endgameTeams: sampleEndgame, host: endgameHost });
+assert.equal((endgameHost.innerHTML.match(/class="team-card endgame-team-card"/g) || []).length, 4, 'four endgame team cards render');
+assert.match(html, /id="endgameTeamsHost"/);
+
 console.log('guide ui: compact team progress renders');

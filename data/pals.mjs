@@ -484,6 +484,30 @@ export const PALS = [
     partnerSkill: 'Balmy Weather: Verkürzt in der Basis die Zeit, bis Breeding Farms neue Eier produzieren.',
     whyGood: 'Pflicht für eine optimierte Breeding-Base, weil die Partnerfähigkeit die Eierproduktion beschleunigt.',
   }),
+  referencePal({
+    id: 'yakumo', name: 'Yakumo', types: ['Neutral'], availability: 'wild-or-breeding',
+    location: 'Sakurajima und späte Gebiete oder Zucht', roles: ['utility', 'roaming', 'support'],
+    workSuitability: { Gathering: 2 },
+    partnerSkill: 'Partner-Skill: Chance auf Übernahme passiver Eigenschaften bei Captures; maximiert mit Service Minded & Lavish Hospitality Dog Coins.',
+    whyGood: 'Schlüssel-Pal für Endgame-Fangrouten und Dog-Coin-Farming.',
+    alternatives: ['cattiva'],
+  }),
+  referencePal({
+    id: 'katress', name: 'Katress', types: ['Dark'], availability: 'boss-or-wild-mid',
+    location: 'Island of the Moon oder nächtliche Gebiete', roles: ['support', 'utility'],
+    workSuitability: { Handiwork: 2, Transporting: 2, Medicine: 2 },
+    partnerSkill: 'Grimoire Collector: Erhöht im gemeinsamen Kampf Item-Drops besiegter oder gefangener Normal-Pals.',
+    whyGood: 'Verdoppelt Erträge bei Mammorest- und Normal-Pal-Capture-Touren.',
+    alternatives: ['orserk'],
+  }),
+  referencePal({
+    id: 'azurobe', name: 'Azurobe', types: ['Water', 'Dragon'], availability: 'boss-or-wild-mid',
+    location: 'Bridge of the Twin Knights / Ozeane', roles: ['mount', 'watering'],
+    workSuitability: { Watering: 3 },
+    partnerSkill: 'Waterwing Dance: Wasser-Reittier ohne Ausdauerverbrauch im Wasser; verleiht Spielerangriffen Wasser-Schaden.',
+    whyGood: 'Ideales Wasser-Mount für Meere, Fischteiche und World-Tree-Fischen.',
+    alternatives: ['shaolong', 'panthalus', 'neptilius'],
+  }),
 ];
 
 export const ACTIVE_META_PALS = PALS.filter(pal => pal.isActiveRecommendation);

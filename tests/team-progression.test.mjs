@@ -24,7 +24,10 @@ assert.ok(phases.every(phase => phase.combat.slots.length === 5));
 assert.ok(phases.every(phase => phase.swaps.length <= 2));
 
 for (const phase of phases) {
-  assert.equal(phase.combat, input.find(team => team.kind === 'combat' && phase.levelBandIds.includes(team.levelBandId)));
+  const expectedCombat = phase.id === 'endgame'
+    ? input.find(team => team.kind === 'combat' && team.levelBandId === '50-plus')
+    : input.find(team => team.kind === 'combat' && phase.levelBandIds.includes(team.levelBandId));
+  assert.equal(phase.combat, expectedCombat);
   assert.equal(phase.switchWhen, phase.combat.switchWhen);
   assert.equal(phase.combat.title, input.find(team => team.id === phase.combat.id).title);
   assert.equal(phase.combat.combinationReason, input.find(team => team.id === phase.combat.id).combinationReason);
@@ -46,3 +49,9 @@ const syntheticStart = buildTeamPhaseView(syntheticStartTeams)[0];
 
 assert.equal(syntheticStart.combat.id, 'combat-1-10');
 assert.deepEqual(syntheticStart.swaps.map(team => team.id), ['special-first', 'special-second']);
+
+const { getEndgameTeams } = await import('../js/team-progression.mjs');
+const endgameTeams = getEndgameTeams(TEAMS);
+assert.equal(endgameTeams.length, 4, 'liefert 4 spezialisierte Endgame-Teams (Kämpfen, Roamen, Angeln, Fangen)');
+assert.deepEqual(endgameTeams.map(item => item.category), ['combat', 'roaming', 'fishing', 'catching']);
+

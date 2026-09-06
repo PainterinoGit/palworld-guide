@@ -28,6 +28,16 @@ const specialSourceSets = {
     'video-italianspartacus-party-comps',
     'video-ragegaming-op-combat-builds',
   ],
+  captureFarming: [
+    'video-pal-professor-passive-tierlist',
+    'pcgamer-best-pals',
+    'pal-compass-role-rankings',
+  ],
+  waterFishing: [
+    'palmods-work-suitability',
+    'palworld-calc-1-0-tier-list',
+    'pcgamer-best-pals',
+  ],
 };
 
 export const LEVEL_BANDS = [
@@ -35,8 +45,8 @@ export const LEVEL_BANDS = [
   { id: '10-20', label: 'Level 10–20', minLevel: 10, maxLevel: 20, summary: 'Stabile Reisegruppe und erste Spezialisierung.' },
   { id: '20-30', label: 'Level 20–30', minLevel: 20, maxLevel: 30, summary: 'Mid-Game-Worker, Mount und gezielte Kampfrollen.' },
   { id: '30-40', label: 'Level 30–40', minLevel: 30, maxLevel: 40, summary: 'Zucht, Regionen und getrennte Kampf-/Base-Rollen.' },
-  { id: '40-50', label: 'Level 40–50', minLevel: 40, maxLevel: 50, summary: 'Late-Game-Aufbau und Vorbereitung auf Raids.' },
-  { id: '50-plus', label: 'Level 50+', minLevel: 50, maxLevel: null, summary: 'Endgame, Raids und finale Teams.' },
+  { id: '40-50', label: 'Level 40–50', minLevel: 40, maxLevel: 50, summary: 'Midgame-Endspurt & Lategame-Übergang: Vorbereitung auf Level 55–80, Ölinfrastruktur und erste Raids.' },
+  { id: '50-plus', label: 'Level 50–80 (Endgame)', minLevel: 50, maxLevel: 80, summary: 'Max-Level 80 Endgame: World Tree, Sakurajima, Ultra-Raids bis Level 80, Tech 70–80 und finale Meta-Teams.' },
 ];
 
 const slot = (palId, role, reason, alternativePalIds = []) => ({
@@ -134,7 +144,7 @@ export const COMBAT_TEAMS = [
     slot('lily', 'support', 'Heilung bleibt wertvoll, bis Raid-Support und Passives final stehen.'),
     slot(null, 'counter', 'Freier Platz: Boss-Element und Resistenz vor jedem Einsatz prüfen.', ['orserk', 'frostallion-noct', 'bellanoir']),
   ], {
-    title: 'Level 40–50 · Lategame-Vorbereitung', purpose: 'Ein ausgerüsteter Kern mit einem bewusst bossabhängigen Counter-Slot.',
+    title: 'Level 40–50 · Übergang zu High-Level', purpose: 'Ein ausgerüsteter Übergangskern zur Vorbereitung auf das Level-80-Endgame.',
     accessNote: 'Mit späten Regionen, verbesserter Ausrüstung und gezielter Vorbereitung auf World Tree oder Raids.',
     switchWhen: 'Sobald das Raid-Element, die Passives und der konkrete Gegenmechanismus bekannt sind.',
     combinationReason: 'Jormuntide Ignis und Anubis liefern verlässlichen Druck, Frostallion beantwortet ausgewählte Elemente, Lyleen stabilisiert und der fünfte Slot bleibt bossabhängig.',
@@ -142,14 +152,14 @@ export const COMBAT_TEAMS = [
   combat('50-plus', [
     slot('shaolong', 'carry', 'Shaolong liefert den Dragon-/Water-Endgame-Carry; Panthalus ist der gleichwertige Water-/Raid-Pfad.', ['panthalus']),
     slot('orserk', 'carry-support', 'Electric-/Dragon-Druck und Partnernutzen geben Water-Zielen eine klare Antwort.'),
-    slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Druck ergänzen den Carry, ohne die Counterplätze zu verbrauchen.'),
-    slot('frostallion-noct', 'counter', 'Dark-/Ice-Option für ein konkretes Ziel und zusätzliche Endgame-Mobilität.'),
-    slot(null, 'counter', 'Zweiter Counter: vor dem Raid nach Schwäche und Mechanik auswählen.', ['jormuntide-ignis', 'frostallion', 'orserk']),
+    slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Druck auf Level 80 ergänzen den Carry, ohne Counterplätze zu verbrauchen.'),
+    slot('frostallion-noct', 'counter', 'Dark-/Ice-Option für Level-80-Ziele und zusätzliche Endgame-Mobilität.'),
+    slot(null, 'counter', 'Zweiter Counter: vor dem Raid nach Schwäche und Mechanik auswählen.', ['bastigor', 'jormuntide-ignis', 'frostallion', 'panthalus']),
   ], {
-    title: 'Level 50+ · Endgame-Kampfteam', purpose: 'Endgame-Grundgerüst aus Carry, Orserk, Support und zwei bewusst variablen Countern.',
-    accessNote: 'Erst mit World-Tree-/Raid-Zugang, gepflegten Passives und einer Ausrüstung für das konkrete Ziel.',
+    title: 'Level 50–80 · Endgame-Kampfteam', purpose: 'Max-Level-80-Grundgerüst aus Carry, Orserk, Support und zwei bewusst variablen Countern für World Tree & Ultra-Raids.',
+    accessNote: 'Erst mit World-Tree-/Raid-Zugang (Level 75–80), gepflegten Passives und einer Ausrüstung für das konkrete Ziel.',
     switchWhen: 'Bei jeder Raid-Mechanik neu nach Boss-Element, Resistenz, Cooldowns und Rollen-Uptime besetzen.',
-    combinationReason: 'Shaolong oder Panthalus trägt, Orserk liefert Electric-Druck, Bellanoir Libero unterstützt und die letzten zwei Plätze beantworten das konkrete Endgame-Ziel.',
+    combinationReason: 'Shaolong oder Panthalus trägt, Orserk liefert Electric-Druck, Bellanoir Libero unterstützt und die letzten zwei Plätze beantworten das konkrete Level-80-Endgame-Ziel.',
   }),
 ];
 
@@ -215,14 +225,14 @@ export const ROAMING_TEAMS = [
     combinationReason: 'Jetragon verkürzt Wege, Jormuntide Ignis und Frostallion bringen Elementdruck, Lyleen stabilisiert und der letzte Platz optimiert die Route.',
   }),
   roaming('50-plus', [
-    slot('jetragon', 'flying-mount', 'Maximale Reisegeschwindigkeit verbindet World Tree, Raids und Ressourcenrouten.'),
+    slot('jetragon', 'flying-mount', 'Maximale Reisegeschwindigkeit (Tech 70) verbindet World Tree, Raids und Ressourcenrouten.'),
     slot('shaolong', 'carry', 'Dragon-/Water-Carry bleibt auf späten Erkundungswegen kampfstark.', ['panthalus']),
     slot('orserk', 'support-counter', 'Electric-Druck und Water-Loot-Synergie helfen auf Endgame-Routen.'),
-    slot('bellanoir-libero', 'support', 'Raid-Support schützt bei gefährlichen Kampfexkursionen.'),
-    slot(null, 'resource-counter', 'Freier Platz: nach Farmziel Mining, Gathering oder den nötigen Boss-Counter einsetzen.', ['aegidron', 'knocklem', 'frostallion-noct']),
+    slot('bellanoir-libero', 'support', 'Raid-Support schützt bei gefährlichen Kampfexkursionen im World Tree.'),
+    slot(null, 'resource-counter', 'Freier Platz: nach Farmziel Mining, Gathering oder den nötigen Boss-Counter einsetzen.', ['bastigor', 'aegidron', 'knocklem', 'frostallion-noct']),
   ], {
-    title: 'Level 50+ · Endgame-Roaming', purpose: 'Lange Endgame-Routen mit Flug-Mount, Carry, Support und situativer Ressourcenrolle.',
-    accessNote: 'Mit Endgame-Mount, World-Tree-Zugang und einer Route, deren Kampf- und Farmziel bekannt ist.',
+    title: 'Level 50–80 · Endgame-Roaming', purpose: 'Lange Endgame-Routen mit schnellstem Flug-Mount, Carry, Support und situativer Ressourcenrolle.',
+    accessNote: 'Mit Endgame-Mount (Jetragon Tech 70), World-Tree-Zugang und einer Route, deren Kampf- und Farmziel bekannt ist.',
     switchWhen: 'Für einen reinen Raid das Roaming-Team gegen das boss-spezifische Spezialteam tauschen.',
     combinationReason: 'Jetragon löst Mobilität, Shaolong oder Panthalus und Orserk lösen Kämpfe, Bellanoir Libero unterstützt und der letzte Slot folgt dem Farmziel.',
   }),
@@ -284,7 +294,7 @@ export const BASE_TEAMS = [
     slot('knocklem', 'ore-material', 'Mining 7 und Transporting 7 bündeln schwere Materiallogistik.', ['aegidron']),
     slot('bastigor', 'cooling-logistics', 'Cooling 8 hält Kühllager und Produktionsketten stabil.'),
   ], {
-    title: 'Level 40–50 · Lategame-Produktionsbase', purpose: 'Hohe Arbeitslevel werden nach Produktion, Material und Kühlung/Logistik getrennt eingesetzt.',
+    title: 'Level 40–50 · Übergangs-Produktionsbase', purpose: 'Hohe Arbeitslevel werden nach Produktion, Material und Kühlung/Logistik getrennt eingesetzt.',
     accessNote: 'Mit späten Regionen, ausreichender Palbox-Kapazität und dauerhaft hoher Produktionslast.',
     switchWhen: 'Wenn Laufwege, Uptime oder ein anderer Engpass den nominalen Work-Level-Vorteil überwiegen.',
     combinationReason: 'Solenne, Renjishi und Dandilord bilden den Produktionskern, Knocklem löst Material/Logistik und Bastigor hält Kühlung als eigene Verantwortung.',
@@ -296,7 +306,7 @@ export const BASE_TEAMS = [
     slot('aegidron', 'ore-material', 'Mining 8 übernimmt Erz und Material als klar getrennten Endgame-Engpass.', ['knocklem']),
     slot('bastigor', 'cooling-logistics', 'Cooling 8 bildet den Kühlkern; bei Transportlast Knocklem ergänzen.', ['wumpo', 'knocklem']),
   ], {
-    title: 'Level 50+ · Endgame-Produktionsbase', purpose: 'Endgame-Worker mit separatem Produktionskern, Erz/Material und Kühlung/Logistik.',
+    title: 'Level 50–80 · Endgame-Produktionsbase', purpose: 'Endgame-Worker mit separatem Produktionskern, Erz/Material und Kühlung/Logistik für Level-80-Durchsatz.',
     accessNote: 'Mit World-Tree-Zugang, hoher Produktionslast und einem Base-Layout, das Spezialisten auslastet.',
     switchWhen: 'Nach gemessener Uptime und Laufweganalyse; nominale Work-Level allein sind kein Wechselgrund.',
     combinationReason: 'Solenne, Renjishi und Dandilord liefern Produktion, Aegidron löst Mining und Bastigor trennt Kühlung von der Materiallogistik.',
@@ -347,6 +357,36 @@ export const SPECIAL_TEAMS = [
       slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Schaden im langen Kampf.'),
       slot(null, 'counter', 'Erster Raid-Counter nach dem Boss-Element.', ['frostallion-noct', 'jormuntide-ignis', 'orserk']),
       slot(null, 'counter', 'Zweiter Raid-Counter nach Mechanik und Resistenz.', ['frostallion', 'bellanoir', 'jormuntide-ignis']),
+    ],
+  }),
+  team({
+    id: 'special-capture-farming', levelBandId: '50-plus', kind: 'special', specialty: 'capture-farming',
+    title: 'Spezialteam · Endgame-Fangen & Dog Coins', purpose: 'Optimiert für Mammorest-Captures, Status-Fangchancen und maximale Dog-Coin-Ausbeute im World Tree.',
+    accessNote: 'Für gezielte Fang- und Farmrouten im World Tree oder auf Mammorest-Spawns.',
+    switchWhen: 'Nach Abschluss der Fangroute zurück zum Standard-Roaming- oder Raid-Team wechseln.',
+    combinationReason: 'Yakumo liefert den Capture-Bonus für Dog Coins, Katress verdoppelt Normal-Pal-Drops, Frostallion friert für +30% Fangchance ein, Anubis schwächt gezielt und Wumpo trägt Sphärenmengen.',
+    sources: specialSourceSets.captureFarming,
+    slots: [
+      slot('yakumo', 'capture-core', 'Partner-Skill mit Service Minded & Lavish Hospitality maximiert Dog Coins bei Captures.'),
+      slot('katress', 'loot-boost', 'Grimoire Collector erhöht Drops von Normal-Pals (Mammorest) beim Besiegen/Fangen.'),
+      slot('frostallion', 'status-freeze', 'Freeze-Effekt verleiht +30% Fangchance auf den ersten geworfenen Ball.', ['bastigor']),
+      slot('anubis', 'mercy-control', 'Kontrollierter Einzelschaden / Ring of Mercy hält wilde Pals auf exakt 1 HP ohne versehentlichen Kill.', ['bastigor', 'solenne']),
+      slot('wumpo', 'carry-capacity', 'Maximale Traglast für Vorrat an legendären Sphären und erbeutete Ressourcen.', ['cattiva']),
+    ],
+  }),
+  team({
+    id: 'special-water-fishing', levelBandId: '50-plus', kind: 'special', specialty: 'water-fishing',
+    title: 'Spezialteam · Endgame-Angeln & Wasser-Routen', purpose: 'Wasserüberquerung ohne Ausdauerverlust, World-Tree-Fischen und passives Holy-Water-Farming.',
+    accessNote: 'Vor Erkundung von Meeresgebieten, Fischteichen oder Wasserrouten im World Tree.',
+    switchWhen: 'Für reine Land- oder Bosskämpfe gegen das passende Roaming- oder Kampfteam tauschen.',
+    combinationReason: 'Shaolong und Panthalus bilden den Wasser-/Dragon-Kern, Azurobe erlaubt schwimmendes Reiten ohne Ausdauerverlust, Neptilius unterstützt und Orserk maximiert Water-Loot.',
+    sources: specialSourceSets.waterFishing,
+    slots: [
+      slot('shaolong', 'water-core', 'Watering 8 Spitzenwert und starker Dragon/Water-Schaden für Meeresbosse.'),
+      slot('panthalus', 'water-mount', 'Legendary Ocean King mit hoher Reisegeschwindigkeit über und im Wasser.', ['jetragon']),
+      slot('azurobe', 'mount', 'Reitbar auf Wasser ohne Ausdauerabzug; verleiht Spielerangriffen Wasser-Schaden.'),
+      slot('orserk', 'loot-synergie', 'Ferocious Thunder Dragon erhöht die Beute besiegter Water-Pals und Fischteich-Pals drastisch.'),
+      slot(null, 'water-support', 'Freier Slot: Neptilius für Speer-Support, Jetragon für schnelle Teichtransfers oder Bastigor.', ['neptilius', 'bastigor', 'jormuntide-ignis']),
     ],
   }),
 ];
