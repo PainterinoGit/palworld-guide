@@ -121,6 +121,7 @@ assert.match(allBuildingText, /Zerkleinerer|Crusher/i, 'Produktionslayout nennt 
 assert.match(allBuildingText, /Stromgenerator|Generator/i, 'Produktionslayout nennt Stromversorgung');
 assert.match(allBuildingText, /Öl-Extraktor|Crude Oil Extractor/i, 'Endgame-Layout nennt Ölversorgung');
 assert.match(allBuildingText, /Ancient Material Synthesizer/i, 'Endgame-Layout nennt Material-Synthesizer');
+assert.match(allBuildingText, /Ancient Relic Recycler/i, 'Endgame-Layout nennt den Ancient Relic Recycler');
 const plannerHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 assert.match(plannerHtml, /Worker-Food.*Salat.*2× Salat.*2× Tomate.*Kochtopf/i, 'Base Planner erklärt Salatproduktion');
 const renderedTwoBase = renderBasePlan(twoBasePlan);

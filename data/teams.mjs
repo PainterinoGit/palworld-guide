@@ -376,17 +376,17 @@ export const SPECIAL_TEAMS = [
   }),
   team({
     id: 'special-water-fishing', levelBandId: '50-plus', kind: 'special', specialty: 'water-fishing',
-    title: 'Spezialteam · Endgame-Angeln & Wasser-Routen', purpose: 'Wasserüberquerung ohne Ausdauerverlust, World-Tree-Fischen und passives Holy-Water-Farming.',
-    accessNote: 'Vor Erkundung von Meeresgebieten, Fischteichen oder Wasserrouten im World Tree.',
+    title: 'Spezialteam · World-Tree-Fishing', purpose: 'Wasserüberquerung, World-Tree-Fishing und passive Core-/Relikt-Beifänge.',
+    accessNote: 'Vor Fischteichen, Wasserpassagen und World-Tree-Angelrouten im Endgame.',
     switchWhen: 'Für reine Land- oder Bosskämpfe gegen das passende Roaming- oder Kampfteam tauschen.',
-    combinationReason: 'Shaolong und Panthalus bilden den Wasser-/Dragon-Kern, Azurobe erlaubt schwimmendes Reiten ohne Ausdauerverlust, Neptilius unterstützt und Orserk maximiert Water-Loot.',
+    combinationReason: 'Shaolong trägt den Wasser-Kern, Panthalus hält die Route mobil, Azurobe spart Ausdauer auf dem Wasser, Orserk veredelt Water-Loot und Neptilius schließt die Support-Lücke.',
     sources: specialSourceSets.waterFishing,
     slots: [
       slot('shaolong', 'water-core', 'Watering 8 Spitzenwert und starker Dragon/Water-Schaden für Meeresbosse.'),
       slot('panthalus', 'water-mount', 'Legendary Ocean King mit hoher Reisegeschwindigkeit über und im Wasser.', ['jetragon']),
       slot('azurobe', 'mount', 'Reitbar auf Wasser ohne Ausdauerabzug; verleiht Spielerangriffen Wasser-Schaden.'),
       slot('orserk', 'loot-synergie', 'Ferocious Thunder Dragon erhöht die Beute besiegter Water-Pals und Fischteich-Pals drastisch.'),
-      slot(null, 'water-support', 'Freier Slot: Neptilius für Speer-Support, Jetragon für schnelle Teichtransfers oder Bastigor.', ['neptilius', 'bastigor', 'jormuntide-ignis']),
+      slot('neptilius', 'water-support', 'Zusätzlicher Water-Support für sichere World-Tree-Angelrouten.', ['jetragon', 'bastigor']),
     ],
   }),
 ];

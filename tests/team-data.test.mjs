@@ -150,4 +150,16 @@ assert.ok(SPECIAL_TEAMS.some(team => /raid|endgame/i.test(team.specialty)));
 assert.ok(SPECIAL_TEAMS.some(team => /resource/i.test(team.specialty)));
 assert.ok(SPECIAL_TEAMS.every(team => team.kind === 'special' && team.sources.length > 0));
 
+const waterFishing = SPECIAL_TEAMS.find(team => team.specialty === 'water-fishing');
+assert.ok(waterFishing, 'Spezialteam water-fishing fehlt');
+assert.deepEqual(
+  waterFishing.slots.slice(0, 4).map(teamSlot => teamSlot.palId),
+  ['shaolong', 'panthalus', 'azurobe', 'orserk'],
+  'Water-Fishing-Team setzt die erwarteten World-Tree-Wasserpals'
+);
+assert.ok(
+  ['neptilius', 'jetragon', 'bastigor'].includes(waterFishing.slots[4].palId ?? ''),
+  'Water-Fishing-Team hält den letzten Slot als Reise-/Support-Option'
+);
+
 console.log('team data contract: ok');

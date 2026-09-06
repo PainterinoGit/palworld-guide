@@ -13,6 +13,8 @@ assert.match(html, /Level 70/, 'Jetragon-Technologie muss in der sichtbaren Prog
 assert.match(html, /Serenity/, 'Handbuch muss die aktualisierte Endgame-Passive-Einordnung enthalten');
 assert.match(html, /Bastigor/, 'Raid-Abschnitt muss Bastigor als defensive Option erwähnen');
 assert.match(html, /World Tree Holy Water/, 'Ressourcen-/Endgame-Hinweise müssen Holy Water enthalten');
+assert.match(html, /Ancient Relic Recycler/, 'Ressourcen-/Handbuch-Hinweise müssen den Ancient Relic Recycler sichtbar nennen');
+assert.match(html, /World-Tree-Fishing/, 'Endgame-Einleitung muss World-Tree-Fishing sichtbar nennen');
 assert.match(html, /Dog-Coin-Farm/i, 'Ressourcen-Tab muss die neue Dog-Coin-Farm sichtbar erklären');
 assert.match(html, /Beam Scatter/i, 'Dog-Coin-Farm muss Beam Scatter als Werkzeug nennen');
 assert.match(html, /Service Minded/i, 'Dog-Coin-Farm muss die Yakumo-Anforderung nennen');
