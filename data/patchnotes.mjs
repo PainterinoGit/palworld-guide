@@ -1,5 +1,18 @@
 export const PATCH_NOTES = [
   {
+    version: '1.1.0',
+    date: '2026-09-05',
+    title: 'Endgame Combat, High-Tech Gear & Passives-Meta',
+    summary: 'Festigt die Level-80-Endgame-Meta für Hard-Mode-Türme, Ultra-Raids und spezialisierte Ausrüstung.',
+    changes: [
+      { label: 'Waffen & Gear', text: 'Plasma Rifle (Tech 78) und Beam Launcher (Tech 80) etablieren sich als Standard-Endgame-Waffen. Ancient Armor/Helm und Ancient Shield bieten maximale Schadensresistenz gegen Boss-One-Shots.' },
+      { label: 'Combat Passives', text: 'Serenity (-30% Cooldown) und Demon God (+30% ATK, +5% DEF) ersetzen ältere Passives wie Musclehead und Ferocious als Standard. Immortality sichert Lifesteal in Ultra-Raids.' },
+      { label: 'Player-DPS Meta', text: 'Gobfin-Stacking (4× Gobfin mit Vanguard + Stronghold Strategist für +120% Spieler-Schaden) in Kombination mit Elementar-Reittieren (Frostallion, Ragnahawk, Azurobe) erreicht Spitzenwerte gegen Hard-Mode-Bosse.' },
+      { label: 'Bossfights (Hard)', text: 'Knocklem übernimmt dank extremem Stat-Boost die Rolle des stärksten Solo-Boss-Breakers für Türme; Frostallion bleibt unverzichtbar für Eis-CC und Drachen-Counter.' },
+    ],
+    sourceIds: ['video-pal-professor-passive-tierlist', 'video-pal-professor-ultra-raid'],
+  },
+  {
     version: '1.0.3',
     date: '2026-08-30',
     title: 'World Tree, Öl und Endgame-Raids',

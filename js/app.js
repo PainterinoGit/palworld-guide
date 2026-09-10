@@ -816,6 +816,7 @@
             }
 
             if (tabName === 'teams') {
+                window.initLevelTeams?.();
                 window.initBasePlanner?.();
                 if (theme) {
                     const cell = document.querySelector(`#teamsThemeTable [data-theme="${theme}"]`);
@@ -827,3 +828,8 @@
                 window.initBreedingCalculator?.();
             }
         }
+
+        window.switchTab = switchTab;
+        window.switchSubPanel = switchSubPanel;
+        window._appSwitchTab = switchTab;
+        window._appSwitchSubPanel = switchSubPanel;

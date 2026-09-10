@@ -62,5 +62,14 @@ window.initBreedingCalculator = () => {
 const appScript = document.createElement('script');
 appScript.src = 'js/app.js';
 document.body.appendChild(appScript);
+window.initLevelTeams?.();
+window.initGuideSteps?.();
 window.initBasePlanner?.();
 window.initBreedingCalculator();
+
+if (window.location.hash) {
+  const hashTab = window.location.hash.replace('#', '');
+  if (document.getElementById(hashTab)) {
+    window.switchTab?.(hashTab);
+  }
+}

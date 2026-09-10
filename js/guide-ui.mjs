@@ -188,6 +188,11 @@ export function initGuideSteps() {
   render();
 }
 
+if (typeof window !== 'undefined') {
+  window.initLevelTeams = initLevelTeams;
+  window.initGuideSteps = initGuideSteps;
+}
+
 if (typeof document !== 'undefined' && document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initLevelTeams, { once: true });
   document.addEventListener('DOMContentLoaded', initGuideSteps, { once: true });

@@ -14,8 +14,27 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        function switchTab(tabName, theme) {
+            document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            var target = document.getElementById(tabName);
+            if (target) target.classList.add('active');
+            var btn = document.querySelector('.tab-btn[onclick*="switchTab(\'' + tabName + '\'"]');
+            if (btn) btn.classList.add('active');
+            if (window._appSwitchTab) window._appSwitchTab(tabName, theme);
+        }
+        function switchSubPanel(panelId, btnEl) {
+            document.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.remove('active'); });
+            document.querySelectorAll('.subnav-btn').forEach(function(b) { b.classList.remove('active'); });
+            var target = document.getElementById(panelId);
+            if (target) target.classList.add('active');
+            if (btnEl) btnEl.classList.add('active');
+            if (window._appSwitchSubPanel) window._appSwitchSubPanel(panelId, btnEl);
+        }
+    </script>
 </head>
 <body>
     <header class="site-header">
@@ -92,6 +111,9 @@
                     </div>
                 </div>
                 <div id="endgameTeamsHost" class="endgame-teams-grid" aria-live="polite"></div>
+                <div class="callout callout-info endgame-meta-callout" style="margin-top: 1.25rem;">
+                    <strong>⚔️ Hard Boss &amp; Player-DPS Meta (Patch 1.0 / 1.1):</strong> Neben den Pal-Carry-Teams dominiert im Level-80-Endgame das <strong>Player-DPS-Setup</strong> (4× Gobfin mit <em>Vanguard</em> + <em>Stronghold Strategist</em> für +120% Spieler-Schaden + Elementar-Reittier wie Frostallion/Ragnahawk/Azurobe) sowie das <strong>Knocklem-Solo-Boss-Setup</strong>. Alle Details zu Waffen (Plasma Rifle, Beam Scatter), Rüstung (Ancient Series) und der 1.0/1.1 Passiv-Rotation findest du im <a href="#handbook" onclick="switchTab('handbook'); switchSubPanel('hb-combat-mounts', document.querySelector('[data-panel=\'hb-combat-mounts\']')); return false;">Handbuch → Kampf &amp; Mounts ↗</a>.
+                </div>
             </section>
             <section class="base-planner-section" aria-labelledby="basePlannerSectionTitle">
                 <h2 id="basePlannerSectionTitle" class="secondary-section-heading">Base-Planer</h2>
@@ -320,11 +342,11 @@
                     <h2 id="passiveRaidGuideTitle">Passives und Raid-Builds richtig einordnen</h2>
                     <p class="hb-desc">Es gibt kein universelles Best-in-Slot-Passiv. Für Endgame-Raids zählen Bossmechanik, Element, Rolle und Überlebensfähigkeit gemeinsam.</p>
                     <div class="hb-table-wrap"><table class="hb-table"><thead><tr><th>Rolle</th><th>Priorität</th><th>Praxisregel</th></tr></thead><tbody>
-                        <tr><td class="hb-name">Booster / Spieler</td><td><strong>Serenity</strong>, Stronghold Strategist, Idiosyncratic</td><td>Cooldowntempo und Heilung sind für Barrier-Phasen oft wertvoller als ein kleiner Rohschaden-Bonus.</td></tr>
+                        <tr><td class="hb-name">Booster / Spieler</td><td><strong>Vanguard</strong>, <strong>Stronghold Strategist</strong> (Gobfin-Stacking); am Kampf-Pal <strong>Serenity</strong></td><td>Vanguard (+10% Spieler-ATK) und Stronghold (+10% Spieler-DEF) auf 4× Gobfin multiplizieren den Spielerschaden massiv (+120%). Serenity (-30% CD) ist am Kampf-Pal Pflicht.</td></tr>
                         <tr><td class="hb-name">Mount</td><td>Diamond Body, Immortality, Legend; situativ Swift/Dimensional Leap</td><td>Rückstoß- und Flinch-Schutz kann gleichzeitig Überleben und DPS erhöhen.</td></tr>
                         <tr><td class="hb-name">Raid-Armee</td><td>Element-Passiv plus Defensive</td><td>Defensive Bastigor-Armeen mit Sveus und Healing Grenades sind eine Option, aber Bellanoir Libero bleibt ein Sonderfall.</td></tr>
                     </tbody></table></div>
-                    <div class="callout callout-warn"><strong>Nicht blind übernehmen:</strong> Lucky ist laut Praxistest fehlerhaft; alte Empfehlungen wie Impatient, Runner oder Ferocious sind im Endgame häufig nur Übergangslösungen.</div>
+                    <div class="callout callout-warn"><strong>Überholte Empfehlungen:</strong> Lucky ist laut Praxistest fehlerhaft; alte Empfehlungen wie <em>Ferocious</em> und <em>Musclehead</em> wurden durch <strong>Demon God</strong> (+30% ATK, +5% DEF) und <strong>Immortality</strong> (Lifesteal) abgelöst, <em>Impatient</em> durch <strong>Serenity</strong> (-30% CD).</div>
                 </section>
                 <section class="hb-block ultra-raid-guide" aria-labelledby="ultraRaidGuideTitle">
                     <p class="section-eyebrow">ENDGAME · BOSS-PRAXIS</p>
@@ -336,7 +358,6 @@
                         <tr><td class="hb-name">Heilung</td><td><strong>Healing Grenades</strong> mitnehmen</td><td>Heilung zwischen gefährlichen Phasen nutzen; Ressourcenverbrauch gegen die Raid-Dauer abwägen.</td></tr>
                         <tr><td class="hb-name">Upgrade-Pfad</td><td>Danach Element-Counter, Passives, IVs und Condensing optimieren</td><td>Die defensive Route ist ein Einstieg und keine universelle Best-in-Slot-Liste für alle Ultra-Bosse.</td></tr>
                     </tbody></table></div>
-                    <div class="callout callout-info"><strong>Entscheidungshilfe:</strong> Gegen einen einzelnen Boss zuerst dessen Element, Phasenmechanik und Schadensfenster prüfen. Erst danach zwischen defensiver Bastigor-Armee und spezialisiertem Counter-Team wählen.</div>
                 </section>
 
                 <div class="hb-block">
@@ -355,14 +376,7 @@
                         </table>
                     </div>
                     <div class="callout callout-tip">
-                        <strong>Faustregel:</strong> Attack-Talent zuerst prüfen, wenn der Pal für Kampf oder Zucht gedacht ist –
-                        bei hohem Level ist ein 75%+ Attack-Talent etwa so wertvoll wie ein zusätzliches Damage-Passiv.
-                        Bei reinen Base-Workern sind Talente zweitrangig – dort zählen Work Suitability & Passives mehr.
-                    </div>
-                    <div class="callout callout-info">
-                        <strong>Alpha-Pals lohnen sich doppelt:</strong> Sie haben nicht nur mehr HP und geben ~10× XP,
-                        sondern tendieren laut Community-Auswertungen auch zu höheren Talent-Werten als normale wilde Pals –
-                        deshalb werden sie gezielt als Zuchtbasis gejagt, trotz niedrigerer Fangrate (ca. ×0,7–0,77).
+                        <strong>Faustregel:</strong> Für Kampf/Zucht Attack-Talent (75%+) priorisieren. Alpha-Pals rollen im Schnitt höhere Talente und eignen sich ideal als Zuchtbasis.
                     </div>
                 </div>
 
@@ -388,11 +402,6 @@
                                 <li>Gegen Goldmünzen zurücksetzbar</li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="callout callout-warn">
-                        <strong>Wichtig:</strong> Der passende Pal hängt vom jeweiligen Einsatzzweck ab –
-                        gutes Talent + hohe Statue-of-Power-Stufe + volles Condensing (siehe unten) + starke Passives.
-                        Eins davon reicht nicht.
                     </div>
                 </div>
             
@@ -447,10 +456,6 @@
                             <p><strong>IV-Fruits</strong> ausschließlich auf dein finales 3–5-köpfiges Kampfteam, da sie extrem limitiert sind. Restliche Handbooks für Base-Vollausbau.</p>
                         </div>
                     </div>
-                    <div class="callout callout-tip">
-                        <strong>Reihenfolge sparen:</strong> Erst kostenlosen <strong>Pal Condensing</strong>-Bonus auf Work Suitability
-                        mitnehmen (siehe Condensation-Tab), bevor du teure Handbooks für die letzten fehlenden Punkte kaufst.
-                    </div>
                 </div>
             
                 <div class="hb-section-divider"></div>
@@ -467,20 +472,14 @@
                     <h3>📈 Warum das für Base-Worker so wichtig ist</h3>
                     <p class="hb-desc">
                         Work-Suitability skaliert <strong>exponentiell</strong>: Handiwork-Output steigt von Level 5 auf 10 um
-                        das 13,5-Fache. Condensing ist ein wichtiger Hebel für Endgame-Automatisierung.
+                        das 13,5-Fache. Condense feste Ein-Job-Spezialisten voll aus (Kindling-, Mining- oder Handiwork-Pals).
                     </p>
-                    <div class="callout callout-tip">
-                        <strong>Priorität:</strong> Condense nur feste <strong>Ein-Job-Spezialisten</strong> voll aus
-                        (dein passender Kindling-, Mining- oder Handiwork-Pal). Für generische Lastenträger/Common-Pals
-                        lohnt sich der Aufwand nicht.
-                    </div>
                 </div>
 
                 <div class="hb-block">
                     <h3>⚔️ Wichtigkeit für Kampf-Pals</h3>
                     <p class="hb-desc">
-                        Moderat: +20% Stats bei ★4 ist spürbar, aber keine zusätzlichen Skill-Slots. Oft relevanter: Partner-Skill
-                        auf Level 5. Lohnt sich primär fürs <strong>feste Raid-/Boss-Team</strong> – erst nachdem Passives per Zucht optimiert sind.
+                        +20% Stats bei ★4 ist spürbar, aber oft relevanter ist der Partner-Skill auf Level 5. Lohnt sich primär fürs feste Raid-/Boss-Team – erst nachdem Passives per Zucht optimiert sind.
                     </p>
                 </div>
 
@@ -489,7 +488,7 @@
                     <div class="stage-flow">
                         <div class="stage-flow-item sf-early">
                             <span class="sf-label">Early Game</span>
-                            <p>Kaum Condensing. Deine aktuellen Pals werden bald ersetzt – hebe Duplikate lieber für Zucht auf.</p>
+                            <p>Kaum Condensing. Duplikate lieber für Zucht aufheben.</p>
                         </div>
                         <div class="stage-flow-item sf-mid">
                             <span class="sf-label">Mid Game</span>
@@ -527,15 +526,6 @@
             
             </div>
             <div id="hb-breeding-all" class="sub-panel">
-                <div class="hb-block">
-                    <div class="callout callout-warn">
-                        <strong>Kurz vorweg:</strong> Ein offizielles „Cloning" (1:1-Kopie eines Pals inkl. Talenten &
-                        Passives) gibt es in Palworld <strong>nicht</strong>. Was oft dafür gehalten wird, ist der
-                        <strong>Pal Essence Condenser</strong> – der macht aber keine Kopie, sondern verschmilzt
-                        Duplikate zu einem stärkeren Original (Details im Condensation-Tab). Der einzige Weg zu einem
-                        besseren/neuen Pal ist <strong>Breeding</strong>.
-                    </div>
-                </div>
 
                 <div class="hb-block">
                     <h3>🥚 Breeding – Grundmechanik</h3>
@@ -564,9 +554,8 @@
                         Spieldaten belegt. Deshalb: Eltern <strong>nur</strong> mit den gewünschten Passives ausstatten, sonst sinkt die Trefferchance.
                     </p>
                     <div class="callout callout-tip">
-                        <strong>1.0.3-Praxis:</strong> Legend + Musclehead + Ferocious können je nach Kampfziel sinnvoll sein.
-                        Lucky nicht blind einplanen: laut Praxistest ist der Effekt fehlerhaft.
-                        Manche seltenen Passives (Lucky, Legend, Kaiser/Emperor-Varianten) sind nicht mutierbar – die müssen von
+                        <strong>Aktueller Standard (Patch 1.0 / 1.1):</strong> Für Kampf-Pals ist <strong>Serenity</strong> (-30% Cooldown) + <strong>Legend</strong> + <strong>Demon God</strong> (+30% ATK) + <strong>Immortality</strong> (Lifesteal) das führende 4-Passives-Setup. Ältere Skills wie <em>Musclehead</em>, <em>Ferocious</em> oder <em>Impatient</em> sind im Endgame überholt. Lucky nicht blind einplanen: laut Praxistest ist der Effekt fehlerhaft.
+                        Manche seltenen Passives (Legend, Kaiser/Emperor-Varianten) sind nicht mutierbar – die müssen von
                         einem Elternteil geerbt werden, der sie bereits besitzt.
                     </div>
                 </div>
@@ -626,6 +615,149 @@
                         <li>Cancel oder Waffenwechsel = Grapple Launch auslösen</li>
                     </ul>
                 </div>
+
+                <section class="hb-block hard-boss-guide" aria-labelledby="hardBossGuideTitle">
+                    <p class="section-eyebrow">PATCH 1.0 / 1.1 · ENDGAME-META</p>
+                    <h2 id="hardBossGuideTitle">Endgame-Bossfights: Hard-Mode-Türme &amp; Ultra-Raids</h2>
+                    <p class="hb-desc">In Patch 1.0 und 1.1 (Level-Cap 80) sind Hard-Mode-Türme und Ultra-Raids extreme DPS- und Überlebensprüfungen. Reine Rohwerte reichen nicht mehr – Kämpfe erfordern entweder striktes Element-Countering, ununterbrochenen Pal-Sustain oder die Gobfin-Player-Damage-Meta.</p>
+
+                    <div class="hb-table-wrap">
+                        <table class="hb-table">
+                            <thead>
+                                <tr><th>Archetyp</th><th>Team-Setup</th><th>Kern-Strategie &amp; Einsatz</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="hb-name">Player-DPS Meta<br><small style="color:var(--text-tertiary)">(Gobfin-Stacking)</small></td>
+                                    <td><strong>4× Gobfin</strong> (4★ kondensiert, Passives: <em>Vanguard</em> + <em>Stronghold Strategist</em>) + <strong>1× Element-Mount</strong></td>
+                                    <td><strong>Höchster Single-Target Burst im Spiel:</strong> Die 4 Gobfins verleihen passiv +80% Spielerangriff, die Passives nochmals +40% ATK &amp; DEF (= <strong>+120% Spieler-Schaden</strong>). Das Reittier wandelt deinen Waffenschaden in das Schwäche-Element des Bosses um (z. B. Frostallion vs. Dragon, Ragnahawk vs. Grass/Ice, Azurobe vs. Fire, Beakon vs. Water, Frostallion Noct vs. Neutral). Abfeuern mit Plasma Rifle oder Beam Scatter.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Hard Tower Bosse<br><small style="color:var(--text-tertiary)">(Solo-Boss-Breaker)</small></td>
+                                    <td><strong>Knocklem</strong> (Titan-Carry), <strong>Frostallion</strong> (Ice-CC), <strong>Bellanoir Libero</strong>, <strong>Jetragon</strong>, <strong>Bastigor</strong></td>
+                                    <td><strong>Knocklem</strong> ist dank seines Partner-Skills der stärkste Solo-Boss-Breaker für Türme (enorme offensive und defensive Multiplikatoren). Frostallion friert ein und kontert Drachen, Jetragon liefert Luft-Burst und Bastigor/Paladius tanken gefahrvolle Phasen.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Ultra-Raids (Lv 80)<br><small style="color:var(--text-tertiary)">(z. B. Bellanoir Libero Ultra)</small></td>
+                                    <td><strong>Basis-Armee:</strong> 15–20× Bellanoir Libero, Paladius &amp; Bastigor<br><strong>Party:</strong> Jetragon (Mobilität) + Bastigor/Hartalis + Buffer</td>
+                                    <td>Ultra-Raids besitzen Millionen an HP. Die Basis-Armee absorbiert Schläge und liefert Dauerfeuer. Der Spieler weicht auf Jetragon den arenaweiten One-Shot-Attacken aus, steuert Aggro und setzt in verwundbaren Phasen DPS-Spitzen.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="hb-block combat-passives-guide" aria-labelledby="combatPassivesGuideTitle">
+                    <p class="section-eyebrow">PATCH 1.0 / 1.1 · PASSIVES &amp; SKILLS</p>
+                    <h2 id="combatPassivesGuideTitle">Die besten Kampf-Fähigkeiten &amp; Moveset-Rotation</h2>
+                    <p class="hb-desc">Durch Patch 1.0 wurden alte Standard-Passives wie <em>Ferocious</em> und <em>Musclehead</em> durch neue, stärkere Fähigkeiten abgelöst. Das Zauberwort heißt Cooldown-Reduktion und Lifesteal.</p>
+
+                    <div class="hb-table-wrap">
+                        <table class="hb-table">
+                            <thead>
+                                <tr><th>Passive / Fähigkeit</th><th>Effekt</th><th>Warum Pflicht ab Patch 1.0?</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="hb-name">1 · Serenity</td>
+                                    <td><strong>−30% Active Skill Cooldown</strong>, +10% Angriff</td>
+                                    <td><strong>Der wichtigste Combat-Passive im Spiel:</strong> Lässt Fähigkeiten fast ohne Pause rotieren und bricht permanent gegnerische Casts ab. Ersetzt das alte <em>Impatient</em> komplett.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">2 · Legend</td>
+                                    <td><strong>+20% Angriff</strong>, +20% Verteidigung, +20% Lauftempo</td>
+                                    <td>Bester Allrounder-Stat-Boost für Endgame-Pals; skaliert mit allen anderen Werten multiplikativ.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">3 · Demon God</td>
+                                    <td><strong>+30% Angriff</strong>, +5% Verteidigung</td>
+                                    <td>Der neue Top-Schadenspassive. Löst <em>Ferocious</em> (+20%) und <em>Musclehead</em> (Arbeitsmali) vollständig als stärkster offensiver Einzelskill ab.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">4 · Immortality</td>
+                                    <td><strong>+15% Angriff</strong> + <strong>Lebensraub</strong> (Lifesteal)</td>
+                                    <td>Wandelt verursachten Schaden in Selbstheilung um. In langen Bosskämpfen und Raids der entscheidende Faktor, damit Pals nicht sterben.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Situativ · Diamond Body</td>
+                                    <td><strong>+30% Verteidigung</strong>, immun gegen Flinch/Knockback</td>
+                                    <td>Tausche gegen <em>Demon God</em> in extrem harten Ultra-Raids, wenn Bosse Pals sonst mit einem Treffer auslöschen. Verhindert Unterbrechungen.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Element-Emperor</td>
+                                    <td>+20% multiplikativer Elementschaden</td>
+                                    <td>Z. B. <em>Flame Emperor</em>, <em>Lord of the Underworld</em>, <em>Siren of the Void</em> – ideal, wenn ein Pal fast ausschließlich Angriffe dieses Elements nutzt.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout callout-tip" style="margin-top:1rem;">
+                        <strong>Neue Moveset-Meta (Cooldown-Rotations-Prinzip):</strong><br>
+                        Mit <strong>Serenity (-30% CD)</strong> ist das alte Ausrüsten von drei schweren 55s-Cooldown-Skills überholt. Die moderne Meta baut auf eine flüssige Kette:
+                        <ul style="margin:0.5rem 0 0 1.2rem; line-height:1.8;">
+                            <li><strong>1× Low-CD Spammer (2–4s CD):</strong> z. B. <em>Air Cannon</em>, <em>Ignis Blast</em>, <em>Dragon Cannon</em> (wird durch Serenity zum Dauerfeuer und stoppt gegnerische Angriffe).</li>
+                            <li><strong>1× Mid-CD Status/AoE-Skill (12–25s CD):</strong> z. B. <em>Nightmare Bloom</em>, <em>Ice Age</em>, <em>Beam Wave</em> (löst Freeze, Burn oder Electrify für Schadensverdopplung aus).</li>
+                            <li><strong>1× High-Impact Signature Move (30–45s CD):</strong> z. B. <em>Dark Whisp</em>, <em>Dragon Meteor</em>, <em>Nightmare Ray</em> für massive Schadensspitzen.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="hb-block player-gear-guide" aria-labelledby="playerGearGuideTitle">
+                    <p class="section-eyebrow">LEVEL 50–80 · GEAR-LOADOUT</p>
+                    <h2 id="playerGearGuideTitle">Endgame-Gear für den Spieler: Waffen, Rüstung &amp; Zubehör</h2>
+                    <p class="hb-desc">Mit der Erhöhung auf Level 80 stehen bis zu 5 Waffenslots und High-End-Technologien aus Soralite (Sunreach) und Paloxite (World Tree) zur Verfügung. Das richtige Gear entscheidet, ob du Hard-Mode-Schläge überstehst.</p>
+
+                    <div class="hb-table-wrap">
+                        <table class="hb-table">
+                            <thead>
+                                <tr><th>Kategorie</th><th>Best-in-Slot Empfehlung</th><th>Eigenschaften &amp; Nutzen</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="hb-name">Hauptwaffe 1<br><small style="color:var(--text-tertiary)">Sustained DPS</small></td>
+                                    <td><strong>Plasma Rifle</strong> (Tech 78)</td>
+                                    <td>Beste Allround-Waffe im Endgame. 38-Schuss-Magazin, exzellente Feuerrate, hohe Reichweite und enorme Haltbarkeit. Zuverlässigster Boss-DPS.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Hauptwaffe 2<br><small style="color:var(--text-tertiary)">Close-Range Burst</small></td>
+                                    <td><strong>Beam Scatter</strong> (Tech 75)</td>
+                                    <td>Tödlich auf kurze Distanz; funktioniert wie eine High-Tech-Schrotflinte. Entfaltet in Kombination mit der Gobfin-Player-DPS-Meta vernichtenden Schaden.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Schwere Waffe<br><small style="color:var(--text-tertiary)">Burst &amp; AoE</small></td>
+                                    <td><strong>Beam Launcher</strong> (Tech 80) oder <strong>Tactical Grenade Launcher</strong> (Tech 72)</td>
+                                    <td>Der Beam Launcher liefert massiven Flächenburst gegen Boss-Schildphasen und Minions. Der Grenade Launcher punktet mit schneller Nachladezeit und Flinch-Effekten.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Utility / Farm<br><small style="color:var(--text-tertiary)">Capture-Kontrolle</small></td>
+                                    <td><strong>Ring of Mercy</strong> (oder Betäubungswaffe)</td>
+                                    <td>Hält Bosse und wilde Pals bei Farming- und Capture-Touren auf exakt 1 HP, um versehentliche Kills vor dem Ballwurf zu verhindern.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Rüstung &amp; Helm<br><small style="color:var(--text-tertiary)">Defensive Basis</small></td>
+                                    <td><strong>Ancient Helm</strong> &amp; <strong>Ancient Armor</strong> (bzw. Lightweight Heat/Cold)</td>
+                                    <td>Gefertigt an der Ancient Workbench aus Paloxite und Soralite. Legendäre Varianten (aus Kisten/Ruinen-Bauplänen) bieten maximale Rüstungs- und HP-Werte.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Schild<br><small style="color:var(--text-tertiary)">Schutzpool</small></td>
+                                    <td><strong>Ancient Shield</strong> (Tech 60–80)</td>
+                                    <td>Gewaltige Schildkapazität mit autonomer Schnell-Regeneration. Verhindert One-Shots durch Boss-Flächenangriffe.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Mobilität<br><small style="color:var(--text-tertiary)">Fortbewegung</small></td>
+                                    <td><strong>Wing Pack</strong> (World Tree)</td>
+                                    <td>Ersetzt traditionelle Gleiter: Erlaubt schnelles Fliegen und dynamische Ausweichmanöver in der Luft, ohne ein fliegendes Mount beschwören zu müssen.</td>
+                                </tr>
+                                <tr>
+                                    <td class="hb-name">Accessoires<br><small style="color:var(--text-tertiary)">Zubehör-Slots</small></td>
+                                    <td><strong>Dogen Emblem</strong> (Sunreach), <strong>Flame Emperor’s Baton</strong> (Feybreak) &amp; <strong>Attack/Defense Pendant +2</strong></td>
+                                    <td>Das Dogen Emblem bufft Spieler und aktiven Pal gleichzeitig. Der Baton verstärkt Feuer-Konvertierungs-Builds (z. B. Ragnahawk) zusätzlich drastisch.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
             
             <div id="hb-base-econ" class="sub-panel">
@@ -722,7 +854,7 @@
                             Gebiet), Salat-Produktion (120 Gold/Stück).</p>
                         </div>
                         <div class="stage-flow-item sf-late">
-                            <span class="sf-label">Late Game (Lv 44+)</span>
+                            <span class="sf-label">Endgame (Level 50–80)</span>
                             <p>Legendary Pal Spheres craften &amp; verkaufen (4.520 Gold/Stück). <strong>Gold Coin Press</strong>
                             (ab Tech Level 48): 1 Metall-Ingot = 100 Gold, unendlich skalierbar mit Metal-Produktion.
                             Mass-Butchering von Jet Dragon/Shadowbeak für Cores/Manuals + wertvolle Item-Drops.</p>
@@ -839,7 +971,7 @@
                     <h2 id="patchnotesTitle">Patchnotes, die deine Route ändern</h2>
                     <p>Kurze Zusammenfassung der Patches, die Progression, Farmrouten oder Endgame-Builds im Guide beeinflussen. Detailwissen bleibt in den jeweiligen Haupttabs.</p>
                 </div>
-                <span class="patchnotes-badge">Aktueller Stand: 1.0.3</span>
+                <span class="patchnotes-badge">Aktueller Stand: 1.1 / 1.0.3</span>
             </section>
             <div id="patchnotesHost" class="patchnotes-list" aria-live="polite"></div>
         </div>
