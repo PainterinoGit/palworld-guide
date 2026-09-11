@@ -22,5 +22,7 @@ assert.match(resources, /name: 'Ancient Civilization Core'.*Raid|name: 'Ancient 
 assert.match(resources, /name: 'Nightstar Sand'.*Nacht|name: 'Nightstar Sand'.*Feybreak/i, 'Nightstar Sand muss die Nachtfarm nennen');
 assert.match(resources, /name: 'Chromit'.*Metal Detector|name: 'Chromit'.*Smokie/i, 'Chromit muss Werkzeug oder Smokie als Farmmethode nennen');
 assert.match(resources, /name: 'Hochwertiger Stoff'.*Sibelyx.*Ranch-Drop/i, 'Hochwertiger Stoff muss Sibelyx als Ranch-Drop nennen');
+assert.match(resources, /name: 'Ancient Pal Manuscript'.*Expedition/i, 'Ancient Pal Manuscript muss Expeditionen als Farmmethode nennen');
+assert.match(resources, /name: 'Ancient Technical Manual'.*Dungeon|name: 'Ancient Technical Manual'.*Sanctuar/i, 'Ancient Technical Manual muss Dungeons oder Sanctuaries als Farmmethode nennen');
 
 console.log('resource catalog contract: ok');

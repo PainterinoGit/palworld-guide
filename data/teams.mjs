@@ -150,16 +150,16 @@ export const COMBAT_TEAMS = [
     combinationReason: 'Jormuntide Ignis und Anubis liefern verlässlichen Druck, Frostallion beantwortet ausgewählte Elemente, Lyleen stabilisiert und der fünfte Slot bleibt bossabhängig.',
   }),
   combat('50-plus', [
-    slot('shaolong', 'carry', 'Shaolong liefert den Dragon-/Water-Endgame-Carry; Panthalus ist der gleichwertige Water-/Raid-Pfad.', ['panthalus']),
-    slot('orserk', 'carry-support', 'Electric-/Dragon-Druck und Partnernutzen geben Water-Zielen eine klare Antwort.'),
-    slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Druck auf Level 80 ergänzen den Carry, ohne Counterplätze zu verbrauchen.'),
-    slot('frostallion-noct', 'counter', 'Dark-/Ice-Option für Level-80-Ziele und zusätzliche Endgame-Mobilität.'),
-    slot(null, 'counter', 'Zweiter Counter: vor dem Raid nach Schwäche und Mechanik auswählen.', ['bastigor', 'jormuntide-ignis', 'frostallion', 'panthalus']),
+    slot('shaolong', 'carry', 'Shaolong liefert den Dragon-/Water-Endgame-Carry; Panthalus und Knocklem bilden die stärksten Alternativen.', ['panthalus', 'knocklem']),
+    slot('orserk', 'carry-support', 'Electric-/Dragon-Druck und Partnernutzen geben Water-Zielen eine klare Antwort.', ['bastigor']),
+    slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Druck auf Level 80 ergänzen den Carry; Gobfin ist die Alternative für reine Player-DPS.', ['gobfin']),
+    slot('frostallion-noct', 'counter', 'Dark-/Ice-Option für Level-80-Ziele und zusätzliche Endgame-Mobilität.', ['frostallion', 'gobfin']),
+    slot(null, 'counter', 'Zweiter Counter: vor dem Raid nach Schwäche, Mechanik oder Gobfin-Stacking auswählen.', ['knocklem', 'gobfin', 'bastigor', 'jormuntide-ignis', 'frostallion', 'panthalus']),
   ], {
-    title: 'Level 50–80 · Endgame-Kampfteam', purpose: 'Max-Level-80-Grundgerüst aus Carry, Orserk, Support und zwei bewusst variablen Countern für World Tree & Ultra-Raids.',
+    title: 'Level 50–80 · Endgame-Kampfteam', purpose: 'Max-Level-80-Grundgerüst aus Carry, Orserk, Support und zwei variablen Meta-Countern für World Tree, Hard-Türme & Ultra-Raids.',
     accessNote: 'Erst mit World-Tree-/Raid-Zugang (Level 75–80), gepflegten Passives und einer Ausrüstung für das konkrete Ziel.',
     switchWhen: 'Bei jeder Raid-Mechanik neu nach Boss-Element, Resistenz, Cooldowns und Rollen-Uptime besetzen.',
-    combinationReason: 'Shaolong oder Panthalus trägt, Orserk liefert Electric-Druck, Bellanoir Libero unterstützt und die letzten zwei Plätze beantworten das konkrete Level-80-Endgame-Ziel.',
+    combinationReason: 'Shaolong oder Knocklem trägt, Orserk liefert Electric-Druck, Bellanoir Libero unterstützt und die Counter-Slots ermöglichen situatives Gobfin-Player-DPS- oder Boss-Stacking.',
   }),
 ];
 
@@ -352,11 +352,11 @@ export const SPECIAL_TEAMS = [
     combinationReason: 'Shaolong oder Panthalus trägt, Orserk gibt Electric-Druck, Bellanoir Libero unterstützt und zwei Counterplätze bleiben dem Raidziel vorbehalten.',
     sources: specialSourceSets.raidEndgame,
     slots: [
-      slot('shaolong', 'carry', 'Dragon-/Water-Carry für den Endgame-Grundrahmen.', ['panthalus']),
-      slot('orserk', 'carry-support', 'Electric-/Dragon-Druck gegen passende Water-Ziele.'),
-      slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Schaden im langen Kampf.'),
-      slot(null, 'counter', 'Erster Raid-Counter nach dem Boss-Element.', ['frostallion-noct', 'jormuntide-ignis', 'orserk']),
-      slot(null, 'counter', 'Zweiter Raid-Counter nach Mechanik und Resistenz.', ['frostallion', 'bellanoir', 'jormuntide-ignis']),
+      slot('shaolong', 'carry', 'Dragon-/Water-Carry für den Endgame-Grundrahmen; Knocklem ist der Boss-Breaker.', ['panthalus', 'knocklem']),
+      slot('orserk', 'carry-support', 'Electric-/Dragon-Druck gegen passende Water-Ziele.', ['bastigor']),
+      slot('bellanoir-libero', 'support', 'Raid-Support und Dark-Schaden im langen Kampf; Gobfin für Player-DPS-Buffs.', ['gobfin']),
+      slot(null, 'counter', 'Erster Raid-Counter nach dem Boss-Element oder Gobfin-Stack.', ['frostallion-noct', 'jormuntide-ignis', 'orserk', 'gobfin']),
+      slot(null, 'counter', 'Zweiter Raid-Counter nach Mechanik, CC (Freeze) und Resistenz.', ['frostallion', 'bellanoir', 'jormuntide-ignis', 'knocklem', 'gobfin']),
     ],
   }),
   team({

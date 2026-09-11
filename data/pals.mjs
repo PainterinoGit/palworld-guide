@@ -508,6 +508,14 @@ export const PALS = [
     whyGood: 'Ideales Wasser-Mount für Meere, Fischteiche und World-Tree-Fischen.',
     alternatives: ['shaolong', 'panthalus', 'neptilius'],
   }),
+  referencePal({
+    id: 'gobfin', name: 'Gobfin', types: ['Water'], availability: 'wild-early-mid',
+    location: "Gobfin's Turf und Flachwasser-Strände", roles: ['support', 'utility'],
+    workSuitability: { Watering: 2, Handiwork: 1, Transporting: 1 },
+    partnerSkill: 'Angry Shark: Erhöht im Team den Angriff des Spielers massiv (+20% bei 4★; 4× Gobfin mit Vanguard & Stronghold Strategist = +120% Spieler-Schaden).',
+    whyGood: 'DAS Kern-Pal für die Level-80 Player-DPS-Meta: 4× voll kondensierte Gobfins verleihen dem Spieler extremen Waffenschaden gegen Turmbosse und Ultra-Raids.',
+    alternatives: [],
+  }),
 ];
 
 export const ACTIVE_META_PALS = PALS.filter(pal => pal.isActiveRecommendation);

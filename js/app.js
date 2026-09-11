@@ -827,9 +827,14 @@
             if (tabName === 'breeding') {
                 window.initBreedingCalculator?.();
             }
+
+            if (tabName === 'locations') {
+                renderResourceCatalog();
+            }
         }
 
         window.switchTab = switchTab;
         window.switchSubPanel = switchSubPanel;
         window._appSwitchTab = switchTab;
         window._appSwitchSubPanel = switchSubPanel;
+        renderResourceCatalog();
